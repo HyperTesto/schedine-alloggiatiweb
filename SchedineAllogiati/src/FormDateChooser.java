@@ -85,7 +85,7 @@ public class FormDateChooser extends Composite {
 		gd_button.heightHint = text.getSize ().y;
 		
 		button.setLayoutData(gd_button);
-		button.setImage (new Image (parent.getDisplay (), "/home/hypertesto/Scaricati/Test/calendar.png"));		
+		//button.setImage (new Image (parent.getDisplay (), ResourceLoader.loader("files/calendar.png")));		
 		setTabList(new Control[]{text});
 		
 		dateTime.addFocusListener (new FocusListener () {
