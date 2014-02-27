@@ -16,32 +16,4 @@ final public class ResourceLoader {
 		return input;
 	}
 
-	public static ArrayList<String> succhiaComuni () {
-
-		ArrayList<String> array;
-
-		array = new ArrayList<String> ();
-		
-		try {
-
-			BufferedReader br = new BufferedReader (new FileReader (
-					"/home/hypertesto/Scrivania/comuni.txt"));
-
-			String line = br.readLine ();
-
-			while (line != null) {
-
-				array.add (line);
-
-				line = br.readLine ();
-			}
-
-			br.close ();
-
-		} catch (Exception w) {
-
-		}
-
-		return array;
-	}
 }
