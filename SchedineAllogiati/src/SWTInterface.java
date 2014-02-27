@@ -155,7 +155,7 @@ public class SWTInterface extends Shell {
 		
 		text_4 = new CompletedText(grpGruppo_1, SWT.BORDER);
 		text_4.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		text_4.setHints(ResourceLoader.succhiaComuni());
+		//text_4.setHints(ResourceLoader.succhiaComuni());
 		text_4.setForcedHints (true);
 		
 		
