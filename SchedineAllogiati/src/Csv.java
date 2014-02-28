@@ -1,7 +1,4 @@
-import org.eclipse.swt.custom.TableTree;
-
-
-public class Csv implements FileGenerator {
+public class Csv implements FileManager {
 
 	@Override
 	public boolean loadFile(String path) {
@@ -10,7 +7,7 @@ public class Csv implements FileGenerator {
 	}
 
 	@Override
-	public boolean writeFile(TableTree records) {
+	public boolean writeFile(Record[] records) {
 		// TODO Auto-generated method stub
 		return false;
 	}

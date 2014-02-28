@@ -1,10 +1,8 @@
-import org.eclipse.swt.custom.TableTree;
-
 /**
  * @author hypertesto
  *
  */
-public class Questura implements FileGenerator {
+public class Questura implements FileManager {
 
 	/* (non-Javadoc)
 	 * @see FileGenerator#loadFile(java.lang.String)
@@ -19,7 +17,7 @@ public class Questura implements FileGenerator {
 	 * @see FileGenerator#writeFile(org.eclipse.swt.custom.TableTree)
 	 */
 	@Override
-	public boolean writeFile(TableTree records) {
+	public boolean writeFile(Record[] records) {
 		// TODO Auto-generated method stub
 		return false;
 	}
