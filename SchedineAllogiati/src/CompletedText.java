@@ -401,6 +401,7 @@ public class CompletedText extends Text {
 			currentIndex = i;
 		}
 		
+		
 		return currentIndex;
 	}
 
