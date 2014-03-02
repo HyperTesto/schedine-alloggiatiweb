@@ -1,9 +1,9 @@
 public class SimpleText implements FileManager {
 
 	@Override
-	public boolean loadFile(String path) {
+	public Record[] loadFile(String path) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override

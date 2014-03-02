@@ -5,7 +5,7 @@
  */
 public interface FileManager {
 	
-	public boolean loadFile(String path);
+	public Record[] loadFile(String path);
 	
 	public boolean writeFile(Record[] records, String saveTo);
 }
