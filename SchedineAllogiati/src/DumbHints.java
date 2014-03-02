@@ -6,6 +6,7 @@ public class DumbHints implements HintsManager {
 	@Override
 	public ArrayList<String> getHints (String typed) {
 		
+		
 		ArrayList<String> res;
 		
 		res = new ArrayList<String> ();
