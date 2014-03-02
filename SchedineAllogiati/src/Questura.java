@@ -16,5 +16,14 @@ public class Questura implements FileManager {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	private void writeRecord(Record alloggiato){
+	
+	}
+	
+	private void loadRecord(){
+
+	}
+	
 
 }
