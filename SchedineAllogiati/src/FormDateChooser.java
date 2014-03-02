@@ -1,7 +1,6 @@
 import java.util.Calendar;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
@@ -216,25 +215,6 @@ public class FormDateChooser extends Composite {
 
 		calendarShell.setVisible (true);
 		calendarShell.setFocus ();
-	}
-	
-	private Image resize (Image image, int width, int height) {
-		
-		Image scaled; 
-		GC gc;
-		
-		scaled = new Image (Display.getDefault (), width, height);
-		gc = new GC (scaled);
-		
-		gc.setAntialias (SWT.ON);
-		
-		gc.drawImage (image, 0, 0, image.getBounds ().width,
-				image.getBounds ().height, 0, 0, width, height);
-		
-		gc.dispose ();
-		image.dispose ();
-		
-		return scaled;
 	}
 	
 	/**
