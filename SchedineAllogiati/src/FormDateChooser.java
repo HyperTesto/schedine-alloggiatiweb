@@ -188,11 +188,8 @@ public class FormDateChooser extends Composite {
 					dateTime.setDay (text.getDay ());
 					dateTime.setMonth (text.getMonth ());
 					dateTime.setYear (text.getYear ());
-
 				}
-
 			}
-
 		});
 
 	}
