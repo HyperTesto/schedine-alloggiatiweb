@@ -86,11 +86,9 @@ public class FormDateChooser extends Composite {
 				1, 1);
 		
 		gd_button.heightHint = textSize.y;
-
 		button.setLayoutData (gd_button);
 		
 		icon = new ImageData (ResourceLoader.loader (imageFile));
-		
 		button.setImage (resize (new Image (	parent.getDisplay (), ResourceLoader.loader (imageFile)), 
 												textSize.y - 10, 
 												((textSize.y - 10) * icon.width) / icon.height	));
