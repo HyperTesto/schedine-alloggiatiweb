@@ -1,10 +1,13 @@
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
@@ -23,10 +26,20 @@ public class AlloggiatoTree extends Tree {
 	protected TreeColumn type, arrival, stay, surname, name, sex, birthday,
 				birthState, birthDistrict, citizienship, docType, docNumber, birthPlace;
 	
-	public AlloggiatoTree(Composite parent, int params) {
+	protected static final String menuItems[] = {
+		
+		"Modifica"
+	};
+	
+	protected static final String singleIconFile = "res/files/single.png";
+	protected static final String groupIconFile = "res/files/group.png";
+	protected static final String familyIconFile = "";
+	
+	public AlloggiatoTree (Composite parent, int params) {
 		super (parent, params);
 		
-		
+		Menu treeMenu;
+		MenuItem temp;
 		
 		// Lets make visible the column heathers with the column names
 		setHeaderVisible (true);
@@ -83,48 +96,56 @@ public class AlloggiatoTree extends Tree {
 		birthPlace.setText ("Luogo di nascita");
 		birthPlace.setWidth (100);
 		
+		treeMenu = new Menu (parent.getShell (), SWT.POP_UP);
 		
-		
-		/*
-		for (int i = 0; i < 4; i++) {
-			TreeItem item = new TreeItem(this, SWT.NONE);
-			item.setText(new String[] { "item " + i, "abc", "defghi" });
-			for (int j = 0; j < 4; j++) {
-				TreeItem subItem = new TreeItem(item, SWT.NONE);
-				subItem.setText(new String[] { "subitem " + j, "jklmnop", "qrs" });
-				for (int k = 0; k < 4; k++) {
-					TreeItem subsubItem = new TreeItem(subItem, SWT.NONE);
-					subsubItem.setText(new String[] { "subsubitem " + k, "tuv", "wxyz" });
-				}
-			}
+		for (String item : menuItems) {
+			
+			temp = new MenuItem (treeMenu, SWT.NONE);
+			temp.setText (item);
+			
+			temp.addSelectionListener (new MenuListener (this));
 		}
-		*/
 		
-		
+		setMenu (treeMenu);
 	}
 	
 	public void insertRecords (Record[] people) {
 		
 		TreeItem item, subItem;
-		Image single, group, family;
+		Image singleImage, groupImage, familyImage, tempImage;
 		
-		single = new Image (Display.getDefault (), "/home/alberto/Desktop/IconeSchedine/1393793258_administrator.png");
+		tempImage = new Image (Display.getDefault (), ResourceLoader.loader (singleIconFile));
+		singleImage = new Image (Display.getDefault (), tempImage.getImageData ().scaledTo (16, 16));
+		tempImage.dispose ();
+		
+		tempImage = new Image (Display.getDefault (), ResourceLoader.loader (groupIconFile));
+		groupImage = new Image (Display.getDefault (), tempImage.getImageData ().scaledTo (16, 16));
+		tempImage.dispose ();
+
 		
 		int i;
 		
 		i = 0;
 		
 		while (i < people.length) {
-			
+						
 			item = new TreeItem (this, SWT.NONE);
 			item.setText (new String[] {
 					
 					//TODO: inserire i campi
-					"Single"
+					"Gruppo"
 					
 			});
 			
-			item.setImage (new Image (Display.getDefault (), single.getImageData ().scaledTo (16, 16)));
+			item.setImage (groupImage);
+			
+			subItem = new TreeItem (item, SWT.NONE);
+			subItem.setText (new String[] {
+					
+					"Single"
+			});
+			
+			subItem.setImage (singleImage);
 			
 			i++;
 		}
@@ -136,6 +157,29 @@ public class AlloggiatoTree extends Tree {
 
 	}
 	
+	private class MenuListener implements SelectionListener {
+		
+		private Tree tree;
+		
+		public MenuListener (Tree tree) {
+			
+			this.tree = tree;
+		}
+		
+		@Override
+		public void widgetDefaultSelected (SelectionEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void widgetSelected (SelectionEvent arg0) {
+			// TODO Auto-generated method stub
+			
+			System.out.print ("[menu] pressed \"" + ((MenuItem) arg0.widget).getText () + "\", ");
+			System.out.println ("selected element \"" + tree.getSelection ()[0].getText () + "\"");
+		}
+	}
 	
 	/**
 	 * @param args
@@ -149,7 +193,7 @@ public class AlloggiatoTree extends Tree {
 		display = new Display ();
 		shell = new Shell (display);
 		shell.setText ("AllogiatoTree");
-		shell.setSize (200, 200);
+		shell.setSize (500, 200);
 		
 		GridLayout gl_shell = new GridLayout (1, false);
 		gl_shell.marginWidth = 0;

@@ -24,7 +24,7 @@ public class SWTInterface extends Shell {
 	private Text text;
 	private Text text_1;
 	private Text text_3;
-	private CompletedText text_4;
+	private CompletedTextOld text_4;
 	private Text text_5;
 	private Text text_6;
 
@@ -153,7 +153,7 @@ public class SWTInterface extends Shell {
 		lblStatoDiNascita.setText("Stato di nascita:");
 		lblStatoDiNascita.setBounds(0, 0, 61, 15);
 		
-		text_4 = new CompletedText(grpGruppo_1, SWT.BORDER);
+		text_4 = new CompletedTextOld(grpGruppo_1, SWT.BORDER);
 		text_4.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		//text_4.setHints(ResourceLoader.succhiaComuni());
 		text_4.setForcedHints (true);
