@@ -1,7 +1,6 @@
 import java.util.Calendar;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
@@ -57,7 +56,8 @@ public class FormDateChooser extends Composite {
 
 		GridLayout gl_composite;
 		Point textSize;
-		ImageData icon;
+		Image icon;
+		ImageData iconImageData;
 		
 		Calendar cal;
 		int day, month, year;
@@ -109,11 +109,18 @@ public class FormDateChooser extends Composite {
 		gd_button.heightHint = textSize.y;
 		button.setLayoutData (gd_button);
 		
-		icon = new ImageData (ResourceLoader.loader (imageFile));
-		button.setImage (resize (new Image (	parent.getDisplay (), ResourceLoader.loader (imageFile)), 
-												textSize.y - 10, 
-												((textSize.y - 10) * icon.width) / icon.height	));
+		icon = new Image (parent.getDisplay (), ResourceLoader.loader (imageFile));
+		iconImageData = icon.getImageData ();
+		
+		button.setImage (new Image (parent.getDisplay (), iconImageData.scaledTo (	textSize.y - 10, 
+																			((textSize.y - 10) * iconImageData.width) / iconImageData.height)));
+		icon.dispose ();
+		
 		button.setAlignment (SWT.CENTER);
+		
+		//FIXME: quando il tooltip è abilitato e viene reso visibile, il calendario svanisce
+		//button.setToolTipText ("Visualizza un calendario\nmediante il quale è possibile\nselezionare una data con il mouse");
+		
 		
 		button.addFocusListener (new FocusListener () {
 
@@ -127,7 +134,6 @@ public class FormDateChooser extends Composite {
 			public void focusLost (FocusEvent arg0) {
 				
 			}
-			
 			
 		});
 		
@@ -166,6 +172,7 @@ public class FormDateChooser extends Composite {
 
 				text.setText (day / 10 + "" + day % 10 + "/" + month / 10 + ""
 						+ month % 10 + "/" + year);
+				
 				calendarShell.setVisible (false);
 			}
 
@@ -181,11 +188,8 @@ public class FormDateChooser extends Composite {
 					dateTime.setDay (text.getDay ());
 					dateTime.setMonth (text.getMonth ());
 					dateTime.setYear (text.getYear ());
-
 				}
-
 			}
-
 		});
 
 	}
@@ -209,25 +213,6 @@ public class FormDateChooser extends Composite {
 
 		calendarShell.setVisible (true);
 		calendarShell.setFocus ();
-	}
-	
-	private Image resize (Image image, int width, int height) {
-		
-		Image scaled; 
-		GC gc;
-		
-		scaled = new Image (Display.getDefault (), width, height);
-		gc = new GC (scaled);
-		
-		gc.setAntialias (SWT.ON);
-		
-		gc.drawImage (image, 0, 0, image.getBounds ().width,
-				image.getBounds ().height, 0, 0, width, height);
-		
-		gc.dispose ();
-		image.dispose ();
-		
-		return scaled;
 	}
 	
 	/**
