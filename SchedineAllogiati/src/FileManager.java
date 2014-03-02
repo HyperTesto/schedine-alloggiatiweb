@@ -7,5 +7,5 @@ public interface FileManager {
 	
 	public boolean loadFile(String path);
 	
-	public boolean writeFile(Record[] records);
+	public boolean writeFile(Record[] records, String saveTo);
 }

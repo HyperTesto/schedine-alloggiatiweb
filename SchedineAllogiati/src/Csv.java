@@ -7,7 +7,7 @@ public class Csv implements FileManager {
 	}
 
 	@Override
-	public boolean writeFile(Record[] records) {
+	public boolean writeFile(Record[] records, String saveTo) {
 		// TODO Auto-generated method stub
 		return false;
 	}
