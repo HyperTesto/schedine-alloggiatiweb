@@ -106,6 +106,10 @@ public class AlloggiatoTree extends Tree {
 	public void insertRecords (Record[] people) {
 		
 		TreeItem item, subItem;
+		Image single, group, family;
+		
+		single = new Image (Display.getDefault (), "/home/alberto/Desktop/IconeSchedine/1393793258_administrator.png");
+		
 		int i;
 		
 		i = 0;
@@ -116,34 +120,15 @@ public class AlloggiatoTree extends Tree {
 			item.setText (new String[] {
 					
 					//TODO: inserire i campi
-					
+					"Single"
 					
 			});
 			
-			item.setImage (resize (new Image (Display.getDefault (), "/home/alberto/Desktop/IconeSchedine/1393793258_administrator.png"), 16, 16));
+			item.setImage (new Image (Display.getDefault (), single.getImageData ().scaledTo (16, 16)));
 			
 			i++;
 		}
 		
-	}
-	
-	private Image resize (Image image, int width, int height) {
-		
-		Image scaled; 
-		GC gc;
-		
-		scaled = new Image (Display.getDefault (), width, height);
-		gc = new GC (scaled);
-		
-		//gc.setAntialias (SWT.ON);
-		
-		gc.drawImage (image, 0, 0, image.getBounds ().width,
-				image.getBounds ().height, 0, 0, width, height);
-		
-		gc.dispose ();
-		image.dispose ();
-		
-		return scaled;
 	}
 	
 	@Override
@@ -173,7 +158,7 @@ public class AlloggiatoTree extends Tree {
 		gl_shell.verticalSpacing = 0;
 		shell.setLayout (gl_shell);
 
-		tree = new AlloggiatoTree (shell, SWT.CHECK);
+		tree = new AlloggiatoTree (shell, SWT.NONE);
 		tree.insertRecords (new Record[] {null});
 		GridData gd_tree = new GridData (SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_tree.heightHint = 146;
