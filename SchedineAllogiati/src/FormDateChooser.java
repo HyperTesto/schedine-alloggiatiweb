@@ -24,6 +24,12 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 
+/**
+ * 
+ * @author Alberto Bonizzi
+ *
+ */
+
 public class FormDateChooser extends Composite {
 
 	protected DateText text;
