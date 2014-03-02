@@ -36,6 +36,7 @@ public class FormDateChooser extends Composite {
 	 * under the Creative Commons 3 licence
 	 * 
 	 */
+	
 	private final static String imageFile = "res/files/1393800387_calendar-month.png";
 	
 	/**
