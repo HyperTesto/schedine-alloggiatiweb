@@ -1,9 +1,14 @@
 import java.util.AbstractList;
+import java.util.List;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
@@ -19,13 +24,15 @@ public class CompletedText extends Text {
 	protected boolean forcedHints;
 	private boolean allowTextChange;
 	private boolean textSet;
+	private HintsManager hintsManager;
 	
-	public CompletedText (final Composite parent, int style) {
+	public CompletedText (final Composite parent, int style, HintsManager hManager) {
 		super (parent, style);
 
 		final Shell popupShell, parentShell;
 		final Text text = this;
-
+		hintsManager = hManager;
+		
 		textSet = false;
 		forcedHints = false;
 		allowTextChange = false;
@@ -130,7 +137,7 @@ public class CompletedText extends Text {
 						
 						System.out.println(text);
 						
-						verifiedIndex = categoryBeginningIndex (hints, text);
+						//verifiedIndex = categoryBeginningIndex (hints, text);
 						
 						System.out.println("Index = " + verifiedIndex);
 						
@@ -158,38 +165,31 @@ public class CompletedText extends Text {
 
 			public void handleEvent (Event event) {
 				
-				if (hints == null || hints.size () == 0)
-					return;
-
 				TableItem temp;
 				Rectangle textBounds;
-				int i;
+				
+				List<String> hints;
 
 				table.removeAll();
 				
-				if (getText ().length() == 0) {
+				if (getText ().length () == 0) {
 
-					popupShell.setVisible(false);
+					popupShell.setVisible (false);
 				}
 				
-				if (getText ().length() > 0) {
+				if (getText ().length () > 0) {
 					
-					if (forcedHints)
-						i = verifiedIndex;
-					else
-						i = categoryBeginningIndex (hints, getText ());
+					hints = hintsManager.getHints (getText());
 					
-					if (i < 0) {
+					if (forcedHints) {
+						//TODO
 						
-						return;
 					}
 					
-					while (i < hints.size () && hints.get(i).toUpperCase ().startsWith (getText ().toUpperCase ())) {
+					for (String hint : hints) {
 						
 						temp = new TableItem (table, SWT.NONE);
-						temp.setText (hints.get (i));
-						
-						i++;
+						temp.setText (hint);
 					}
 					
 					textBounds = parent.getDisplay ().map (parent, null, getBounds ());
@@ -198,7 +198,6 @@ public class CompletedText extends Text {
 					if (table.getItemCount () > 0) {
 						
 						popupShell.setVisible (true);
-						//table.setSelection (0);
 					
 					} else {
 						
@@ -323,7 +322,8 @@ public class CompletedText extends Text {
 	public void setForcedHints (boolean forcedHints) {
 		this.forcedHints = forcedHints;
 	}
-
+	
+	/*
 	public static int categoryBeginningIndex (AbstractList<String> array, String string) {
 		
 		int lenght, currentIndex, previousIndex, aux, increment;
@@ -404,5 +404,36 @@ public class CompletedText extends Text {
 		
 		return currentIndex;
 	}
+	*/
+	
+	public static void main (String args[]) {
+		
+		Display display;
+		Shell shell;
+		CompletedText text;
+		
+		display = new Display ();
+		shell = new Shell (display);
+		shell.setText("CompletedText");
+		shell.setSize(250, 64);
+		
+		shell.setLayout(new GridLayout(1, false));
+		
+		text = new CompletedText (shell, SWT.BORDER, new DumbHints ());
+		text.setLayoutData (new GridData (SWT.FILL, SWT.CENTER, true, true, 1, 1));
+		
+		shell.open ();
+		
+		while (!shell.isDisposed ()) {
 
+			if (!display.readAndDispatch ()) {
+				display.sleep ();
+			}
+		}
+		
+		
+		
+		
+		
+	}
 }
