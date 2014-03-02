@@ -172,6 +172,7 @@ public class FormDateChooser extends Composite {
 
 				text.setText (day / 10 + "" + day % 10 + "/" + month / 10 + ""
 						+ month % 10 + "/" + year);
+				
 				calendarShell.setVisible (false);
 			}
 
