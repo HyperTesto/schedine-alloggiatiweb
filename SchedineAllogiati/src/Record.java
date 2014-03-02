@@ -15,5 +15,17 @@ public class Record {
 		doc = new Documento(tipoDoc, numeroDoc, rilascioDoc);
 	
 	}
+	
+	public String getNome(){
+		return allog.nome;
+	}
+	
+	public String getCognome(){
+		return allog.cognome;
+	}
+	
+	public String getSesso(){
+		return allog.sesso;
+	}
 
 }
