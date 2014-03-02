@@ -31,9 +31,21 @@ public class FormDateChooser extends Composite {
 	protected DateTime dateTime;
 	protected Button button;
 	
+	/*
+	 * The used icon has been downloaded from https://www.iconfinder.com/iconsets/fugue#readme and is
+	 * under the Creative Commons 3 licence
+	 * 
+	 */
 	private final static String imageFile = "res/files/1393800387_calendar-month.png";
 	
-	public FormDateChooser(final Composite parent, int style) {
+	/**
+	 * 
+	 * Constructor method for the composite
+	 * 
+	 * @param parent
+	 * @param style
+	 */
+	public FormDateChooser (final Composite parent, int style) {
 		super (parent, style);
 
 		GridLayout gl_composite;
@@ -211,11 +223,25 @@ public class FormDateChooser extends Composite {
 		return scaled;
 	}
 	
+	/**
+	 * 
+	 * Returns the {@link org.eclipse.swt.widgets.DateTime} composite included in the FormDateChooser
+	 * 
+	 * @return the {@link org.eclipse.swt.widgets.DateTime} composite
+	 */
+	
 	public DateTime getDateTime () {
 
 		return dateTime;
 	}
-
+	
+	/**
+	 * 
+	 * Returns the {@link org.eclipse.swt.widgets.Text} composite included in the FormDateChooser
+	 * 
+	 * @return the {@link org.eclipse.swt.widgets.Text} composite
+	 */
+	
 	public Text getText () {
 
 		return text;
@@ -230,12 +256,12 @@ public class FormDateChooser extends Composite {
 		display = new Display ();
 		shell = new Shell (display);
 		shell.setText ("CompletedText");
-
+		shell.setImage (new Image (display, ResourceLoader.loader (imageFile)));
+		
 		shell.setLayout (new GridLayout (1, false));
 
 		date = new FormDateChooser (shell, SWT.NONE);
-		date.setLayoutData (new GridData (SWT.FILL, SWT.CENTER, true, true, 1,
-				1));
+		date.setLayoutData (new GridData (SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		
 		shell.open ();
 		shell.pack ();
