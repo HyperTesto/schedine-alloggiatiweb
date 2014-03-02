@@ -57,7 +57,8 @@ public class FormDateChooser extends Composite {
 
 		GridLayout gl_composite;
 		Point textSize;
-		ImageData icon;
+		Image icon;
+		ImageData iconImageData;
 		
 		Calendar cal;
 		int day, month, year;
@@ -109,11 +110,18 @@ public class FormDateChooser extends Composite {
 		gd_button.heightHint = textSize.y;
 		button.setLayoutData (gd_button);
 		
-		icon = new ImageData (ResourceLoader.loader (imageFile));
-		button.setImage (resize (new Image (	parent.getDisplay (), ResourceLoader.loader (imageFile)), 
-												textSize.y - 10, 
-												((textSize.y - 10) * icon.width) / icon.height	));
+		icon = new Image (parent.getDisplay (), ResourceLoader.loader (imageFile));
+		iconImageData = icon.getImageData ();
+		
+		button.setImage (new Image (parent.getDisplay (), iconImageData.scaledTo (	textSize.y - 10, 
+																			((textSize.y - 10) * iconImageData.width) / iconImageData.height)));
+		icon.dispose ();
+		
 		button.setAlignment (SWT.CENTER);
+		
+		//FIXME: quando il tooltip è abilitato e viene reso visibile, il calendario svanisce
+		//button.setToolTipText ("Visualizza un calendario\nmediante il quale è possibile\nselezionare una data con il mouse");
+		
 		
 		button.addFocusListener (new FocusListener () {
 
@@ -127,7 +135,6 @@ public class FormDateChooser extends Composite {
 			public void focusLost (FocusEvent arg0) {
 				
 			}
-			
 			
 		});
 		
