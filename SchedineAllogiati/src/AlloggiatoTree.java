@@ -1,4 +1,6 @@
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -101,7 +103,7 @@ public class AlloggiatoTree extends Tree {
 		
 	}
 	
-	public void insertAlloggiatos (Alloggiato[] people) {
+	public void insertRecords (Record[] people) {
 		
 		TreeItem item, subItem;
 		int i;
@@ -118,9 +120,30 @@ public class AlloggiatoTree extends Tree {
 					
 			});
 			
+			item.setImage (resize (new Image (Display.getDefault (), "/home/alberto/Desktop/IconeSchedine/1393793258_administrator.png"), 16, 16));
+			
 			i++;
 		}
 		
+	}
+	
+	private Image resize (Image image, int width, int height) {
+		
+		Image scaled; 
+		GC gc;
+		
+		scaled = new Image (Display.getDefault (), width, height);
+		gc = new GC (scaled);
+		
+		//gc.setAntialias (SWT.ON);
+		
+		gc.drawImage (image, 0, 0, image.getBounds ().width,
+				image.getBounds ().height, 0, 0, width, height);
+		
+		gc.dispose ();
+		image.dispose ();
+		
+		return scaled;
 	}
 	
 	@Override
@@ -151,7 +174,7 @@ public class AlloggiatoTree extends Tree {
 		shell.setLayout (gl_shell);
 
 		tree = new AlloggiatoTree (shell, SWT.CHECK);
-		tree.insertAlloggiatos (new Alloggiato[] {null});
+		tree.insertRecords (new Record[] {null});
 		GridData gd_tree = new GridData (SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_tree.heightHint = 146;
 		tree.setLayoutData (gd_tree);
