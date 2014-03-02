@@ -1,4 +1,6 @@
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -101,9 +103,13 @@ public class AlloggiatoTree extends Tree {
 		
 	}
 	
-	public void insertAlloggiatos (Alloggiato[] people) {
+	public void insertRecords (Record[] people) {
 		
 		TreeItem item, subItem;
+		Image single, group, family;
+		
+		single = new Image (Display.getDefault (), "/home/alberto/Desktop/IconeSchedine/1393793258_administrator.png");
+		
 		int i;
 		
 		i = 0;
@@ -114,9 +120,11 @@ public class AlloggiatoTree extends Tree {
 			item.setText (new String[] {
 					
 					//TODO: inserire i campi
-					
+					"Single"
 					
 			});
+			
+			item.setImage (new Image (Display.getDefault (), single.getImageData ().scaledTo (16, 16)));
 			
 			i++;
 		}
@@ -150,8 +158,8 @@ public class AlloggiatoTree extends Tree {
 		gl_shell.verticalSpacing = 0;
 		shell.setLayout (gl_shell);
 
-		tree = new AlloggiatoTree (shell, SWT.CHECK);
-		tree.insertAlloggiatos (new Alloggiato[] {null});
+		tree = new AlloggiatoTree (shell, SWT.NONE);
+		tree.insertRecords (new Record[] {null});
 		GridData gd_tree = new GridData (SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_tree.heightHint = 146;
 		tree.setLayoutData (gd_tree);
