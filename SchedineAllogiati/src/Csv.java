@@ -71,7 +71,7 @@ public class Csv implements FileManager {
 		riga+=record.getTipoDocumento()+";";
 		riga+=record.getNumeroDocumento()+";";
 		riga+=record.getRilascioDocumento();
-		return null;
+		return riga;
 	}
 
 	private Record readRecord(String riga){
