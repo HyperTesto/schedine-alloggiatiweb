@@ -5,7 +5,6 @@ public class DumbHints implements HintsManager {
 
 	@Override
 	public ArrayList<String> getHints (String typed) {
-		// TODO Auto-generated method stub
 		
 		ArrayList<String> res;
 		
