@@ -1,7 +1,9 @@
+import java.util.List;
+
 public class SimpleText implements FileManager {
 
 	@Override
-	public Record[] loadFile(String path) {
+	public List<Record> loadFile(String path) {
 		// TODO Auto-generated method stub
 		return null;
 	}

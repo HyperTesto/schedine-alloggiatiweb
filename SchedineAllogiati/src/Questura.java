@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * @author hypertesto
  *
@@ -6,7 +8,7 @@ public class Questura implements FileManager {
 
 	
 	@Override
-	public Record[] loadFile(String path) {
+	public List<Record> loadFile(String path) {
 		// TODO Auto-generated method stub
 		return null;
 	}
