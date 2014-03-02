@@ -43,6 +43,8 @@ public class FormDateChooser extends Composite {
 		Calendar cal;
 		int day, month, year;
 		
+		GridData gd_button;
+		
 		gl_composite = new GridLayout (2, false);
 
 		gl_composite.marginHeight = 0;
@@ -82,7 +84,7 @@ public class FormDateChooser extends Composite {
 			}
 		});
 
-		GridData gd_button = new GridData (SWT.LEFT, SWT.CENTER, false, false,
+		gd_button = new GridData (SWT.LEFT, SWT.CENTER, false, false,
 				1, 1);
 		
 		gd_button.heightHint = textSize.y;
