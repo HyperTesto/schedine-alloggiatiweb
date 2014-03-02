@@ -3,14 +3,16 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class Csv implements FileManager {
 
 	@Override
-	public Record[] loadFile(String path) {
+	public List<Record> loadFile(String path) {
 
-		Record[] records = null;
+		List<Record> records = new ArrayList<Record>();
 
 		try{	
 			InputStream in = ResourceLoader.loader(path);
@@ -19,7 +21,7 @@ public class Csv implements FileManager {
 			//Read File Line By Line
 			int i=0;
 			while ((strLine = br.readLine()) != null)   {
-				records[i] = readRecord(strLine);
+				records.add(readRecord(strLine));
 			}
 			//Close the input stream
 			in.close();
