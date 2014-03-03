@@ -20,7 +20,10 @@ public class SimpleText implements FileManager {
 			String strLine;
 			//Read File Line By Line
 			while ((strLine = br.readLine()) != null)   {
-				records.add(readRecord(strLine));
+				Record temp = readRecord(strLine);
+				if (temp != null){
+					records.add(temp);
+				}
 			}
 			//Close the input stream
 			in.close();
