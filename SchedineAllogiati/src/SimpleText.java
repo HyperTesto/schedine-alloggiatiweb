@@ -28,7 +28,7 @@ public class SimpleText implements FileManager {
 			//Close the input stream
 			in.close();
 		}catch (Exception e){//Catch exception if any
-			System.err.println("Error: " + e.getMessage());
+			System.err.println("Errore nell'apertura/lettura del file: " + e.getMessage());
 		}
 		return records;
 	}
@@ -45,7 +45,7 @@ public class SimpleText implements FileManager {
 			
 
 		}catch(Exception e){
-			System.out.println("Errore nella lettura del file!");
+			System.out.println("Errore nella apertura/scrittura del file: " + e.getMessage());
 			return false;
 		}
 		
@@ -110,7 +110,7 @@ public class SimpleText implements FileManager {
 			record = new Record(tipoAlloggiato, dataArrivo, permanenza, nome, cognome, dataNascita, sesso, cittadinanza, statoNascita, comuneNascita, tipoDoc, numDoc, rilascioDoc);
 			
 		}catch (Exception e){//Catch exception if any
-			System.err.println("Errore: il file non sembra formattato correttamente");
+			System.err.println("Errore: la riga non sembra formattata correttamente");
 			record = null;
 		}
 		//record = new Record(t.nextToken(),t.nextToken(),Integer.parseInt(t.nextToken()),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken());
