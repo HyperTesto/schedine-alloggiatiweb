@@ -142,7 +142,7 @@ public class AlloggiatoTree extends Tree {
 			subItem = new TreeItem (item, SWT.NONE);
 			subItem.setText (new String[] {
 					
-					"Single"
+					"Singolo"
 			});
 			
 			subItem.setImage (singleImage);
