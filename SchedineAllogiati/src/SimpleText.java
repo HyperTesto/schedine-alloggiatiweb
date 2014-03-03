@@ -76,13 +76,41 @@ public class SimpleText implements FileManager {
 	}
 
 	private Record readRecord(String riga){
+		String nome,cognome,tipoAlloggiato,dataArrivo,dataNascita,sesso,cittadinanza,statoNascita,comuneNascita,tipoDoc,numDoc,rilascioDoc;
+		int permanenza;
 		Record record;
 		StringTokenizer t = new StringTokenizer(riga,"\t");
-		/*
-		 * Istanzio il record leggendo direttamente dalla riga, questa parte sarà da raffianare
-		 * per renderlo più flessibile e meno sensibile ai bug
-		 */
-		record = new Record(t.nextToken(),t.nextToken(),Integer.parseInt(t.nextToken()),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken());
+		try{
+			/*
+			 * Dati permanenza
+			 */
+			tipoAlloggiato = t.nextToken();
+			dataArrivo = t.nextToken();
+			permanenza = Integer.parseInt(t.nextToken());
+			/*
+			 * Generalità alloggiato
+			 */
+			nome = t.nextToken();
+			cognome = t.nextToken();
+			dataNascita = t.nextToken();
+			sesso = t.nextToken();
+			cittadinanza = t.nextToken();
+			statoNascita = t.nextToken();
+			comuneNascita = t.nextToken();
+			/*
+			 * Dati documento
+			 */
+			tipoDoc = t.nextToken(); 
+			numDoc = t.nextToken();
+			rilascioDoc = t.nextToken();
+			
+			record = new Record(tipoAlloggiato, dataArrivo, permanenza, nome, cognome, dataNascita, sesso, cittadinanza, statoNascita, comuneNascita, tipoDoc, numDoc, rilascioDoc);
+			
+		}catch (Exception e){//Catch exception if any
+			System.err.println("Errore: il file non sembra formattato correttamente");
+			record = null;
+		}
+		//record = new Record(t.nextToken(),t.nextToken(),Integer.parseInt(t.nextToken()),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken());
 
 		return record;
 	}
