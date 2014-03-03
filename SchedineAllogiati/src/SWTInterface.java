@@ -34,6 +34,7 @@ public class SWTInterface extends Shell {
 	 */
 	public static void main(String args[]) {
 		try {
+			
 			Display display = Display.getDefault();
 			SWTInterface shell = new SWTInterface(display);
 			shell.setMaximized(true);
