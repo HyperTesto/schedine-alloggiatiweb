@@ -19,7 +19,6 @@ public class Csv implements FileManager {
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			String strLine;
 			//Read File Line By Line
-			int i=0;
 			while ((strLine = br.readLine()) != null)   {
 				records.add(readRecord(strLine));
 			}
