@@ -13,7 +13,7 @@ import java.util.StringTokenizer;
  */
 public class Questura implements FileManager {
 
-	
+
 	@Override
 	public List<Record> loadFile(String path) {
 
@@ -47,56 +47,120 @@ public class Questura implements FileManager {
 			}
 			bw.close();
 			return true;
-			
+
 
 		}catch(Exception e){
 			System.out.println("Errore nella apertura/scrittura del file!: " +e.getMessage());
 			return false;
 		}
-		
+
 	}
-	
+
 	private String formatRecord(Record record){
 		String riga="";
-		
+
 		/*
 		 * parte da implementare per gestire la formattazione corretta
 		 * per i record da inviare tramite file alla questura
 		 */
-		
+
 		/*
 		 * Campi alloggiato
 		 */
-		
+
 
 		/*
 		 * Dati personali alloggiato
 		 */
-		
+
 
 		/*
 		 * Dati documento
 		 */
-		
+
 		return riga;
 	}
-	
+
 	private Record readRecord(String riga){
 		String nome,cognome,tipoAlloggiato,dataArrivo,dataNascita,sesso,cittadinanza,statoNascita,comuneNascita,tipoDoc,numDoc,rilascioDoc;
 		int permanenza;
 		Record record;
-		StringTokenizer t = new StringTokenizer(riga,";");
+		/*
+		 * StringTokenizer t = new StringTokenizer(riga,";");
+		 */
 		/* questa parte andrà reimplementata 
 		 * per maneggiare i record formattati per l'invio tramite file alla questura
 		 * molto probabilmente la strada migliore sarà utilizzare il metodo substring e trimmare il tutto
 		 */
 
-		
+
 		//record = new Record(t.nextToken(),t.nextToken(),Integer.parseInt(t.nextToken()),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken());
 
 		// da cambiare il return con record quando tutto sarà implementato
 		return null;
 	}
-	
 
+	private String readName(String riga){
+
+		return null;
+	}
+
+	private String readCognome(String riga){
+
+		return null;
+	}
+
+	private String readSesso(String riga){
+
+		return null;
+	}
+
+	private String readCittadinanza(String riga){
+
+		return null;
+	}
+
+	private String readDataNascita(String riga){
+
+		return null;
+	}
+
+	private String readStatoNascita(String riga){
+
+		return null;
+	}
+
+	private String readComuneNascita(String riga){
+
+		return null;
+	}
+
+	private String readTipoAlloggiato(String riga){
+
+		return null;
+	}
+
+	private String readDataArrivo(String riga){
+
+		return null;
+	}
+
+	private int readPermanenza(String riga){
+		return 0;
+	}
+
+	private String readTipoDoc(String riga){
+
+		return null;
+	}
+
+	private String readNumeroDoc(String riga){
+
+		return null;
+	}
+	
+	private String readRilascioDoc(String riga){
+
+		return null;
+	}
 }
