@@ -42,7 +42,7 @@ public class Csv implements FileManager {
 			
 
 		}catch(Exception e){
-			System.out.println("Error!");
+			System.out.println("Errore nella lettura del file!");
 			return false;
 		}
 		
