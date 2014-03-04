@@ -90,7 +90,7 @@ public class SimpleText implements FileManager {
 	}
 
 	/**
-	 * Metodo di supporto per la lettura dei record di tipo testo semplica
+	 * Metodo di supporto per la lettura dei record di tipo testo semplice
 	 * @param riga
 	 * @return Record
 	 */ 
