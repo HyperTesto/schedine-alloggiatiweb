@@ -229,9 +229,9 @@ public class FormDateChooser extends Composite {
 	
 	/**
 	 * 
-	 * Returns the {@link org.eclipse.swt.widgets.Text} composite included in the FormDateChooser
+	 * Returns the {@link org.eclipse.swt.widgets.Text} widget included in the FormDateChooser
 	 * 
-	 * @return the {@link org.eclipse.swt.widgets.Text} composite
+	 * @return the {@link org.eclipse.swt.widgets.Text} widget
 	 */
 	
 	public Text getText () {
