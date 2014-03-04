@@ -8,6 +8,23 @@ public class Record {
 	private Documento doc;
 	private Permanenza perm;
 	
+	/**
+	 * Record class constructor
+	 * 
+	 * @param tipoAlloggiato
+	 * @param dataArrivo
+	 * @param permanenza
+	 * @param nome
+	 * @param cognome
+	 * @param dataNascita
+	 * @param sesso
+	 * @param cittadinanza
+	 * @param statoNascita
+	 * @param comuneNascita
+	 * @param tipoDoc
+	 * @param numeroDoc
+	 * @param rilascioDoc
+	 */
 	public Record(String tipoAlloggiato, String dataArrivo, int permanenza, String nome, String cognome, String dataNascita, String sesso, String cittadinanza, String statoNascita, String comuneNascita, String tipoDoc, String numeroDoc, String rilascioDoc){
 		
 		perm = new Permanenza(tipoAlloggiato, dataArrivo, permanenza);
