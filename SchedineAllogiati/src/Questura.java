@@ -142,16 +142,16 @@ public class Questura implements FileManager {
 
 	private String readTipoAlloggiato(String riga){
 
-		return null;
+		return riga.substring(0, 1);
 	}
 
 	private String readDataArrivo(String riga){
 
-		return null;
+		return riga.substring(2, 11);
 	}
 
 	private int readPermanenza(String riga){
-		return 0;
+		return Integer.parseInt(riga.substring(12, 13));
 	}
 
 	private String readTipoDoc(String riga){
