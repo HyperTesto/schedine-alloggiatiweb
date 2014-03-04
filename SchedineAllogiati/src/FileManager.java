@@ -9,5 +9,5 @@ public interface FileManager {
 	
 	public List<Record> loadFile(String path);
 	
-	public boolean writeFile(Record[] records, String saveTo);
+	public boolean writeFile(List<Record> records, String saveTo);
 }
