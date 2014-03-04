@@ -106,12 +106,13 @@ public class Questura implements FileManager {
 	 */
 	private String readName(String riga){
 
-		return riga.substring(14, 64).trim();
+		return riga.substring(65, 30).trim();
 	}
-
+	
+	
 	private String readCognome(String riga){
 
-		return null;
+		return riga.substring(14, 64).trim();
 	}
 
 	private String readSesso(String riga){
