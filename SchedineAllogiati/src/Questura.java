@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author hypertesto
+ * @author Enrico Testori
  *
  */
 public class Questura implements FileManager {
@@ -98,10 +98,15 @@ public class Questura implements FileManager {
 		// da cambiare il return con record quando tutto sarà implementato
 		return null;
 	}
-
+	
+	/**
+	 * Ritorna il nome dell'alloggiato opportunamente trimmato
+	 * @param riga
+	 * @return String
+	 */
 	private String readName(String riga){
 
-		return null;
+		return riga.substring(14, 64).trim();
 	}
 
 	private String readCognome(String riga){
