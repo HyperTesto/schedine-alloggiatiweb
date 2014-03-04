@@ -6,6 +6,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
@@ -114,6 +116,20 @@ public class AlloggiatoTree extends Tree {
 		TreeItem item, subItem;
 		Image singleImage, groupImage, familyImage, tempImage;
 		
+		/*
+		addListener (SWT.MeasureItem, new Listener () {
+
+			@Override
+			public void handleEvent (Event arg0) {
+				// TODO Auto-generated method stub
+				
+				System.out.println ("altezza-riga: " + arg0.height);
+			}
+			
+			
+		});
+		*/
+		
 		tempImage = new Image (Display.getDefault (), ResourceLoader.loader (singleIconFile));
 		singleImage = new Image (Display.getDefault (), tempImage.getImageData ().scaledTo (16, 16));
 		tempImage.dispose ();
@@ -138,6 +154,8 @@ public class AlloggiatoTree extends Tree {
 			});
 			
 			item.setImage (groupImage);
+			
+			//System.out.println (item.getBounds ());
 			
 			subItem = new TreeItem (item, SWT.NONE);
 			subItem.setText (new String[] {

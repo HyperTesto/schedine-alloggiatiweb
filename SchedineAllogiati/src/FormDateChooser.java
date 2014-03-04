@@ -217,9 +217,9 @@ public class FormDateChooser extends Composite {
 	
 	/**
 	 * 
-	 * Returns the {@link org.eclipse.swt.widgets.DateTime} composite included in the FormDateChooser
+	 * Returns the {@link org.eclipse.swt.widgets.DateTime} widget included in the FormDateChooser
 	 * 
-	 * @return the {@link org.eclipse.swt.widgets.DateTime} composite
+	 * @return the {@link org.eclipse.swt.widgets.DateTime} widget
 	 */
 	
 	public DateTime getDateTime () {
