@@ -106,18 +106,18 @@ public class Questura implements FileManager {
 	 */
 	private String readName(String riga){
 
-		return riga.substring(65, 30).trim();
+		return riga.substring(64, 93).trim();
 	}
 	
 	
 	private String readCognome(String riga){
 
-		return riga.substring(14, 64).trim();
+		return riga.substring(14, 63).trim();
 	}
 
 	private String readSesso(String riga){
 
-		return null;
+		return riga.substring(94, 94);
 	}
 
 	private String readCittadinanza(String riga){
@@ -127,7 +127,7 @@ public class Questura implements FileManager {
 
 	private String readDataNascita(String riga){
 
-		return null;
+		return riga.substring(95, 104);
 	}
 
 	private String readStatoNascita(String riga){
@@ -137,7 +137,7 @@ public class Questura implements FileManager {
 
 	private String readComuneNascita(String riga){
 
-		return null;
+		return riga.substring(105, 113);
 	}
 
 	private String readTipoAlloggiato(String riga){
