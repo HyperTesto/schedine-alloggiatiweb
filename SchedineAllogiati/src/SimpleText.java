@@ -34,11 +34,11 @@ public class SimpleText implements FileManager {
 	}
 
 	@Override
-	public boolean writeFile(Record[] records, String saveTo) {
+	public boolean writeFile(List<Record> records, String saveTo) {
 		try{
 			BufferedWriter bw = new BufferedWriter(new FileWriter(saveTo));
-			for(int i=0; i<records.length;i++){
-				bw.write(formatRecord(records[i]));
+			for(Record temp : records){
+				bw.write(formatRecord(temp));
 			}
 			bw.close();
 			return true;
