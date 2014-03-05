@@ -11,7 +11,13 @@ import java.util.List;
  *
  */
 public class Questura implements FileManager {
-
+	
+	/*
+	 * Variabili statiche per la modalità del check
+	 */
+	public static int STRICT = 0; 		//controllo integrità sottogruppi e che data arrivo sia nelle 48 ore precedenti (per invio immediato a questura)
+	public static int SEMI_STRICT = 1;	//controllo integrità sottogruppi e data arrivo non differisca più di 48 h da un record all'altro
+	public static int PERMISSIVE = 2;	//controllo integrità sottogruppi
 
 	private List<Exception> exceptions;
 
@@ -190,8 +196,13 @@ public class Questura implements FileManager {
 	/*
 	 * Utilità varie
 	 */
-	public boolean checkCongruence(List<Record> records){
+	public static boolean check(List<Record> records){
 		
+		return false;
+		
+	}
+	
+	private static boolean checkSubGroups(List<Record> records){
 		boolean isSingle, isFamily, isGroup;
 		isSingle=isGroup=isFamily=false;
 		
@@ -240,5 +251,14 @@ public class Questura implements FileManager {
 		}
 		
 		return true;
+	}
+	
+	private static boolean checkDateInterval(List<Record> records, int mod){
+		
+		for(Record temp : records){
+			
+		}
+		
+		return false;
 	}
 }
