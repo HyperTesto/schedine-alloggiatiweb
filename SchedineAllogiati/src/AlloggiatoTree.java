@@ -6,8 +6,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
@@ -21,17 +19,17 @@ import org.eclipse.swt.widgets.TreeItem;
 
 /**
  * @author Alberto Bonizzi
- *
+ * 
  */
 public class AlloggiatoTree extends Tree {
-
+	
 	protected TreeColumn type, arrival, stay, surname, name, sex, birthday,
-				birthState, birthDistrict, citizienship, docType, docNumber, birthPlace;
+			birthState, birthDistrict, citizienship, docType, docNumber,
+			birthPlace;
 	
 	protected static final String menuItems[] = {
-		
-		"Modifica"
-	};
+	
+	"Modifica" };
 	
 	protected static final String singleIconFile = "res/files/single.png";
 	protected static final String groupIconFile = "res/files/group.png";
@@ -117,50 +115,51 @@ public class AlloggiatoTree extends Tree {
 		Image singleImage, groupImage, familyImage, tempImage;
 		
 		/*
-		addListener (SWT.MeasureItem, new Listener () {
-
-			@Override
-			public void handleEvent (Event arg0) {
-				// TODO Auto-generated method stub
-				
-				System.out.println ("altezza-riga: " + arg0.height);
-			}
-			
-			
-		});
-		*/
+		 * addListener (SWT.MeasureItem, new Listener () {
+		 * 
+		 * @Override public void handleEvent (Event arg0) { // TODO
+		 * Auto-generated method stub
+		 * 
+		 * System.out.println ("altezza-riga: " + arg0.height); }
+		 * 
+		 * 
+		 * });
+		 */
 		
-		tempImage = new Image (Display.getDefault (), ResourceLoader.loader (singleIconFile));
-		singleImage = new Image (Display.getDefault (), tempImage.getImageData ().scaledTo (16, 16));
+		tempImage = new Image (Display.getDefault (),
+				ResourceLoader.loader (singleIconFile));
+		singleImage = new Image (Display.getDefault (), tempImage
+				.getImageData ().scaledTo (16, 16));
 		tempImage.dispose ();
 		
-		tempImage = new Image (Display.getDefault (), ResourceLoader.loader (groupIconFile));
-		groupImage = new Image (Display.getDefault (), tempImage.getImageData ().scaledTo (16, 16));
+		tempImage = new Image (Display.getDefault (),
+				ResourceLoader.loader (groupIconFile));
+		groupImage = new Image (Display.getDefault (), tempImage
+				.getImageData ().scaledTo (16, 16));
 		tempImage.dispose ();
-
 		
 		int i;
 		
 		i = 0;
 		
 		while (i < people.length) {
-						
+			
 			item = new TreeItem (this, SWT.NONE);
 			item.setText (new String[] {
-					
-					//TODO: inserire i campi
+			
+			// TODO: inserire i campi
 					"Gruppo"
-					
+			
 			});
 			
 			item.setImage (groupImage);
 			
-			//System.out.println (item.getBounds ());
+			// System.out.println (item.getBounds ());
 			
 			subItem = new TreeItem (item, SWT.NONE);
 			subItem.setText (new String[] {
-					
-					"Singolo"
+			
+					"Singolo" 
 			});
 			
 			subItem.setImage (singleImage);
@@ -172,7 +171,7 @@ public class AlloggiatoTree extends Tree {
 	
 	@Override
 	protected void checkSubclass () {
-
+		
 	}
 	
 	private class MenuListener implements SelectionListener {
@@ -189,13 +188,15 @@ public class AlloggiatoTree extends Tree {
 			// TODO Auto-generated method stub
 			
 		}
-
+		
 		@Override
 		public void widgetSelected (SelectionEvent arg0) {
 			// TODO Auto-generated method stub
 			
-			System.out.print ("[menu] pressed \"" + ((MenuItem) arg0.widget).getText () + "\", ");
-			System.out.println ("selected element \"" + tree.getSelection ()[0].getText () + "\"");
+			System.out.print ("[menu] pressed \""
+					+ ((MenuItem) arg0.widget).getText () + "\", ");
+			System.out.println ("selected element \""
+					+ tree.getSelection ()[0].getText () + "\"");
 		}
 	}
 	
@@ -219,23 +220,23 @@ public class AlloggiatoTree extends Tree {
 		gl_shell.marginHeight = 0;
 		gl_shell.verticalSpacing = 0;
 		shell.setLayout (gl_shell);
-
+		
 		tree = new AlloggiatoTree (shell, SWT.NONE);
-		tree.insertRecords (new Record[] {null});
+		tree.insertRecords (new Record[] { null });
 		GridData gd_tree = new GridData (SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_tree.heightHint = 146;
 		tree.setLayoutData (gd_tree);
 		
 		shell.open ();
-		//shell.pack ();
+		// shell.pack ();
 		
 		while (!shell.isDisposed ()) {
-
+			
 			if (!display.readAndDispatch ()) {
 				display.sleep ();
 			}
 		}
-
+		
 	}
-
+	
 }
