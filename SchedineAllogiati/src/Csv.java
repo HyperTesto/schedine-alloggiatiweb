@@ -1,7 +1,8 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class Csv implements FileManager {
 		List<Record> records = new ArrayList<Record>();
 
 		try{	
-			InputStream in = ResourceLoader.loader(path);
+			FileInputStream in = new FileInputStream(new File(path));
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			String strLine;
 			//Read File Line By Line
@@ -126,14 +127,22 @@ public class Csv implements FileManager {
 			rilascioDoc = t.nextToken();
 			
 			record = new Record(tipoAlloggiato, dataArrivo, permanenza, nome, cognome, dataNascita, sesso, cittadinanza, statoNascita, comuneNascita, tipoDoc, numDoc, rilascioDoc);
-			
+		
 		}catch (Exception e){//Catch exception if any
 			System.err.println("Errore: la riga non sembra formattata correttamente");
 			record = null;
 		}
 		//record = new Record(t.nextToken(),t.nextToken(),Integer.parseInt(t.nextToken()),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken());
-
+		
 		return record;
+	}
+	
+	public static void main(String args[]){
+		FileManager csv = new Csv();
+		
+		for(Record temp : csv.loadFile("/home/hypertesto/cacca.txt")){
+			System.out.println(temp.getNome());
+		}
 	}
 
 }
