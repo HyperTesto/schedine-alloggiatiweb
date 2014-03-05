@@ -8,7 +8,11 @@ public class Alloggiato {
 	 * Dati personali dell'alloggiato
 	 */
 	
-	
+	public static final String CAPO_FAMIGLIA="CAPO FAMIGLIA";
+	public static final String CAPO_GRUPPO="CAPO GRUPPO";
+	public static final String OSPITE_SINGOLO="OSPITE SINGOLO";
+	public static final String MEMBRO_GRUPPO="MEMBO GRUPPO";
+	public static final String MEMBRO_FAMIGLIA="MEMBRO FAMIGLIA";
 	public String nome, cognome, dataNascita, sesso, cittadinanza, statoNascita, comuneNascita;
 	
 	/**
