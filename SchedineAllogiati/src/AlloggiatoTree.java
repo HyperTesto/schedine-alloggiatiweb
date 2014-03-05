@@ -1,3 +1,6 @@
+import java.io.IOException;
+import java.util.List;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -109,7 +112,7 @@ public class AlloggiatoTree extends Tree {
 		setMenu (treeMenu);
 	}
 	
-	public void insertRecords (Record[] people) {
+	public void insertRecords (List<Record> people) {
 		
 		TreeItem item, subItem;
 		Image singleImage, groupImage, familyImage, tempImage;
@@ -138,40 +141,71 @@ public class AlloggiatoTree extends Tree {
 				.getImageData ().scaledTo (16, 16));
 		tempImage.dispose ();
 		
-		int i;
+		item = null;
 		
-		i = 0;
-		
-		while (i < people.length) {
+		for (Record record : people) {
 			
-			item = new TreeItem (this, SWT.NONE);
-			item.setText (new String[] {
+			if (record.getTipoAlloggiato ().equals (Alloggiato.CAPO_GRUPPO) ||
+					record.getTipoAlloggiato ().equals (Alloggiato.CAPO_FAMIGLIA)) {
+				
+				item = new TreeItem (this, SWT.NONE);
+				item.setText (recordToStringArray (record));
+				
+				if (record.getTipoAlloggiato ().equals (Alloggiato.CAPO_GRUPPO)) {
+					
+					item.setImage (groupImage);
+				} else {
+					//TODO: aggiungere immagine famiglia
+					
+				}
 			
-			// TODO: inserire i campi
-					"Gruppo"
+			} else if (record.getTipoAlloggiato ().equals (Alloggiato.MEMBRO_GRUPPO) ||
+					record.getTipoAlloggiato ().equals (Alloggiato.MEMBRO_FAMIGLIA)){
+				
+				subItem = new TreeItem (item, SWT.NONE);
+				subItem.setText (recordToStringArray (record));
+				
+				subItem.setImage (singleImage);
 			
-			});
+			} else { //OSPITE SINGOLO
+				
+				item = new TreeItem (this, SWT.NONE);
+				item.setText (recordToStringArray (record));
+				
+				item.setImage (singleImage);
+			}
 			
-			item.setImage (groupImage);
 			
-			// System.out.println (item.getBounds ());
-			
-			subItem = new TreeItem (item, SWT.NONE);
-			subItem.setText (new String[] {
-			
-					"Singolo" 
-			});
-			
-			subItem.setImage (singleImage);
-			
-			i++;
 		}
-		
+			
 	}
 	
 	@Override
 	protected void checkSubclass () {
 		
+	}
+	
+	private static String[] recordToStringArray (Record record) {
+		
+		String[] res;
+		
+		res = new String[13];
+		
+		res[0] = record.getTipoAlloggiato ();
+		res[1] = record.getDataArrivo ();
+		res[2] = String.valueOf (record.getPermanenza ());
+		res[3] = record.getCognome ();
+		res[4] = record.getNome ();
+		res[5] = record.getSesso ();
+		res[6] = record.getDataNascita ();
+		res[7] = record.getStatoNascita ();
+		res[8] = record.getComuneNascita ();
+		res[9] = record.getCittadinanza ();
+		res[10] = record.getTipoDocumento ();
+		res[11] = record.getNumeroDocumento ();
+		res[12] = record.getNumeroDocumento ();
+		
+		return res;
 	}
 	
 	private class MenuListener implements SelectionListener {
@@ -202,15 +236,19 @@ public class AlloggiatoTree extends Tree {
 	
 	/**
 	 * @param args
+	 * @throws IOException 
 	 */
-	public static void main (String[] args) {
+	public static void main (String[] args) throws IOException {
 		
 		Display display;
 		Shell shell;
 		AlloggiatoTree tree;
+		FileManager fManager;
 		
 		display = new Display ();
 		shell = new Shell (display);
+		fManager = new Csv ();
+		
 		shell.setText ("AllogiatoTree");
 		shell.setSize (500, 200);
 		
@@ -221,8 +259,8 @@ public class AlloggiatoTree extends Tree {
 		gl_shell.verticalSpacing = 0;
 		shell.setLayout (gl_shell);
 		
-		tree = new AlloggiatoTree (shell, SWT.NONE);
-		tree.insertRecords (new Record[] { null });
+		tree = new AlloggiatoTree (shell, SWT.CHECK);
+		tree.insertRecords (fManager.loadFile ("/home/alberto.bonizzi/Desktop/allogiati.csv"));
 		GridData gd_tree = new GridData (SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_tree.heightHint = 146;
 		tree.setLayoutData (gd_tree);
