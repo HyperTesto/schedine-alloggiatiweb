@@ -23,4 +23,10 @@ public interface FileManager{
 	 * @return boolean
 	 */
 	public boolean writeFile(List<Record> records, String saveTo) throws IOException;
+
+	/**
+	 * Metodo per controllare se si sono verificati errori in lettura/scrittura
+	 * @return List<Exception>
+	 */
+	public List<Exception> getErrors();
 }
