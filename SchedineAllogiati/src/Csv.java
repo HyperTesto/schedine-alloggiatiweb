@@ -3,6 +3,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +18,11 @@ import java.util.StringTokenizer;
 public class Csv implements FileManager {
 
 	@Override
-	public List<Record> loadFile(String path) {
+	public List<Record> loadFile(String path)  throws IOException{
 
 		List<Record> records = new ArrayList<Record>();
 
-		try{	
+		/*try{	*/
 			FileInputStream in = new FileInputStream(new File(path));
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			String strLine;
@@ -34,15 +35,15 @@ public class Csv implements FileManager {
 			}
 			//Close the input stream
 			in.close();
-		}catch (Exception e){//Catch exception if any
+		/*}catch (Exception e){//Catch exception if any
 			System.err.println("Errore nell'apertura/lettura del file: " + e.getMessage());
-		}
+		}*/
 		return records;
 	}
 
 	@Override
-	public boolean writeFile(List<Record> records, String saveTo) {
-		try{
+	public boolean writeFile(List<Record> records, String saveTo)  throws IOException{
+		/*try{*/
 			BufferedWriter bw = new BufferedWriter(new FileWriter(saveTo));
 			for(Record temp : records){
 				bw.write(formatRecord(temp));
@@ -51,10 +52,10 @@ public class Csv implements FileManager {
 			return true;
 			
 
-		}catch(Exception e){
+		/*}catch(Exception e){
 			System.out.println("Errore nella apertura/scrittura del file!: " +e.getMessage());
 			return false;
-		}
+		}*/
 		
 	}
 	
@@ -137,7 +138,7 @@ public class Csv implements FileManager {
 		return record;
 	}
 	
-	public static void main(String args[]){
+	public static void main(String args[]) throws IOException{
 		FileManager csv = new Csv();
 		
 		for(Record temp : csv.loadFile("/home/hypertesto/cacca.txt")){

@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -5,14 +6,14 @@ import java.util.List;
  * @version 1.0
  *
  */
-public interface FileManager {
+public interface FileManager{
 	
 	/**
 	 * Metodo per la lettura di file che ritorna una lista di Record
 	 * @param path
 	 * @return List<Record>
 	 */
-	public List<Record> loadFile(String path);
+	public List<Record> loadFile(String path) throws IOException;
 	
 	/**
 	 * Metodo per la scrittura di file. Ritorna true se l'operazione
@@ -21,5 +22,5 @@ public interface FileManager {
 	 * @param saveTo
 	 * @return boolean
 	 */
-	public boolean writeFile(List<Record> records, String saveTo);
+	public boolean writeFile(List<Record> records, String saveTo) throws IOException;
 }
