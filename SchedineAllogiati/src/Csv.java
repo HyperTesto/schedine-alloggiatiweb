@@ -55,6 +55,7 @@ public class Csv implements FileManager {
 			for(Record temp : records){
 				bw.write(formatRecord(temp));
 			}
+			
 			bw.close();
 			return true;
 			
@@ -101,7 +102,7 @@ public class Csv implements FileManager {
 		 */
 		riga+=record.getTipoDocumento()+";";
 		riga+=record.getNumeroDocumento()+";";
-		riga+=record.getRilascioDocumento();
+		riga+=record.getRilascioDocumento() + "\n";
 		return riga;
 	}
 	
@@ -153,8 +154,18 @@ public class Csv implements FileManager {
 	
 	public static void main(String args[]) throws IOException{
 		FileManager csv = new Csv();
+		List<Record> records;
 		
-		for(Record temp : csv.loadFile("/home/hypertesto/cacca.txt")){
+		records = new ArrayList<Record> ();
+		
+		records.add (new Record (Alloggiato.CAPO_GRUPPO, "04/03/2014", 3, "Alberto", "Bonizzi", "10/08/1994", "M", "Italiana", "Italia", "Belluno (BL)", "Carta d'identità", "AS101SA", "Belluno (BL)"));
+		records.add (new Record (Alloggiato.OSPITE_SINGOLO, "04/03/2014", 3, "Enrico", "Testori", "26/01/1994", "M", "Italiana", "Italia", "Feltre (BL)", "Carta d'identità", "ET202TE", "Feltre (BL)"));
+		records.add (new Record (Alloggiato.OSPITE_SINGOLO, "04/03/2014", 3, "Gimmy", "Ymmig", "10/08/1994", "M", "Congo", "Malawi", "Lilongwe (MK)", "Carta d'identità", "454554", "Lilongwe (MK)"));
+		records.add (new Record (Alloggiato.OSPITE_SINGOLO, "04/03/2014", 3, "Kabobo", "Ga", "26/01/1994", "M", "Ghana", "Ghana", "Mokungo (MK)", "Carta d'identità", "TONGABONGA", "Mokungo (MK)"));
+		
+		csv.writeFile (records, "/home/alberto.bonizzi/Desktop/allogiati.csv");
+		
+		for(Record temp : csv.loadFile("/home/alberto.bonizzi/Desktop/allogiati.csv")){
 			System.out.println(temp.getNome());
 		}
 	}
