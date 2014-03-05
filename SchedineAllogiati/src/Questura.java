@@ -216,17 +216,17 @@ public class Questura implements FileManager {
 		for(Record temp : records){
 			
 			//trovo di che sottogruppo si tratta
-			if(temp.getTipoAlloggiato()=="CAPO FAMIGLIA"){
+			if(temp.getTipoAlloggiato().equals(Alloggiato.CAPO_FAMIGLIA)){
 				isFamily = true;
 				isGroup = false;
 				isSingle=false;
 				
-			}else if(temp.getTipoAlloggiato()=="CAPOGRUPPO"){
+			}else if(temp.getTipoAlloggiato().equals(Alloggiato.CAPO_GRUPPO)){
 				isGroup = true;
 				isFamily=false;
 				isSingle=false;
 				
-			}else if(temp.getTipoAlloggiato()=="OSPITE SINGOLO"){
+			}else if(temp.getTipoAlloggiato().equals(Alloggiato.OSPITE_SINGOLO)){
 				isSingle = true;
 				isFamily = false;
 				isGroup = false;
@@ -235,9 +235,9 @@ public class Questura implements FileManager {
 				/*
 				 * Entro nel controllo dei membri gruppo/famiglia
 				 */
-				if(temp.getTipoAlloggiato()=="MEMBRO GRUPPO"&&isGroup==true){
+				if(temp.getTipoAlloggiato().equals(Alloggiato.MEMBRO_GRUPPO)&&isGroup==true){
 					//OK
-				}else if(temp.getTipoAlloggiato()=="MEBRO FAMIGLIA" && isFamily==true){
+				}else if(temp.getTipoAlloggiato().equals(Alloggiato.MEMBRO_FAMIGLIA) && isFamily==true){
 					//OK
 				}else{
 					//PROBLEM DETECTED!
