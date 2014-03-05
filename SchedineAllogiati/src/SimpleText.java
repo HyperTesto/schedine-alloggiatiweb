@@ -14,9 +14,12 @@ import java.util.StringTokenizer;
  */
 public class SimpleText implements FileManager {
 
+	private List<Exception> exceptions;
+
 	@Override
 	public List<Record> loadFile(String path) {
-
+		
+		exceptions  = new ArrayList<Exception>();
 		List<Record> records = new ArrayList<Record>();
 
 		try{	
@@ -24,11 +27,15 @@ public class SimpleText implements FileManager {
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			String strLine;
 			//Read File Line By Line
+			int i=1;
 			while ((strLine = br.readLine()) != null)   {
 				Record temp = readRecord(strLine);
 				if (temp != null){
 					records.add(temp);
+				}else{
+					exceptions.add(new Exception("Errore alla riga " + i + ": dati malformati."));
 				}
+				i++;
 			}
 			//Close the input stream
 			in.close();
@@ -54,6 +61,12 @@ public class SimpleText implements FileManager {
 			return false;
 		}
 		
+	}
+	
+	@Override
+	public List<Exception> getErrors() {
+		// TODO Auto-generated method stub
+		return exceptions;
 	}
 	
 	

@@ -3,6 +3,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,34 +16,41 @@ import java.util.StringTokenizer;
  *
  */
 public class Csv implements FileManager {
+	
+	private List<Exception> exceptions;
 
 	@Override
-	public List<Record> loadFile(String path) {
-
+	public List<Record> loadFile(String path)  throws IOException{
+		
+		exceptions  = new ArrayList<Exception>();
 		List<Record> records = new ArrayList<Record>();
 
-		try{	
+		/*try{	*/
 			FileInputStream in = new FileInputStream(new File(path));
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			String strLine;
 			//Read File Line By Line
+			int i=1;		//partiamo da uno per la visualizzazione all'utente
 			while ((strLine = br.readLine()) != null)   {
 				Record temp = readRecord(strLine);
 				if (temp != null){
 					records.add(temp);
+				}else{
+					exceptions.add(new Exception("Errore alla riga " + i + ": dati malformati."));
 				}
+				i++;
 			}
 			//Close the input stream
 			in.close();
-		}catch (Exception e){//Catch exception if any
+		/*}catch (Exception e){//Catch exception if any
 			System.err.println("Errore nell'apertura/lettura del file: " + e.getMessage());
-		}
+		}*/
 		return records;
 	}
 
 	@Override
-	public boolean writeFile(List<Record> records, String saveTo) {
-		try{
+	public boolean writeFile(List<Record> records, String saveTo)  throws IOException{
+		/*try{*/
 			BufferedWriter bw = new BufferedWriter(new FileWriter(saveTo));
 			for(Record temp : records){
 				bw.write(formatRecord(temp));
@@ -51,11 +59,17 @@ public class Csv implements FileManager {
 			return true;
 			
 
-		}catch(Exception e){
+		/*}catch(Exception e){
 			System.out.println("Errore nella apertura/scrittura del file!: " +e.getMessage());
 			return false;
-		}
+		}*/
 		
+	}
+	
+	@Override
+	public List<Exception> getErrors() {
+		// TODO Auto-generated method stub
+		return exceptions;
 	}
 	
 	
@@ -137,12 +151,14 @@ public class Csv implements FileManager {
 		return record;
 	}
 	
-	public static void main(String args[]){
+	public static void main(String args[]) throws IOException{
 		FileManager csv = new Csv();
 		
 		for(Record temp : csv.loadFile("/home/hypertesto/cacca.txt")){
 			System.out.println(temp.getNome());
 		}
 	}
+
+	
 
 }
