@@ -168,4 +168,64 @@ public class Questura implements FileManager {
 
 		return null;
 	}
+	
+	/*
+	 * Metodi per la creazione del file alloggiati
+	 */
+	
+	
+	/*
+	 * Utilità varie
+	 */
+	public boolean checkCongruence(List<Record> records){
+		
+		boolean isSingle, isFamily, isGroup;
+		isSingle=isGroup=isFamily=false;
+		
+		/*
+		 * RULES:
+		 * - ogni sottogruppo deve cominciare con un osite singolo, un capogruppo o u capo famiglia
+		 * - ogni sottogruppo ospite singolo è composto solo da un osite
+		 * - ogni sottogruppo gruppo deve contenere almeno un capogruppo e un membro
+		 * - ogni sottogruppo famiglia deve avere almeno un capofamiglia e un membro famiglia
+		 */
+		for(Record temp : records){
+			
+			//trovo di che sottogruppo si tratta
+			if(temp.getTipoAlloggiato()=="CAPO FAMIGLIA"){
+				isFamily = true;
+				isGroup = false;
+				isSingle=false;
+				
+			}else if(temp.getTipoAlloggiato()=="CAPOGRUPPO"){
+				isGroup = true;
+				isFamily=false;
+				isSingle=false;
+				
+			}else if(temp.getTipoAlloggiato()=="OSPITE SINGOLO"){
+				isSingle = true;
+				isFamily = false;
+				isGroup = false;
+				
+			}else{
+				/*
+				 * Entro nel controllo dei membri gruppo/famiglia
+				 */
+				if(temp.getTipoAlloggiato()=="MEMBRO GRUPPO"&&isGroup==true){
+					//OK
+				}else if(temp.getTipoAlloggiato()=="MEBRO FAMIGLIA" && isFamily==true){
+					//OK
+				}else{
+					//PROBLEM DETECTED!
+					return false;
+					
+				}
+				
+			}
+			
+			
+		}
+		
+		return true;
+	}
 }
