@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author hypertesto
+ * @author Enrico Testori
  *
  */
 public class Questura implements FileManager {
@@ -98,20 +98,26 @@ public class Questura implements FileManager {
 		// da cambiare il return con record quando tutto sarà implementato
 		return null;
 	}
-
+	
+	/**
+	 * Ritorna il nome dell'alloggiato opportunamente trimmato
+	 * @param riga
+	 * @return String
+	 */
 	private String readName(String riga){
 
-		return null;
+		return riga.substring(64, 93).trim();
 	}
-
+	
+	
 	private String readCognome(String riga){
 
-		return null;
+		return riga.substring(14, 63).trim();
 	}
 
 	private String readSesso(String riga){
 
-		return null;
+		return riga.substring(94, 94);
 	}
 
 	private String readCittadinanza(String riga){
@@ -121,7 +127,7 @@ public class Questura implements FileManager {
 
 	private String readDataNascita(String riga){
 
-		return null;
+		return riga.substring(95, 104);
 	}
 
 	private String readStatoNascita(String riga){
@@ -131,21 +137,21 @@ public class Questura implements FileManager {
 
 	private String readComuneNascita(String riga){
 
-		return null;
+		return riga.substring(105, 113);
 	}
 
 	private String readTipoAlloggiato(String riga){
 
-		return null;
+		return riga.substring(0, 1);
 	}
 
 	private String readDataArrivo(String riga){
 
-		return null;
+		return riga.substring(2, 11);
 	}
 
 	private int readPermanenza(String riga){
-		return 0;
+		return Integer.parseInt(riga.substring(12, 13));
 	}
 
 	private String readTipoDoc(String riga){
@@ -161,5 +167,65 @@ public class Questura implements FileManager {
 	private String readRilascioDoc(String riga){
 
 		return null;
+	}
+	
+	/*
+	 * Metodi per la creazione del file alloggiati
+	 */
+	
+	
+	/*
+	 * Utilità varie
+	 */
+	public boolean checkCongruence(List<Record> records){
+		
+		boolean isSingle, isFamily, isGroup;
+		isSingle=isGroup=isFamily=false;
+		
+		/*
+		 * RULES:
+		 * - ogni sottogruppo deve cominciare con un osite singolo, un capogruppo o u capo famiglia
+		 * - ogni sottogruppo ospite singolo è composto solo da un osite
+		 * - ogni sottogruppo gruppo deve contenere almeno un capogruppo e un membro
+		 * - ogni sottogruppo famiglia deve avere almeno un capofamiglia e un membro famiglia
+		 */
+		for(Record temp : records){
+			
+			//trovo di che sottogruppo si tratta
+			if(temp.getTipoAlloggiato()=="CAPO FAMIGLIA"){
+				isFamily = true;
+				isGroup = false;
+				isSingle=false;
+				
+			}else if(temp.getTipoAlloggiato()=="CAPOGRUPPO"){
+				isGroup = true;
+				isFamily=false;
+				isSingle=false;
+				
+			}else if(temp.getTipoAlloggiato()=="OSPITE SINGOLO"){
+				isSingle = true;
+				isFamily = false;
+				isGroup = false;
+				
+			}else{
+				/*
+				 * Entro nel controllo dei membri gruppo/famiglia
+				 */
+				if(temp.getTipoAlloggiato()=="MEMBRO GRUPPO"&&isGroup==true){
+					//OK
+				}else if(temp.getTipoAlloggiato()=="MEBRO FAMIGLIA" && isFamily==true){
+					//OK
+				}else{
+					//PROBLEM DETECTED!
+					return false;
+					
+				}
+				
+			}
+			
+			
+		}
+		
+		return true;
 	}
 }

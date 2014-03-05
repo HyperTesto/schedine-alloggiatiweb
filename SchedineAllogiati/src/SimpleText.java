@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+/**
+ * 
+ * @author Enrico Testori
+ *
+ */
 public class SimpleText implements FileManager {
 
 	@Override
@@ -50,7 +55,13 @@ public class SimpleText implements FileManager {
 		}
 		
 	}
-
+	
+	
+	/**
+	 * Metodo di supporto per la formattazione del record di tipo testo semplice
+	 * @param record
+	 * @return String
+	 */
 	private String formatRecord(Record record){
 		String riga="";
 		/*
@@ -78,6 +89,11 @@ public class SimpleText implements FileManager {
 		return riga;
 	}
 
+	/**
+	 * Metodo di supporto per la lettura dei record di tipo testo semplice
+	 * @param riga
+	 * @return Record
+	 */ 
 	private Record readRecord(String riga){
 		String nome,cognome,tipoAlloggiato,dataArrivo,dataNascita,sesso,cittadinanza,statoNascita,comuneNascita,tipoDoc,numDoc,rilascioDoc;
 		int permanenza;
