@@ -198,7 +198,7 @@ public class Questura implements FileManager {
 	 */
 	public static boolean check(List<Record> records, int mod){
 		
-		return checkSubGroups(records) && checkDateInterval(records,mod);
+		return false;
 		
 	}
 	
@@ -253,10 +253,12 @@ public class Questura implements FileManager {
 		return true;
 	}
 	
-	private static boolean checkDateInterval(List<Record> records, int mod){
+	private static List<FormatException> checkDateInterval(List<Record> records, int mod){
+		
+		List<FormatException> dateExceptions = new ArrayList<FormatException>();
 		
 		if(mod==Questura.PERMISSIVE){
-			return true;
+			return null;
 		}else if(mod==Questura.SEMI_STRICT){
 			for(Record temp : records){
 				// controlli per la modalità semi-strict 
@@ -270,6 +272,6 @@ public class Questura implements FileManager {
 			// parametro errato
 		}
 				
-		return false;
+		return null;
 	}
 }
