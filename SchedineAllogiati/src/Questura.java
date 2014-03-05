@@ -196,9 +196,9 @@ public class Questura implements FileManager {
 	/*
 	 * Utilità varie
 	 */
-	public static boolean check(List<Record> records){
+	public static boolean check(List<Record> records, int mod){
 		
-		return false;
+		return checkSubGroups(records) && checkDateInterval(records,mod);
 		
 	}
 	
@@ -269,10 +269,7 @@ public class Questura implements FileManager {
 		}else{
 			// parametro errato
 		}
-		
-		
-		
-		
+				
 		return false;
 	}
 }
