@@ -98,7 +98,7 @@ public class SimpleText implements FileManager {
 		 */
 		riga+=record.getTipoDocumento()+"\t";
 		riga+=record.getNumeroDocumento()+"\t";
-		riga+=record.getRilascioDocumento();
+		riga+=record.getRilascioDocumento()+"\n";
 		return riga;
 	}
 
