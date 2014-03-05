@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
-import java.io.InputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ public class SimpleText implements FileManager {
 		List<Record> records = new ArrayList<Record>();
 
 		try{	
-			InputStream in = ResourceLoader.loader(path);
+			FileInputStream in = new FileInputStream (new File (path));
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			String strLine;
 			//Read File Line By Line
@@ -145,6 +147,25 @@ public class SimpleText implements FileManager {
 		//record = new Record(t.nextToken(),t.nextToken(),Integer.parseInt(t.nextToken()),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken());
 
 		return record;
+	}
+	
+	public static void main (String args[]) throws IOException {
+		
+		FileManager fManager = new SimpleText();
+		List<Record> records;
+		
+		records = new ArrayList<Record> ();
+		
+		records.add (new Record (Alloggiato.CAPO_GRUPPO, "04/03/2014", 3, "Alberto", "Bonizzi", "10/08/1994", "M", "Italiana", "Italia", "Belluno (BL)", "Carta d'identità", "AS101SA", "Belluno (BL)"));
+		records.add (new Record (Alloggiato.OSPITE_SINGOLO, "04/03/2014", 3, "Enrico", "Testori", "26/01/1994", "M", "Italiana", "Italia", "Feltre (BL)", "Carta d'identità", "ET202TE", "Feltre (BL)"));
+		records.add (new Record (Alloggiato.OSPITE_SINGOLO, "04/03/2014", 3, "Gimmy", "Ymmig", "10/08/1994", "M", "Congo", "Malawi", "Lilongwe (MK)", "Carta d'identità", "454554", "Lilongwe (MK)"));
+		records.add (new Record (Alloggiato.OSPITE_SINGOLO, "04/03/2014", 3, "Kabobo", "Ga", "26/01/1994", "M", "Ghana", "Ghana", "Mokungo (MK)", "Carta d'identità", "TONGABONGA", "Mokungo (MK)"));
+		
+		fManager.writeFile (records, "/home/alberto.bonizzi/Desktop/allogiati.txt");
+		
+		for(Record temp : fManager.loadFile("/home/alberto.bonizzi/Desktop/allogiati.txt")){
+			System.out.println(temp.getNome());
+		}
 	}
 
 }
