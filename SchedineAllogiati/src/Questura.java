@@ -235,7 +235,7 @@ public class Questura implements FileManager {
 				/*
 				 * Entro nel controllo dei membri gruppo/famiglia
 				 */
-				if(temp.getTipoAlloggiato().equals(Alloggiato.MEMBRO_GRUPPO)&&isGroup==true){
+				if(temp.getTipoAlloggiato().equals(Alloggiato.MEMBRO_GRUPPO) && isGroup==true){
 					//OK
 				}else if(temp.getTipoAlloggiato().equals(Alloggiato.MEMBRO_FAMIGLIA) && isFamily==true){
 					//OK
@@ -255,9 +255,23 @@ public class Questura implements FileManager {
 	
 	private static boolean checkDateInterval(List<Record> records, int mod){
 		
-		for(Record temp : records){
+		if(mod==Questura.PERMISSIVE){
+			return true;
+		}else if(mod==Questura.SEMI_STRICT){
+			for(Record temp : records){
+				// controlli per la modalità semi-strict 
+			}
 			
+		}else if(mod==Questura.STRICT){
+			for(Record temp : records){
+				// controlli per la modalità strict 
+			}
+		}else{
+			// parametro errato
 		}
+		
+		
+		
 		
 		return false;
 	}
