@@ -4,7 +4,7 @@
  *
  */
 
-public class FormatException {
+public class FormatException extends Exception{
 	
 	/*
 	 * Variabili statiche per i messaggi di errore.
@@ -21,8 +21,10 @@ public class FormatException {
 	private int position;
 	
 	public FormatException(int pos, String tipo){
+		
+		super(tipo);
 		position = pos;
-		exception = new Exception(tipo);
+		
 	}
 	
 	public int getPosition(){
@@ -30,7 +32,7 @@ public class FormatException {
 	}
 	
 	public Exception getException(){
-		return exception;
+		return this.getException();
 	}
 
 }
