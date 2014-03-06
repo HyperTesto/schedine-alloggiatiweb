@@ -11,7 +11,13 @@ import java.util.List;
  *
  */
 public class Questura implements FileManager {
-
+	
+	/*
+	 * Variabili statiche per la modalità del check
+	 */
+	public static int STRICT = 0; 		//controllo integrità sottogruppi e che data arrivo sia nelle 48 ore precedenti (per invio immediato a questura)
+	public static int SEMI_STRICT = 1;	//controllo integrità sottogruppi e data arrivo non differisca più di 48 h da un record all'altro
+	public static int PERMISSIVE = 2;	//controllo integrità sottogruppi
 
 	private List<Exception> exceptions;
 
@@ -190,8 +196,13 @@ public class Questura implements FileManager {
 	/*
 	 * Utilità varie
 	 */
-	public boolean checkCongruence(List<Record> records){
+	public static boolean check(List<Record> records, int mod){
 		
+		return false;
+		
+	}
+	
+	private static boolean checkSubGroups(List<Record> records){
 		boolean isSingle, isFamily, isGroup;
 		isSingle=isGroup=isFamily=false;
 		
@@ -205,17 +216,17 @@ public class Questura implements FileManager {
 		for(Record temp : records){
 			
 			//trovo di che sottogruppo si tratta
-			if(temp.getTipoAlloggiato()=="CAPO FAMIGLIA"){
+			if(temp.getTipoAlloggiato().equals(Alloggiato.CAPO_FAMIGLIA)){
 				isFamily = true;
 				isGroup = false;
 				isSingle=false;
 				
-			}else if(temp.getTipoAlloggiato()=="CAPOGRUPPO"){
+			}else if(temp.getTipoAlloggiato().equals(Alloggiato.CAPO_GRUPPO)){
 				isGroup = true;
 				isFamily=false;
 				isSingle=false;
 				
-			}else if(temp.getTipoAlloggiato()=="OSPITE SINGOLO"){
+			}else if(temp.getTipoAlloggiato().equals(Alloggiato.OSPITE_SINGOLO)){
 				isSingle = true;
 				isFamily = false;
 				isGroup = false;
@@ -224,9 +235,9 @@ public class Questura implements FileManager {
 				/*
 				 * Entro nel controllo dei membri gruppo/famiglia
 				 */
-				if(temp.getTipoAlloggiato()=="MEMBRO GRUPPO"&&isGroup==true){
+				if(temp.getTipoAlloggiato().equals(Alloggiato.MEMBRO_GRUPPO) && isGroup==true){
 					//OK
-				}else if(temp.getTipoAlloggiato()=="MEBRO FAMIGLIA" && isFamily==true){
+				}else if(temp.getTipoAlloggiato().equals(Alloggiato.MEMBRO_FAMIGLIA) && isFamily==true){
 					//OK
 				}else{
 					//PROBLEM DETECTED!
@@ -240,5 +251,27 @@ public class Questura implements FileManager {
 		}
 		
 		return true;
+	}
+	
+	private static List<FormatException> checkDateInterval(List<Record> records, int mod){
+		
+		List<FormatException> dateExceptions = new ArrayList<FormatException>();
+		
+		if(mod==Questura.PERMISSIVE){
+			return null;
+		}else if(mod==Questura.SEMI_STRICT){
+			for(Record temp : records){
+				// controlli per la modalità semi-strict 
+			}
+			
+		}else if(mod==Questura.STRICT){
+			for(Record temp : records){
+				// controlli per la modalità strict 
+			}
+		}else{
+			// parametro errato
+		}
+				
+		return null;
 	}
 }
