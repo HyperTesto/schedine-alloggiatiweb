@@ -148,6 +148,8 @@ public class AlloggiatoTree extends Tree {
 			if (record.getTipoAlloggiato ().equals (Alloggiato.CAPO_GRUPPO) ||
 					record.getTipoAlloggiato ().equals (Alloggiato.CAPO_FAMIGLIA)) {
 				
+				System.out.println ("Master");
+				
 				item = new TreeItem (this, SWT.NONE);
 				item.setText (recordToStringArray (record));
 				
@@ -162,6 +164,8 @@ public class AlloggiatoTree extends Tree {
 			} else if (record.getTipoAlloggiato ().equals (Alloggiato.MEMBRO_GRUPPO) ||
 					record.getTipoAlloggiato ().equals (Alloggiato.MEMBRO_FAMIGLIA)){
 				
+				System.out.println ("Master");
+				
 				subItem = new TreeItem (item, SWT.NONE);
 				subItem.setText (recordToStringArray (record));
 				
@@ -169,10 +173,12 @@ public class AlloggiatoTree extends Tree {
 			
 			} else { //OSPITE SINGOLO
 				
-				item = new TreeItem (this, SWT.NONE);
-				item.setText (recordToStringArray (record));
+				System.out.println ("Puppet");
 				
-				item.setImage (singleImage);
+				subItem = new TreeItem (item, SWT.NONE);
+				subItem.setText (recordToStringArray (record));
+				
+				subItem.setImage (singleImage);
 			}
 			
 			
@@ -260,7 +266,7 @@ public class AlloggiatoTree extends Tree {
 		shell.setLayout (gl_shell);
 		
 		tree = new AlloggiatoTree (shell, SWT.CHECK);
-		tree.insertRecords (fManager.loadFile ("/home/alberto.bonizzi/Desktop/allogiati.csv"));
+		tree.insertRecords (fManager.loadFile ("/home/alberto/Desktop/allogiati.csv"));
 		GridData gd_tree = new GridData (SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_tree.heightHint = 146;
 		tree.setLayoutData (gd_tree);
