@@ -9,6 +9,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
@@ -110,6 +112,80 @@ public class AlloggiatoTree extends Tree {
 		}
 		
 		setMenu (treeMenu);
+		
+		addListener (SWT.Selection, new Listener () {
+			
+			@Override
+			public void handleEvent (Event event) {
+				
+				if (event.detail == SWT.CHECK) {
+					
+					TreeItem item;
+					boolean checked;
+					
+					item = (TreeItem) event.item;
+					checked = item.getChecked ();
+					
+					checkItems (item, checked);
+					checkPath (item.getParentItem (), checked, false);
+				}
+			}
+		
+		});
+	}
+	
+	private void checkPath (TreeItem item, boolean checked, boolean grayed) {
+		
+		if (item == null)
+			return;
+		
+		if (grayed) {
+			
+			checked = true;
+		
+		} else {
+			
+			int index;
+			TreeItem[] items;
+			
+			index = 0;
+			items = item.getItems ();
+			
+			while (index < items.length) {
+				
+				TreeItem child;
+				
+				child = items[index];
+				
+				if (child.getGrayed () || checked != child.getChecked ()) {
+					
+					checked = grayed = true;
+					break;
+				}
+				
+				index++;
+			}
+		}
+		
+		item.setChecked (checked);
+		item.setGrayed (grayed);
+		
+		checkPath (item.getParentItem (), checked, grayed);
+	}
+
+	private void checkItems (TreeItem item, boolean checked) {
+		
+		TreeItem[] items;
+		
+		item.setGrayed (false);
+		item.setChecked (checked);
+		
+		items = item.getItems ();
+		
+		for (int i = 0; i < items.length; i++) {
+			
+			checkItems (items[i], checked);
+		}
 	}
 	
 	public void insertRecords (List<Record> people) {
@@ -148,8 +224,6 @@ public class AlloggiatoTree extends Tree {
 			if (record.getTipoAlloggiato ().equals (Alloggiato.CAPO_GRUPPO) ||
 					record.getTipoAlloggiato ().equals (Alloggiato.CAPO_FAMIGLIA)) {
 				
-				System.out.println ("Master");
-				
 				item = new TreeItem (this, SWT.NONE);
 				item.setText (recordToStringArray (record));
 				
@@ -164,16 +238,12 @@ public class AlloggiatoTree extends Tree {
 			} else if (record.getTipoAlloggiato ().equals (Alloggiato.MEMBRO_GRUPPO) ||
 					record.getTipoAlloggiato ().equals (Alloggiato.MEMBRO_FAMIGLIA)){
 				
-				System.out.println ("Master");
-				
 				subItem = new TreeItem (item, SWT.NONE);
 				subItem.setText (recordToStringArray (record));
 				
 				subItem.setImage (singleImage);
 			
 			} else { //OSPITE SINGOLO
-				
-				System.out.println ("Puppet");
 				
 				subItem = new TreeItem (item, SWT.NONE);
 				subItem.setText (recordToStringArray (record));
@@ -265,7 +335,7 @@ public class AlloggiatoTree extends Tree {
 		gl_shell.verticalSpacing = 0;
 		shell.setLayout (gl_shell);
 		
-		tree = new AlloggiatoTree (shell, SWT.CHECK);
+		tree = new AlloggiatoTree (shell, SWT.NONE);
 		tree.insertRecords (fManager.loadFile ("/home/alberto/Desktop/allogiati.csv"));
 		GridData gd_tree = new GridData (SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_tree.heightHint = 146;
