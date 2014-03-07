@@ -214,7 +214,7 @@ public class AlloggiatoTree extends Tree {
 			
 			getSelectedRecordsRecursive (temp, res);
 		}
-			
+		
 		return res;
 	}
 	
@@ -299,43 +299,43 @@ public class AlloggiatoTree extends Tree {
 		
 		res[0]	= record.getTipoAlloggiato ();
 		
-		System.out.println ("Tipo: " + res[0]);
+		//System.out.println ("Tipo: " + res[0]);
 		res[1]	= record.getDataArrivo ();
 		
-		System.out.println ("Arrivo: " + res[1]);
+		//System.out.println ("Arrivo: " + res[1]);
 		res[2]	= String.valueOf (record.getPermanenza ());
 		
-		System.out.println ("Permanenza: " + res[2]);
+		//System.out.println ("Permanenza: " + res[2]);
 		res[3]	= record.getCognome ();
 		
-		System.out.println ("Cognome: " + res[3]);
+		//System.out.println ("Cognome: " + res[3]);
 		res[4]	= record.getNome ();
 		
-		System.out.println ("Nome: " + res[4]);
+		//System.out.println ("Nome: " + res[4]);
 		res[5]	= record.getSesso ();
 		
-		System.out.println ("Sesso: " + res[5]);
+		//System.out.println ("Sesso: " + res[5]);
 		res[6]	= record.getDataNascita ();
 		
-		System.out.println ("Data nascita: " + res[6]);
+		//System.out.println ("Data nascita: " + res[6]);
 		res[7]	= record.getComuneNascita ();
 		
-		System.out.println ("Comune nascita: " + res[7]);
+		//System.out.println ("Comune nascita: " + res[7]);
 		res[8]	= record.getStatoNascita ();
 		
-		System.out.println ("Stato nascita: " + res[8]);
+		//System.out.println ("Stato nascita: " + res[8]);
 		res[9]	= record.getCittadinanza ();
 		
-		System.out.println ("Citatdinanza: " + res[9]);
+		//System.out.println ("Citatdinanza: " + res[9]);
 		res[10]	= record.getTipoDocumento ();
 		
-		System.out.println ("Tipo documento: " + res[10]);
+		//System.out.println ("Tipo documento: " + res[10]);
 		res[11]	= record.getNumeroDocumento ();
 		
-		System.out.println ("Numero documento: " + res[11]);
+		//System.out.println ("Numero documento: " + res[11]);
 		res[12]	= record.getRilascioDocumento ();
 		
-		System.out.println ("Rilascio documento: " + res[12]);
+		//System.out.println ("Rilascio documento: " + res[12]);
 		return res;
 	}
 	
@@ -421,7 +421,7 @@ public class AlloggiatoTree extends Tree {
 		gd_tree.heightHint = 146;
 		tree.setLayoutData (gd_tree);
 		
-		fManager.writeFile (tree.getSelectedRecords (), "/home/alberto/Desktop/alloggiati_out.csv");
+		//fManager.writeFile (tree.getSelectedRecords (), "/home/alberto/Desktop/alloggiati_out.csv");
 		
 		shell.open ();
 		// shell.pack ();
