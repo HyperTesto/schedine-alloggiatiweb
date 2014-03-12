@@ -129,8 +129,8 @@ public class Csv implements FileManager {
 			 */
 			nome = t.nextToken();
 			cognome = t.nextToken();
-			dataNascita = t.nextToken();
 			sesso = t.nextToken();
+			dataNascita = t.nextToken();
 			cittadinanza = t.nextToken();
 			statoNascita = t.nextToken();
 			comuneNascita = t.nextToken();
