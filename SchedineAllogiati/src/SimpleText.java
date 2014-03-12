@@ -92,8 +92,8 @@ public class SimpleText implements FileManager {
 		riga+=record.getCognome()+"\t";
 		riga+=record.getSesso()+"\t";
 		riga+=record.getDataNascita()+"\t";
-		riga+=record.getStatoNascita()+"\t";
 		riga+=record.getComuneNascita()+"\t";
+		riga+=record.getStatoNascita()+"\t";
 		riga+=record.getCittadinanza()+"\t";
 		/*
 		 * Dati documento
@@ -126,11 +126,11 @@ public class SimpleText implements FileManager {
 			 */
 			nome = t.nextToken();
 			cognome = t.nextToken();
-			dataNascita = t.nextToken();
 			sesso = t.nextToken();
-			cittadinanza = t.nextToken();
-			statoNascita = t.nextToken();
+			dataNascita = t.nextToken();
 			comuneNascita = t.nextToken();
+			statoNascita = t.nextToken();
+			cittadinanza = t.nextToken();
 			/*
 			 * Dati documento
 			 */
