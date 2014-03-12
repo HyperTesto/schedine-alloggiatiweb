@@ -94,8 +94,8 @@ public class Csv implements FileManager {
 		riga+=record.getCognome()+";";
 		riga+=record.getSesso()+";";
 		riga+=record.getDataNascita()+";";
-		riga+=record.getStatoNascita()+";";
 		riga+=record.getComuneNascita()+";";
+		riga+=record.getStatoNascita()+";";
 		riga+=record.getCittadinanza()+";";
 		/*
 		 * Dati documento
@@ -131,9 +131,9 @@ public class Csv implements FileManager {
 			cognome = t.nextToken();
 			sesso = t.nextToken();
 			dataNascita = t.nextToken();
-			cittadinanza = t.nextToken();
-			statoNascita = t.nextToken();
 			comuneNascita = t.nextToken();
+			statoNascita = t.nextToken();
+			cittadinanza = t.nextToken();
 			/*
 			 * Dati documento
 			 */
