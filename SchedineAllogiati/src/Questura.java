@@ -128,64 +128,158 @@ public class Questura implements FileManager {
 		return riga.substring(64, 93).trim();
 	}
 	
-	
+	/**
+	 * 
+	 * @param riga
+	 * @return String: cognome alloggiato trimmato
+	 */
 	private String readCognome(String riga){
 
 		return riga.substring(14, 63).trim();
 	}
-
+	
+	/**
+	 * 
+	 * @param riga
+	 * @return String: sesso alloggiato (M o F)
+	 */
 	private String readSesso(String riga){
-
-		return riga.substring(94, 94);
+		String sesso = riga.substring(94, 94);
+		if(sesso.equals("1")){
+			return "M";
+		}else if(sesso.equals("2")){
+			return "F";
+		}else{
+			//problema: sesso errato!
+			return "";
+		}
 	}
 
+	/**
+	 * 
+	 * @param riga
+	 * @return String stato cittadinanza (manca query)
+	 */
 	private String readCittadinanza(String riga){
 
-		return null;
+		//per debug ritorna direttamente il nome esteso
+		return riga.substring(125, 133);
 	}
 
+	/**
+	 * 
+	 * @param riga
+	 * @return String: data di nascita
+	 */
 	private String readDataNascita(String riga){
 
 		return riga.substring(95, 104);
 	}
 
+	/**
+	 * 
+	 * @param riga
+	 * @return String: stato di nascita (manca query)
+	 */
 	private String readStatoNascita(String riga){
 
-		return null;
+		return riga.substring(116, 124);
 	}
 
+	/**
+	 * 
+	 * @param riga
+	 * @return String: comune di nascita (manca query)
+	 */
 	private String readComuneNascita(String riga){
-
+		// acquisire anche la provinincia è superfluo visto che è già codificata nel DB
 		return riga.substring(105, 113);
 	}
 
+	/**
+	 * 
+	 * @param riga
+	 * @return String tipo alloggiato
+	 */
 	private String readTipoAlloggiato(String riga){
+		String tipo = riga.substring(0, 1);
+		
+		if (tipo.equals("16")){
+			
+			return Alloggiato.OSPITE_SINGOLO;
+			
+		}else if (tipo.equals("17")){
+			
+			return Alloggiato.CAPO_FAMIGLIA;
+			
+		}else if (tipo.equals("18")){
+			
+			return Alloggiato.CAPO_GRUPPO;
+			
+		}else if (tipo.equals("19")){
+			
+			return Alloggiato.MEMBRO_FAMIGLIA;
+			
+		}else if (tipo.equals("20")){
+			
+			return Alloggiato.MEMBRO_GRUPPO;
+			
+		}else{
+			
+			//PROBLEM DETECTED!
+			return "";
+		}
 
-		return riga.substring(0, 1);
+		 
 	}
 
+	/**
+	 * 
+	 * @param riga
+	 * @return String: data di arrivo
+	 */
 	private String readDataArrivo(String riga){
 
 		return riga.substring(2, 11);
 	}
 
+	/**
+	 * 
+	 * @param riga
+	 * @return int: permanenza
+	 */
 	private int readPermanenza(String riga){
 		return Integer.parseInt(riga.substring(12, 13));
 	}
 
+	/**
+	 * 
+	 * @param riga
+	 * @return String: tipo documento trimmato (manca query)
+	 */
 	private String readTipoDoc(String riga){
 
-		return null;
+		return riga.substring(134, 138).trim();
 	}
 
+	/**
+	 * 
+	 * @param riga
+	 * @return String: numero doc
+	 */
 	private String readNumeroDoc(String riga){
 
-		return null;
+		return riga.substring(139, 158).trim();
 	}
 	
+	/**
+	 * 
+	 * @param riga
+	 * @return String: luogo di rilascio (manca query)
+	 */
 	private String readRilascioDoc(String riga){
 
-		return null;
+		return riga.substring(159, 167).trim();
 	}
 	
 	/*

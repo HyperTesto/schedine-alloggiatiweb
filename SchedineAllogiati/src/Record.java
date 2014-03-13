@@ -155,5 +155,27 @@ public class Record {
 		return doc.rilascioDoc;
 	}
 	
+	/**
+	 *  @override
+	 */
+	public String toString(){
+		String s = null;
+		s+="TIPO ALLOGGIATO: " + perm.tipoAlloggiato + "\n";
+		s+="DATA DI ARRIVO: " + perm.dataArrivo + "\n";
+		s+="PERMANENZA: " + perm.permanenza + "\n";
+		s+="NOME: " + allog.nome + "\n";
+		s+="COGNOME: " + allog.cognome + "\n";
+		s+="SESSO: " + allog.sesso + "\n";
+		s+="DATA DI NASCITA: " + allog.dataNascita + "\n";
+		s+="COMUNE DI NASCITA: " + allog.comuneNascita + "\n";
+		s+="STATO DI NASCITA: " + allog.statoNascita + "\n";
+		s+="CITTADINANZA: " + allog.cittadinanza + "\n";
+		s+="TIPO DOCUMENTO: " + doc.tipoDoc + "\n";
+		s+="NUMERO DOCUMENTO: " + doc.numeroDoc + "\n";
+		s+="RILASCIO: " + doc.rilascioDoc + "\n";
+		return s; 
+		
+	}
+	
 
 }
