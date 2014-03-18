@@ -13,24 +13,46 @@ import java.sql.Statement;
 
 public class QueryQuestura {
 	
-	public static void connect() throws SQLException{
+	Connection connection;
+	
+	public QueryQuestura(){
+		connection = null;
+	}	
+	
+	
+	public void connect() throws SQLException{
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		Connection connection = null;
+		
 		connection = DriverManager.getConnection("jdbc:sqlite:/home/hypertesto/git/SchedineAlloggiati/SchedineAllogiati/src/res/files/tabelle_questura.db");
 	    Statement statement = connection.createStatement();
 	    statement.setQueryTimeout(30);  // set timeout to 30 sec.
 		
 	}
 	
-	public void disconnect(){
+	public void disconnect() throws SQLException{
+		if(connection != null)
+	          connection.close();
+	}
+	
+	
+	public void getCodiceComune(String comune){
 		
 	}
 
+	public void getCodiceStato(String stato){
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	public static void main(String[] args) {
 		// load the sqlite-JDBC driver using the current class loader
 	    try {
