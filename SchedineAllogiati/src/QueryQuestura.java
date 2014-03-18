@@ -14,6 +14,8 @@ import java.sql.Statement;
 public class QueryQuestura {
 	
 	Connection connection;
+	Statement statement;
+	Boolean d = true;
 	
 	public QueryQuestura(){
 		connection = null;
@@ -28,7 +30,7 @@ public class QueryQuestura {
 		}
 		
 		connection = DriverManager.getConnection("jdbc:sqlite:/home/hypertesto/git/SchedineAlloggiati/SchedineAllogiati/src/res/files/tabelle_questura.db");
-	    Statement statement = connection.createStatement();
+		statement = connection.createStatement();
 	    statement.setQueryTimeout(30);  // set timeout to 30 sec.
 		
 	}
@@ -39,11 +41,22 @@ public class QueryQuestura {
 	}
 	
 	
-	public void getCodiceComune(String comune){
+	public String getCodiceComune(String comune) throws SQLException{
+		String query, result = null;
+		query = "select * FROM codici_luoghi WHERE nome = \"" + comune +"\"";
 		
+		if (d) System.out.println(query);
+		
+		ResultSet rs = statement.executeQuery(query);
+		 while(rs.next())
+	      {
+	        result = rs.getString("codice");
+	      }
+		return result;
 	}
 
-	public void getCodiceStato(String stato){
+	public String getCodiceStato(String stato){
+		return "";
 		
 	}
 	
@@ -54,49 +67,26 @@ public class QueryQuestura {
 	
 	
 	public static void main(String[] args) {
-		// load the sqlite-JDBC driver using the current class loader
-	    try {
-			Class.forName("org.sqlite.JDBC");
-		} catch (ClassNotFoundException e1) {
+		QueryQuestura q = new QueryQuestura();
+		try {
+			q.connect();
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
-
-	    Connection connection = null;
-	    try
-	    {
-	      // create a database connection
-	      connection = DriverManager.getConnection("jdbc:sqlite:/home/hypertesto/git/SchedineAlloggiati/SchedineAllogiati/src/res/files/tabelle_questura.db");
-	      Statement statement = connection.createStatement();
-	      statement.setQueryTimeout(30);  // set timeout to 30 sec.
-
-	      ResultSet rs = statement.executeQuery("select * FROM codici_luoghi ORDER BY nome");
-	      while(rs.next())
-	      {
-	        // read the result set
-	        System.out.println("name = " + rs.getString("nome"));
-	        System.out.println("id = " + rs.getInt("codice"));
-	      }
-	    }
-	    catch(SQLException e)
-	    {
-	      // if the error message is "out of memory", 
-	      // it probably means no database file is found
-	      System.err.println(e.getMessage());
-	    }
-	    finally
-	    {
-	      try
-	      {
-	        if(connection != null)
-	          connection.close();
-	      }
-	      catch(SQLException e)
-	      {
-	        // connection close failed.
-	        System.err.println(e);
-	      }
-	    }
+		try {
+			//q.getCodiceComune("FALCADE (BL)");
+			System.out.println(q.getCodiceComune("FALCADE (BL)"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			q.disconnect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
