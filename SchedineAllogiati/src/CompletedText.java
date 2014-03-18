@@ -251,19 +251,19 @@ public class CompletedText extends Text {
 			@Override
 			public void handleEvent(Event event) {
 					
-				System.out.println(table.getItemCount());
+				//System.out.println (table.getItemCount ());
 				
 				if (!textSet) {
-					if (table.getItemCount() > 0) {
-
+					if (table.getItemCount () > 0) {
+						
 						allowTextChange = true;
 						setText (table.getItem (0).getText ());
-
+						
 					} else {
-
+						
 						allowTextChange = true;
 						setText ("");
-
+						
 					}
 				}
 				
