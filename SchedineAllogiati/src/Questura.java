@@ -76,6 +76,7 @@ public class Questura implements FileManager {
 
 	private String formatRecord(Record record){
 		String riga="";
+		QueryQuestura q = new QueryQuestura();
 
 		/*
 		 * parte da implementare per gestire la formattazione corretta
@@ -85,11 +86,21 @@ public class Questura implements FileManager {
 		/*
 		 * Campi alloggiato
 		 */
+		//campo tipo (da sistemare coni codici
+		riga+=record.getTipoAlloggiato();
+		//campo data di arrivo
+		riga+=record.getDataArrivo();
+		//campo permanenza
+		riga+=record.getPermanenza();
 
 
 		/*
 		 * Dati personali alloggiato
 		 */
+		//campo nome
+		riga+=padRight(record.getNome(), 50);
+		//campo cognome
+		riga+=padRight(record.getNome(), 70);
 
 
 		/*
@@ -367,5 +378,13 @@ public class Questura implements FileManager {
 		}
 				
 		return null;
+	}
+	
+	private String padRight(String s, int n) {
+	     return String.format("%1$-" + n + "s", s);  
+	}
+
+	private String padLeft(String s, int n) {
+	    return String.format("%1$" + n + "s", s);  
 	}
 }
