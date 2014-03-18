@@ -55,8 +55,18 @@ public class QueryQuestura {
 		return result;
 	}
 
-	public String getCodiceStato(String stato){
-		return "";
+	public String getCodiceStato(String stato) throws SQLException{
+		String query, result = null;
+		query = "select * FROM codici_luoghi WHERE nome = \"" + stato +"\"";
+		
+		if (d) System.out.println(query);
+		
+		ResultSet rs = statement.executeQuery(query);
+		 while(rs.next())
+	      {
+	        result = rs.getString("codice");
+	      }
+		return result;
 		
 	}
 	
@@ -81,6 +91,15 @@ public class QueryQuestura {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		try {
+			//q.getCodiceComune("FALCADE (BL)");
+			System.out.println(q.getCodiceStato("ITALIA"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		try {
 			q.disconnect();
 		} catch (SQLException e) {
