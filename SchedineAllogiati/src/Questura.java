@@ -98,9 +98,9 @@ public class Questura implements FileManager {
 		 * Dati personali alloggiato
 		 */
 		//campo nome
-		riga+=padRight(record.getNome(), 50);
+		riga+=padRight(record.getCognome(), 50);
 		//campo cognome
-		riga+=padRight(record.getNome(), 70);
+		riga+=padRight(record.getNome(), 30);
 
 
 		/*
