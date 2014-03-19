@@ -3,6 +3,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +75,7 @@ public class Questura implements FileManager {
 		return exceptions;
 	}
 
-	private String formatRecord(Record record){
+	private String formatRecord(Record record) throws SQLException{
 		String riga="";
 		QueryQuestura q = new QueryQuestura();
 
@@ -97,11 +98,36 @@ public class Questura implements FileManager {
 		/*
 		 * Dati personali alloggiato
 		 */
+		
 		//campo nome
 		riga+=padRight(record.getCognome(), 50);
+		
 		//campo cognome
 		riga+=padRight(record.getNome(), 30);
-
+		
+		//campo sesso
+		if(record.getSesso().equals("M")){
+			riga+="1";
+		}else{
+			riga+="2";
+		}
+		
+		//data di nascita
+		riga+=record.getDataNascita();
+		
+		//comune di nascita
+		riga+= padRight(q.getCodiceComune(record.getComuneNascita()),9);
+		
+		//provincia di nascita
+		riga+=padRight(record.getProvinciaNascita(),2);
+		
+		//stato di nascita
+		riga+=q.getCodiceStato(record.getStatoNascita());
+		
+		//cittadinanza
+		riga+=q.getCodiceStatoCittadinanza(record.getCittadinanza());
+		
+		//
 
 		/*
 		 * Dati documento
