@@ -91,6 +91,19 @@ public class QueryQuestura {
 		return result;
 	}
 	
+	public String getLuogoRilascio(String rilascio) throws SQLException{
+		String query, result = null;
+		query = "select * FROM codici_luoghi WHERE nome = \"" + rilascio +"\"";
+		
+		if (d) System.out.println(query);
+		
+		ResultSet rs = statement.executeQuery(query);
+		 while(rs.next())
+	      {
+	        result = rs.getString("codice");
+	      }
+		return result;
+	}
 	
 	
 	
@@ -132,6 +145,15 @@ public class QueryQuestura {
 		try {
 			//q.getCodiceComune("FALCADE (BL)");
 			System.out.println(q.getCodiceDocumento("CARTA DI IDENTITA\'"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		try {
+			//q.getCodiceComune("FALCADE (BL)");
+			System.out.println(q.getLuogoRilascio("BELLUNO (BL)"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
