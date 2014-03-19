@@ -29,7 +29,7 @@ public class QueryQuestura {
 			e1.printStackTrace();
 		}
 		
-		connection = DriverManager.getConnection("jdbc:sqlite:/home/hypertesto/git/SchedineAlloggiati/SchedineAllogiati/src/res/files/tabelle_questura.db");
+		connection = DriverManager.getConnection("jdbc:sqlite:src/res/files/tabelle_questura.db");
 		statement = connection.createStatement();
 	    statement.setQueryTimeout(30);  // set timeout to 30 sec.
 		
