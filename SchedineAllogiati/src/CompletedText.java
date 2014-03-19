@@ -173,8 +173,6 @@ public class CompletedText extends Text {
 				
 				TableItem temp;
 				Rectangle textBounds;
-				
-				//List<String> hints;
 
 				table.removeAll();
 				
@@ -184,8 +182,6 @@ public class CompletedText extends Text {
 				}
 				
 				if (getText ().length () > 0 && (hints != null) && (hints.size () > 0)) {
-					
-					//hints = hintsManager.getHints (getText());
 					
 					for (String hint : hints) {
 						

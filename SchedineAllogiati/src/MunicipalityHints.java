@@ -1,3 +1,6 @@
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -27,8 +30,7 @@ public class MunicipalityHints implements HintsManager {
 		
 		try {
 			
-			connection = DriverManager
-					.getConnection ("jdbc:sqlite:src/res/files/tabelle_questura.db");
+			connection = DriverManager.getConnection ("jdbc:sqlite:src/res/files/tabelle_questura.db");
 			
 			statement = connection.createStatement ();
 			statement.setQueryTimeout (30);
@@ -45,8 +47,9 @@ public class MunicipalityHints implements HintsManager {
 		} catch (SQLException e) {
 			// if the error message is "out of memory",
 			// it probably means no database file is found
-			System.err.println (e.getMessage ());
-		
+			
+			System.out.println ("Errore nel db: " + e.getLocalizedMessage ());
+			
 		} finally {
 			
 			try {
