@@ -139,30 +139,25 @@ public class CompletedText extends Text {
 						
 						debug ("Text = " + text + "\n");
 						
-						if (text.equals ("")) {
-							
-							debug ("No text\n");
-							
-						} else {
 						
-							debug ("Looking for hints...\n");
-							hints = hintsManager.getHints (text);
+						debug ("Looking for hints...\n");
+						hints = hintsManager.getHints (text);
+						
+						if (hints.size () != 0) {
 							
+							debug ("There are hints for " + text + "\n");
+							result = true;
+						
+						} else {
 							
-							if (hints.size () != 0) {
-								
-								debug ("There are hints for " + text + "\n");
-								result = true;
-							} else {
-								
-								debug ("No hints for " + text + "\n");
-							}
-							
-							if (event.keyCode == SWT.BS || event.keyCode == SWT.DEL) {
-								
-								result = true;
-							}
+							debug ("No hints for " + text + "\n");
 						}
+						
+						if (event.keyCode == SWT.BS || event.keyCode == SWT.DEL) {
+							
+							result = true;
+						}
+
 					}
 					
 					event.doit = result;
@@ -188,7 +183,7 @@ public class CompletedText extends Text {
 					popupShell.setVisible (false);
 				}
 				
-				if (getText ().length () > 0) {
+				if (getText ().length () > 0 && (hints != null)) {
 					
 					//hints = hintsManager.getHints (getText());
 					
