@@ -24,6 +24,8 @@ public class CompletedText extends Text {
 	private boolean textSet;
 	private HintsManager hintsManager;
 	
+	private static final boolean debug = true;
+	
 	public CompletedText (final Composite parent, int style, HintsManager hManager) {
 		super (parent, style);
 
@@ -135,21 +137,31 @@ public class CompletedText extends Text {
 							text = text.substring (0, text.length () - 1);
 						}
 						
-						//System.out.println ("[debug] Text = " + text);
+						debug ("Text = " + text + "\n");
 						
-						
-						hints = hintsManager.getHints (text);
-						
-						
-						if (hints.size () != 0) {
+						if (text.equals ("")) {
 							
-							//System.out.println ("[debug] There are hints for " + text);
-							result = true;
-						}
-						
-						if (event.keyCode == SWT.BS || event.keyCode == SWT.DEL) {
+							debug ("No text\n");
 							
-							result = true;
+						} else {
+						
+							debug ("Looking for hints...\n");
+							hints = hintsManager.getHints (text);
+							
+							
+							if (hints.size () != 0) {
+								
+								debug ("There are hints for " + text + "\n");
+								result = true;
+							} else {
+								
+								debug ("No hints for " + text + "\n");
+							}
+							
+							if (event.keyCode == SWT.BS || event.keyCode == SWT.DEL) {
+								
+								result = true;
+							}
 						}
 					}
 					
@@ -303,6 +315,12 @@ public class CompletedText extends Text {
 
 	public void setForcedHints (boolean forcedHints) {
 		this.forcedHints = forcedHints;
+	}
+	
+	private static void debug (String m) {
+		
+		if (debug)
+			System.out.print ("[debug] " + m);
 	}
 	
 	public static void main (String args[]) throws ClassNotFoundException {
