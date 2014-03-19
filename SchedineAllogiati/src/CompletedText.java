@@ -183,7 +183,7 @@ public class CompletedText extends Text {
 					popupShell.setVisible (false);
 				}
 				
-				if (getText ().length () > 0 && (hints != null)) {
+				if (getText ().length () > 0 && (hints != null) && (hints.size () > 0)) {
 					
 					//hints = hintsManager.getHints (getText());
 					
