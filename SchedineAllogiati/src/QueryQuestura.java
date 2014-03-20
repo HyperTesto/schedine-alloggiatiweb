@@ -105,6 +105,19 @@ public class QueryQuestura {
 		return result;
 	}
 	
+	public String getCodiceAlloggiato(String alloggiato) throws SQLException{
+		String query, result = null;
+		query = "select * from codici_alloggiati WHERE tipo = \"" + alloggiato +"\"";
+		
+		if (d) System.out.println(query);
+		
+		ResultSet rs = statement.executeQuery(query);
+		 while(rs.next())
+	      {
+	        result = rs.getString("tipo");
+	      }
+		return result;
+	}
 	
 	
 	
@@ -159,12 +172,25 @@ public class QueryQuestura {
 			e.printStackTrace();
 		}
 		
+		
+		try {
+			//q.getCodiceComune("FALCADE (BL)");
+			System.out.println(q.getCodiceAlloggiato(Alloggiato.OSPITE_SINGOLO));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		try {
 			q.disconnect();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	
+		
+	
 	}
+	
 
 }
