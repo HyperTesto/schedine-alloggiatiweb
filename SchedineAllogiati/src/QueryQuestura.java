@@ -114,7 +114,7 @@ public class QueryQuestura {
 		ResultSet rs = statement.executeQuery(query);
 		 while(rs.next())
 	      {
-	        result = rs.getString("tipo");
+	        result = rs.getString("codice");
 	      }
 		return result;
 	}
