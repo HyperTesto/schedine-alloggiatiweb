@@ -134,13 +134,13 @@ public class Questura implements FileManager {
 		 */
 		
 		//tipo
-		riga+=q.getCodiceDocumento(record.getTipoDocumento());
+		riga+=padRight(q.getCodiceDocumento(record.getTipoDocumento()),5);
 		
 		//numero
 		riga+=padRight(record.getNumeroDocumento(), 20);
 		
 		//luogo rilascio
-		riga+=q.getLuogoRilascio(record.getRilascioDocumento());
+		riga+=padRight(q.getLuogoRilascio(record.getRilascioDocumento()),9);
 
 		return riga;
 	}
