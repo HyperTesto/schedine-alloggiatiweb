@@ -88,7 +88,7 @@ public class Questura implements FileManager {
 		 * Campi alloggiato
 		 */
 		//campo tipo (da sistemare coni codici
-		riga+=record.getTipoAlloggiato();
+		riga+=q.getCodiceAlloggiato(record.getTipoAlloggiato());
 		//campo data di arrivo
 		riga+=record.getDataArrivo();
 		//campo permanenza
