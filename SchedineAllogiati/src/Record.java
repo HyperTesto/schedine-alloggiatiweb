@@ -94,7 +94,16 @@ public class Record {
 		return allog.comuneNascita;
 	}
 	
-	
+	/**
+	 * 
+	 * @return 2 lettere della provincia (di supporto)
+	 */
+	public String getProvinciaNascita(){
+		
+		String comune_provincia = allog.comuneNascita;
+		
+		return comune_provincia.substring(comune_provincia.length()-3, comune_provincia.length()-1);
+	}
 	
 	/*
 	 * Metodi ritorno campi Permanenza

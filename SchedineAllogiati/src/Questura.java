@@ -3,6 +3,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,8 +75,9 @@ public class Questura implements FileManager {
 		return exceptions;
 	}
 
-	private String formatRecord(Record record){
+	private String formatRecord(Record record) throws SQLException{
 		String riga="";
+		QueryQuestura q = new QueryQuestura();
 
 		/*
 		 * parte da implementare per gestire la formattazione corretta
@@ -85,16 +87,60 @@ public class Questura implements FileManager {
 		/*
 		 * Campi alloggiato
 		 */
+		//campo tipo (da sistemare coni codici
+		riga+=q.getCodiceAlloggiato(record.getTipoAlloggiato());
+		//campo data di arrivo
+		riga+=record.getDataArrivo();
+		//campo permanenza
+		riga+=record.getPermanenza();
 
 
 		/*
 		 * Dati personali alloggiato
 		 */
-
+		
+		//campo nome
+		riga+=padRight(record.getCognome(), 50);
+		
+		//campo cognome
+		riga+=padRight(record.getNome(), 30);
+		
+		//campo sesso
+		if(record.getSesso().equals("M")){
+			riga+="1";
+		}else{
+			riga+="2";
+		}
+		
+		//data di nascita
+		riga+=record.getDataNascita();
+		
+		//comune di nascita
+		riga+= padRight(q.getCodiceComune(record.getComuneNascita()),9);
+		
+		//provincia di nascita
+		riga+=padRight(record.getProvinciaNascita(),2);
+		
+		//stato di nascita
+		riga+=q.getCodiceStato(record.getStatoNascita());
+		
+		//cittadinanza
+		riga+=q.getCodiceStatoCittadinanza(record.getCittadinanza());
+		
+		//
 
 		/*
 		 * Dati documento
 		 */
+		
+		//tipo
+		riga+=padRight(q.getCodiceDocumento(record.getTipoDocumento()),5);
+		
+		//numero
+		riga+=padRight(record.getNumeroDocumento(), 20);
+		
+		//luogo rilascio
+		riga+=padRight(q.getLuogoRilascio(record.getRilascioDocumento()),9);
 
 		return riga;
 	}
@@ -367,5 +413,13 @@ public class Questura implements FileManager {
 		}
 				
 		return null;
+	}
+	
+	private String padRight(String s, int n) {
+	     return String.format("%1$-" + n + "s", s);  
+	}
+
+	private String padLeft(String s, int n) {
+	    return String.format("%1$" + n + "s", s);  
 	}
 }
