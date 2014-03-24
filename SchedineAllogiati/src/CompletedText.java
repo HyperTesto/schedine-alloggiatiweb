@@ -1,6 +1,8 @@
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -106,10 +108,11 @@ public class CompletedText extends Text {
 			}
 		});
 		
-		addListener (SWT.Verify, new Listener () {
+		this.addVerifyListener (new VerifyListener () {
 
 			@Override
-			public void handleEvent (Event event) {
+			public void verifyText (VerifyEvent event) {
+				// TODO Auto-generated method stub
 				
 				System.out.println ("[debug] Verify");
 				
@@ -163,6 +166,8 @@ public class CompletedText extends Text {
 					event.doit = result;
 				}
 			}
+			
+			
 		});
 		
 		addListener (SWT.Modify, new Listener () {
@@ -179,7 +184,7 @@ public class CompletedText extends Text {
 				if (getText ().length () == 0) {
 
 					popupShell.setVisible (false);
-				}
+				}	
 				
 				if (getText ().length () > 0 && (hints != null) && (hints.size () > 0)) {
 					
