@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
@@ -108,7 +109,7 @@ public class CompletedText extends Text {
 			}
 		});
 		
-		this.addVerifyListener (new VerifyListener () {
+		addVerifyListener (new VerifyListener () {
 
 			@Override
 			public void verifyText (VerifyEvent event) {
@@ -144,7 +145,14 @@ public class CompletedText extends Text {
 						
 						
 						debug ("Looking for hints...\n");
-						hints = hintsManager.getHints (text);
+						try {
+							
+							hints = hintsManager.getHints (text);
+						
+						} catch (SQLException e) {
+							// TODO Visualizzare all'utente l'eccezione
+							e.printStackTrace();
+						}
 						
 						if (hints.size () != 0) {
 							
