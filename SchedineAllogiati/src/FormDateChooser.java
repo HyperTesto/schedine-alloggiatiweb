@@ -99,7 +99,10 @@ public class FormDateChooser extends Composite {
 			@Override
 			public void widgetSelected (SelectionEvent e) {
 
-				showCalendar (parent);
+				if (calendarShell.isVisible ())
+					calendarShell.setVisible (false);
+				else
+					showCalendar (parent);
 			}
 		});
 
