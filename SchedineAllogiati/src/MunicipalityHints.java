@@ -1,6 +1,3 @@
-import java.io.File;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -11,13 +8,16 @@ import java.util.ArrayList;
 
 public class MunicipalityHints implements HintsManager {
 	
+	Connection  connection;
+	
 	public MunicipalityHints () throws ClassNotFoundException {
 		
 		Class.forName ("org.sqlite.JDBC");
+		
 	}
 	
 	@Override
-	public ArrayList<String> getHints (String typed) {
+	public ArrayList<String> getHints (String typed) throws SQLException {
 		// TODO Auto-generated method stub
 		
 		ArrayList<String> res;
@@ -28,45 +28,28 @@ public class MunicipalityHints implements HintsManager {
 		res = new ArrayList<String> ();
 		connection = null;
 		
-		try {
-			
-			connection = DriverManager.getConnection ("jdbc:sqlite:src/res/files/tabelle_questura.db");
-			
-			statement = connection.createStatement ();
-			statement.setQueryTimeout (30);
-			
-			rs = statement
-					.executeQuery ("select nome from codici_luoghi where nome like \""
-							+ typed + "%\" order by nome");
-			
-			while (rs.next ()) {
-				
-				res.add (rs.getString ("nome"));
-			}
+		connection = DriverManager
+				.getConnection ("jdbc:sqlite:src/res/files/tabelle_questura.db");
 		
-		} catch (SQLException e) {
-			// if the error message is "out of memory",
-			// it probably means no database file is found
+		statement = connection.createStatement ();
+		statement.setQueryTimeout (30);
+		
+		rs = statement
+				.executeQuery ("select nome from codici_luoghi where nome like \""
+						+ typed + "%\" order by nome");
+		
+		while (rs.next ()) {
 			
-			System.out.println ("Errore nel db: " + e.getLocalizedMessage ());
-			
-		} finally {
-			
-			try {
-				
-				if (connection != null)
-					connection.close ();
-			
-			} catch (SQLException e) {
-				// connection close failed.
-				System.err.println (e);
-			}
+			res.add (rs.getString ("nome"));
 		}
-
+		
+		if (connection != null)
+			connection.close ();
+		
 		return res;
 	}
 	
-	public static void main (String[] args) throws InterruptedException, ClassNotFoundException {
+	public static void main (String[] args) throws InterruptedException, ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		
 		MunicipalityHints h;
