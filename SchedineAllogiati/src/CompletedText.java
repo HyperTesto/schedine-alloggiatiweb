@@ -26,7 +26,7 @@ public class CompletedText extends Text {
 	private boolean textSet;
 	private HintsManager hintsManager;
 	
-	private static final boolean debug = true;
+	private static final boolean debug = false;
 	
 	public CompletedText (final Composite parent, int style, HintsManager hManager) {
 		super (parent, style);
@@ -114,7 +114,7 @@ public class CompletedText extends Text {
 			public void verifyText (VerifyEvent event) {
 				// TODO Auto-generated method stub
 				
-				System.out.println ("[debug] Verify");
+				//System.out.println ("[debug] Verify");
 				
 				if (allowTextChange) {
 					
@@ -167,14 +167,13 @@ public class CompletedText extends Text {
 				}
 			}
 			
-			
 		});
 		
 		addListener (SWT.Modify, new Listener () {
 
 			public void handleEvent (Event event) {
 				
-				System.out.println ("[debug] Modify");
+				//System.out.println ("[debug] Modify");
 				
 				TableItem temp;
 				Rectangle textBounds;
