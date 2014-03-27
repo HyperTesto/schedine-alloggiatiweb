@@ -13,6 +13,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.events.FocusEvent;
@@ -26,20 +28,20 @@ import org.eclipse.swt.events.SelectionListener;
 /**
  * 
  * @author Alberto Bonizzi
- *
+ * 
  */
 
 public class FormDateChooser extends Composite {
-
+	
 	protected DateText text;
 	protected Shell calendarShell;
 	protected DateTime dateTime;
 	protected Button button;
 	
 	/*
-	 * The used icon has been downloaded from https://www.iconfinder.com/iconsets/fugue#readme and is
-	 * under the Creative Commons 3 licence
-	 * 
+	 * The used icon has been downloaded from
+	 * https://www.iconfinder.com/iconsets/fugue#readme and is under the
+	 * Creative Commons 3 licence
 	 */
 	
 	private final static String imageFile = "res/files/1393800387_calendar-month.png";
@@ -53,7 +55,7 @@ public class FormDateChooser extends Composite {
 	 */
 	public FormDateChooser (final Composite parent, int style) {
 		super (parent, style);
-
+		
 		GridLayout gl_composite;
 		Point textSize;
 		Image icon;
@@ -65,74 +67,78 @@ public class FormDateChooser extends Composite {
 		GridData gd_button;
 		
 		gl_composite = new GridLayout (2, false);
-
+		
 		gl_composite.marginHeight = 0;
 		gl_composite.verticalSpacing = 0;
 		gl_composite.marginWidth = 0;
 		gl_composite.horizontalSpacing = 0;
-
+		
 		setLayout (gl_composite);
-
+		
 		text = new DateText (this, SWT.BORDER);
 		textSize = text.computeSize (SWT.DEFAULT, SWT.DEFAULT);
-
-		text.setLayoutData (new GridData (SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
+		
+		text.setLayoutData (new GridData (SWT.FILL, SWT.CENTER, true, false, 1,
+				1));
+		
 		cal = Calendar.getInstance ();
-
+		
 		day = cal.get (Calendar.DAY_OF_MONTH);
 		month = cal.get (Calendar.MONTH) + 1;
 		year = cal.get (Calendar.YEAR);
-
+		
 		text.setText (day / 10 + "" + day % 10 + "/" + month / 10 + "" + month
 				% 10 + "/" + year);
+		
 		text.setSelection (0);
-
-		calendarShell = new Shell (parent.getDisplay (), SWT.ON_TOP);
+		text.setToolTipText ("Inserire una data del tipo GG/MM/AAAA");
+		
+		calendarShell = new Shell (parent.getDisplay (), SWT.NONE);
 		calendarShell.setLayout (new FillLayout ());
-
+		
 		dateTime = new DateTime (calendarShell, SWT.CALENDAR);
-
+		
 		button = new Button (this, SWT.NONE);
 		button.addSelectionListener (new SelectionAdapter () {
 			
 			@Override
 			public void widgetSelected (SelectionEvent e) {
-
+				
+				System.out.println (calendarShell.isVisible ());
+				
 				if (calendarShell.isVisible ())
 					calendarShell.setVisible (false);
 				else
 					showCalendar (parent);
 			}
 		});
-
-		gd_button = new GridData (SWT.LEFT, SWT.CENTER, false, false,
-				1, 1);
+		
+		gd_button = new GridData (SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		
 		gd_button.heightHint = textSize.y;
 		button.setLayoutData (gd_button);
 		
-		icon = new Image (parent.getDisplay (), ResourceLoader.loader (imageFile));
+		icon = new Image (parent.getDisplay (),
+				ResourceLoader.loader (imageFile));
 		iconImageData = icon.getImageData ();
 		
-		button.setImage (new Image (parent.getDisplay (), iconImageData.scaledTo (	textSize.y - 10, 
-																			((textSize.y - 10) * iconImageData.width) / iconImageData.height)));
+		button.setImage (new Image (parent.getDisplay (), iconImageData
+				.scaledTo (textSize.y - 10,
+						((textSize.y - 10) * iconImageData.width)
+								/ iconImageData.height)));
 		icon.dispose ();
 		
 		button.setAlignment (SWT.CENTER);
-		
-		//FIXME: quando il tooltip è abilitato e viene reso visibile, il calendario svanisce
-		//button.setToolTipText ("Visualizza un calendario\nmediante il quale è possibile\nselezionare una data con il mouse");
-		
+		button.setToolTipText ("Visualizza un calendario\nmediante il quale è possibile\nselezionare una data con il mouse");
 		
 		button.addFocusListener (new FocusListener () {
-
+			
 			@Override
 			public void focusGained (FocusEvent arg0) {
 				
-				text.setFocus ();
+				//text.setFocus ();
 			}
-
+			
 			@Override
 			public void focusLost (FocusEvent arg0) {
 				
@@ -141,109 +147,132 @@ public class FormDateChooser extends Composite {
 		});
 		
 		setTabList (new Control[] { text });
-
-		dateTime.addFocusListener (new FocusListener () {
-
-			@Override
-			public void focusGained (FocusEvent e) {
-
-			}
-
-			@Override
-			public void focusLost (FocusEvent e) {
-
-				calendarShell.setVisible (false);
-			}
-
-		});
-
+		
 		dateTime.addSelectionListener (new SelectionListener () {
-
+			
 			@Override
 			public void widgetSelected (SelectionEvent e) {
-
+				
 			}
-
+			
 			@Override
 			public void widgetDefaultSelected (SelectionEvent e) {
-
+				
 				int day, month, year;
-
+				
 				day = dateTime.getDay ();
 				month = dateTime.getMonth () + 1;
 				year = dateTime.getYear ();
-
+				
 				text.setText (day / 10 + "" + day % 10 + "/" + month / 10 + ""
 						+ month % 10 + "/" + year);
 				
 				calendarShell.setVisible (false);
 			}
-
+			
 		});
-
+		
 		text.addModifyListener (new ModifyListener () {
-
+			
 			@Override
 			public void modifyText (ModifyEvent e) {
-
+				
 				if (text.isDateSet ()) {
-
+					
 					dateTime.setDay (text.getDay ());
 					dateTime.setMonth (text.getMonth ());
 					dateTime.setYear (text.getYear ());
 				}
 			}
 		});
+		
+		Listener focusOutListener = new Listener () {
+			public void handleEvent (Event event) {
 
+				parent.getDisplay ().asyncExec (new Runnable () {
+
+					public void run () {
+						
+						System.out.println ("Focus out");
+						
+						Control control;
+
+						if (parent.getDisplay ().isDisposed ())
+							return;
+
+						control = parent.getDisplay ().getFocusControl ();
+
+						if (control != button) {
+
+							calendarShell.setVisible (false);
+						}
+					}
+				});
+			}
+		};
+		
+		dateTime.addListener (SWT.FocusOut, focusOutListener);
+		
+		parent.getShell ().addListener (SWT.Move, new Listener () {
+
+			public void handleEvent (Event event) {
+
+				calendarShell.setVisible (false);
+			}
+		});
+		
 	}
-
+	
 	private void showCalendar (Composite parent) {
-
+		
 		Rectangle parentBounds;
 		Point calendarSize;
 		Rectangle buttonSize;
-
+		
 		calendarSize = dateTime.computeSize (SWT.DEFAULT, SWT.DEFAULT);
 		buttonSize = button.getBounds ();
-
+		
 		parentBounds = parent.getDisplay ().map (parent, null, getBounds ());
 		
-		calendarShell.setBounds (
+		calendarShell
+				.setBounds (
 						(parentBounds.x + +text.getBounds ().width + buttonSize.width / 2)
 								- calendarSize.x / 2, parentBounds.y
 								+ parentBounds.height, calendarSize.x,
 						calendarSize.y);
-
+		
 		calendarShell.setVisible (true);
 		calendarShell.setFocus ();
 	}
 	
 	/**
 	 * 
-	 * Returns the {@link org.eclipse.swt.widgets.DateTime} widget included in the FormDateChooser
+	 * Returns the {@link org.eclipse.swt.widgets.DateTime} widget included in
+	 * the FormDateChooser
 	 * 
 	 * @return the {@link org.eclipse.swt.widgets.DateTime} widget
 	 */
 	
 	public DateTime getDateTime () {
-
+		
 		return dateTime;
 	}
 	
 	/**
 	 * 
-	 * Returns the {@link org.eclipse.swt.widgets.Text} widget included in the FormDateChooser
+	 * Returns the {@link org.eclipse.swt.widgets.Text} widget included in the
+	 * FormDateChooser
 	 * 
 	 * @return the {@link org.eclipse.swt.widgets.Text} widget
 	 */
 	
 	public Text getText () {
-
+		
 		return text;
 	}
-
+	
 	public static void main (String[] args) {
-
+		
 		Display display;
 		Shell shell;
 		FormDateChooser date;
@@ -254,15 +283,16 @@ public class FormDateChooser extends Composite {
 		shell.setImage (new Image (display, ResourceLoader.loader (imageFile)));
 		
 		shell.setLayout (new GridLayout (1, false));
-
+		
 		date = new FormDateChooser (shell, SWT.NONE);
-		date.setLayoutData (new GridData (SWT.FILL, SWT.CENTER, true, true, 1, 1));
+		date.setLayoutData (new GridData (SWT.FILL, SWT.CENTER, true, true, 1,
+				1));
 		
 		shell.open ();
 		shell.pack ();
 		
 		while (!shell.isDisposed ()) {
-
+			
 			if (!display.readAndDispatch ()) {
 				display.sleep ();
 			}
