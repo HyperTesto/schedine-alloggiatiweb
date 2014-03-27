@@ -169,8 +169,9 @@ public class Questura implements FileManager {
 		rilascioDoc = this.readRilascioDoc(riga);
 		permanenza = this.readPermanenza(riga);
 		
-		// da cambiare il return con record quando tutto sarà implementato
-		return null;
+		record = new Record(tipoAlloggiato, dataArrivo, permanenza, nome, cognome, dataNascita, sesso, cittadinanza, statoNascita, comuneNascita, tipoDoc, numDoc, rilascioDoc);
+		
+		return record;
 	}
 	
 	/**
