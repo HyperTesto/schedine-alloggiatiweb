@@ -283,8 +283,6 @@ public class AlloggiatoTree extends Tree {
 		}
 	}
 	
-	
-	
 	@Override
 	protected void checkSubclass () {
 		
@@ -383,7 +381,5 @@ public class AlloggiatoTree extends Tree {
 				display.sleep ();
 			}
 		}
-		
 	}
-	
 }
