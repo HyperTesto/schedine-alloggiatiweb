@@ -93,7 +93,7 @@ public class FormDateChooser extends Composite {
 		text.setSelection (0);
 		text.setToolTipText ("Inserire una data del tipo GG/MM/AAAA");
 		
-		calendarShell = new Shell (parent.getDisplay (), SWT.NONE);
+		calendarShell = new Shell (parent.getDisplay (), SWT.ON_TOP);
 		calendarShell.setLayout (new FillLayout ());
 		
 		dateTime = new DateTime (calendarShell, SWT.CALENDAR);
@@ -169,7 +169,8 @@ public class FormDateChooser extends Composite {
 			}
 		});
 		
-		Listener focusOutListener = new Listener () {
+		dateTime.addListener (SWT.FocusOut, new Listener () {
+			
 			public void handleEvent (Event event) {
 
 				parent.getDisplay ().asyncExec (new Runnable () {
@@ -190,9 +191,7 @@ public class FormDateChooser extends Composite {
 					}
 				});
 			}
-		};
-		
-		dateTime.addListener (SWT.FocusOut, focusOutListener);
+		});
 		
 		dateTime.addListener (SWT.KeyDown, new Listener () {
 
@@ -279,6 +278,7 @@ public class FormDateChooser extends Composite {
 		date.setLayoutData (new GridData (SWT.FILL, SWT.CENTER, true, true, 1,
 				1));
 		
+		shell.setSize (100, 100);
 		shell.open ();
 		shell.pack ();
 		
