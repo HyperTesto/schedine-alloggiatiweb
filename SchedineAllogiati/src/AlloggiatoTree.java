@@ -173,7 +173,7 @@ public class AlloggiatoTree extends Tree {
 					record.getTipoAlloggiato ().equals (Alloggiato.CAPO_FAMIGLIA)) {
 				
 				item = new TreeItem (this, SWT.NONE);
-				item.setText (recordToStringArray (record));
+				item.setText (record.toStringArray ());
 				
 				if (record.getTipoAlloggiato ().equals (Alloggiato.CAPO_GRUPPO)) {
 					
@@ -187,14 +187,14 @@ public class AlloggiatoTree extends Tree {
 					record.getTipoAlloggiato ().equals (Alloggiato.MEMBRO_FAMIGLIA)){
 				
 				subItem = new TreeItem (item, SWT.NONE);
-				subItem.setText (recordToStringArray (record));
+				subItem.setText (record.toStringArray ());
 				
 				subItem.setImage (singleImage);
 			
 			} else { //OSPITE SINGOLO
 				
 				subItem = new TreeItem (item, SWT.NONE);
-				subItem.setText (recordToStringArray (record));
+				subItem.setText (record.toStringArray ());
 				
 				subItem.setImage (singleImage);
 			}
@@ -283,60 +283,9 @@ public class AlloggiatoTree extends Tree {
 		}
 	}
 	
-	
-	
 	@Override
 	protected void checkSubclass () {
 		
-	}
-	
-	private static String[] recordToStringArray (Record record) {
-		
-		String[] res;
-		
-		res = new String[13];
-		
-		
-		res[0]	= record.getTipoAlloggiato ();
-		
-		//System.out.println ("Tipo: " + res[0]);
-		res[1]	= record.getDataArrivo ();
-		
-		//System.out.println ("Arrivo: " + res[1]);
-		res[2]	= String.valueOf (record.getPermanenza ());
-		
-		//System.out.println ("Permanenza: " + res[2]);
-		res[3]	= record.getCognome ();
-		
-		//System.out.println ("Cognome: " + res[3]);
-		res[4]	= record.getNome ();
-		
-		//System.out.println ("Nome: " + res[4]);
-		res[5]	= record.getSesso ();
-		
-		//System.out.println ("Sesso: " + res[5]);
-		res[6]	= record.getDataNascita ();
-		
-		//System.out.println ("Data nascita: " + res[6]);
-		res[7]	= record.getComuneNascita ();
-		
-		//System.out.println ("Comune nascita: " + res[7]);
-		res[8]	= record.getStatoNascita ();
-		
-		//System.out.println ("Stato nascita: " + res[8]);
-		res[9]	= record.getCittadinanza ();
-		
-		//System.out.println ("Citatdinanza: " + res[9]);
-		res[10]	= record.getTipoDocumento ();
-		
-		//System.out.println ("Tipo documento: " + res[10]);
-		res[11]	= record.getNumeroDocumento ();
-		
-		//System.out.println ("Numero documento: " + res[11]);
-		res[12]	= record.getRilascioDocumento ();
-		
-		//System.out.println ("Rilascio documento: " + res[12]);
-		return res;
 	}
 	
 	private static Record treeItemToRecord (TreeItem item) {
@@ -416,7 +365,7 @@ public class AlloggiatoTree extends Tree {
 		shell.setLayout (gl_shell);
 		
 		tree = new AlloggiatoTree (shell, SWT.CHECK);
-		tree.insertRecords (fManager.loadFile ("/home/alberto/Desktop/alloggiati.csv"));
+		tree.insertRecords (fManager.loadFile ("/home/alberto.bonizzi/Desktop/alloggiati.csv"));
 		GridData gd_tree = new GridData (SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_tree.heightHint = 146;
 		tree.setLayoutData (gd_tree);
@@ -432,7 +381,5 @@ public class AlloggiatoTree extends Tree {
 				display.sleep ();
 			}
 		}
-		
 	}
-	
 }

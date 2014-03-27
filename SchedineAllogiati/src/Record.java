@@ -186,5 +186,64 @@ public class Record {
 		
 	}
 	
+	/**
+	 * 
+	 * Ritorna un array di String contenente tutti gli attributi
+	 * dell'oggetto in ordine come specificato dalla documentazione
+	 * del sito della questura
+	 * 
+	 * 
+	 * @return L'array di String
+	 */
+	
+    public String[] toStringArray () {
+		
+		String[] res;
+		
+		res = new String[13];
+		
+		
+		res[0]	= this.getTipoAlloggiato ();
+		
+		//System.out.println ("Tipo: " + res[0]);
+		res[1]	= this.getDataArrivo ();
+		
+		//System.out.println ("Arrivo: " + res[1]);
+		res[2]	= String.valueOf (this.getPermanenza ());
+		
+		//System.out.println ("Permanenza: " + res[2]);
+		res[3]	= this.getCognome ();
+		
+		//System.out.println ("Cognome: " + res[3]);
+		res[4]	= this.getNome ();
+		
+		//System.out.println ("Nome: " + res[4]);
+		res[5]	= this.getSesso ();
+		
+		//System.out.println ("Sesso: " + res[5]);
+		res[6]	= this.getDataNascita ();
+		
+		//System.out.println ("Data nascita: " + res[6]);
+		res[7]	= this.getComuneNascita ();
+		
+		//System.out.println ("Comune nascita: " + res[7]);
+		res[8]	= this.getStatoNascita ();
+		
+		//System.out.println ("Stato nascita: " + res[8]);
+		res[9]	= this.getCittadinanza ();
+		
+		//System.out.println ("Citatdinanza: " + res[9]);
+		res[10]	= this.getTipoDocumento ();
+		
+		//System.out.println ("Tipo documento: " + res[10]);
+		res[11]	= this.getNumeroDocumento ();
+		
+		//System.out.println ("Numero documento: " + res[11]);
+		res[12]	= this.getRilascioDocumento ();
+		
+		//System.out.println ("Rilascio documento: " + res[12]);
+		return res;
+	}
+	
 
 }

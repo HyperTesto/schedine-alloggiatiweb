@@ -1,7 +1,9 @@
-import java.util.AbstractList;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -19,12 +21,13 @@ import org.eclipse.swt.widgets.Text;
 public class CompletedText extends Text {
 
 	private Table table;
-	private AbstractList<String> hints;
-	private int verifiedIndex = -1;
+	private List<String> hints;
 	protected boolean forcedHints;
 	private boolean allowTextChange;
 	private boolean textSet;
 	private HintsManager hintsManager;
+	
+	private static final boolean debug = false;
 	
 	public CompletedText (final Composite parent, int style, HintsManager hManager) {
 		super (parent, style);
@@ -106,10 +109,13 @@ public class CompletedText extends Text {
 			}
 		});
 		
-		addListener (SWT.Verify, new Listener () {
+		addVerifyListener (new VerifyListener () {
 
 			@Override
-			public void handleEvent (Event event) {
+			public void verifyText (VerifyEvent event) {
+				// TODO Auto-generated method stub
+				
+				//System.out.println ("[debug] Verify");
 				
 				if (allowTextChange) {
 					
@@ -132,32 +138,42 @@ public class CompletedText extends Text {
 						
 						if (event.keyCode == SWT.BS) {
 					
-							text = text.substring(0, text.length()-1);
+							text = text.substring (0, text.length () - 1);
 						}
 						
-						System.out.println(text);
+						debug ("Text = " + text + "\n");
 						
-						//verifiedIndex = categoryBeginningIndex (hints, text);
 						
-						System.out.println("Index = " + verifiedIndex);
-						
-						if (verifiedIndex >= 0) {
+						debug ("Looking for hints...\n");
+						try {
 							
+							hints = hintsManager.getHints (text);
+						
+						} catch (SQLException e) {
+							// TODO Visualizzare all'utente l'eccezione
+							e.printStackTrace();
+						}
+						
+						if (hints.size () != 0) {
+							
+							debug ("There are hints for " + text + "\n");
 							result = true;
+						
+						} else {
+							
+							debug ("No hints for " + text + "\n");
 						}
 						
 						if (event.keyCode == SWT.BS || event.keyCode == SWT.DEL) {
 							
 							result = true;
 						}
+
 					}
 					
 					event.doit = result;
 				}
-				
-				
 			}
-			
 			
 		});
 		
@@ -165,26 +181,19 @@ public class CompletedText extends Text {
 
 			public void handleEvent (Event event) {
 				
+				//System.out.println ("[debug] Modify");
+				
 				TableItem temp;
 				Rectangle textBounds;
-				
-				List<String> hints;
 
 				table.removeAll();
 				
 				if (getText ().length () == 0) {
 
 					popupShell.setVisible (false);
-				}
+				}	
 				
-				if (getText ().length () > 0) {
-					
-					hints = hintsManager.getHints (getText());
-					
-					if (forcedHints) {
-						//TODO
-						
-					}
+				if (getText ().length () > 0 && (hints != null) && (hints.size () > 0)) {
 					
 					for (String hint : hints) {
 						
@@ -212,7 +221,6 @@ public class CompletedText extends Text {
 			public void handleEvent (Event event) {
 				
 				allowTextChange = true;
-				//System.out.println (table.getSelectionIndex ());
 
 				setText (table.getSelection ()[0].getText ());
 				popupShell.setVisible (false);
@@ -258,19 +266,19 @@ public class CompletedText extends Text {
 			@Override
 			public void handleEvent(Event event) {
 					
-				System.out.println(table.getItemCount());
+				//System.out.println (table.getItemCount ());
 				
 				if (!textSet) {
-					if (table.getItemCount() > 0) {
-
+					if (table.getItemCount () > 0) {
+						
 						allowTextChange = true;
-						setText(table.getItem(0).getText());
-
+						setText (table.getItem (0).getText ());
+						
 					} else {
-
+						
 						allowTextChange = true;
-						setText("");
-
+						setText ("");
+						
 					}
 				}
 				
@@ -303,17 +311,6 @@ public class CompletedText extends Text {
 	public void setTable (Table table) {
 		this.table = table;
 	}
-
-	public AbstractList<String> getHints () {
-		return hints;
-	}
-
-	public void setHints (AbstractList<String> hints) {
-		this.hints = hints;
-
-		if (hints == null)
-			return;
-	}
 	
 	public boolean isForcedHints () {
 		return forcedHints;
@@ -323,90 +320,13 @@ public class CompletedText extends Text {
 		this.forcedHints = forcedHints;
 	}
 	
-	/*
-	public static int categoryBeginningIndex (AbstractList<String> array, String string) {
+	private static void debug (String m) {
 		
-		int lenght, currentIndex, previousIndex, aux, increment;
-		boolean found;
-		final int STEP = 30;
-		
-		lenght = array.size();
-		found = false;
-		currentIndex = lenght/2;
-		previousIndex = 0;
-		
-		while (!found && currentIndex >= 0 && currentIndex < array.size()) {
-			
-			int comparison;
-			
-			comparison = string.toUpperCase().compareTo(array.get(currentIndex).toUpperCase());
-			aux = currentIndex;
-			increment = Math.abs(currentIndex-previousIndex)/2;
-			
-			if (increment == 0)
-				increment++;
-			
-			if (increment == 1) {
-				if (!array.get(currentIndex).toUpperCase()
-						.startsWith(string.toUpperCase())) {
-
-					if (!array.get(currentIndex + 1).toUpperCase()
-							.startsWith(string.toUpperCase())) {
-
-						if ((string.toUpperCase().compareTo(
-								array.get(currentIndex + 1).toUpperCase()) < 0)
-								&& (string.toUpperCase().compareTo(
-										array.get(currentIndex).toUpperCase()) > 0)) {
-
-							return -1;
-						}
-					}
-				}
-			}
-			
-			if (array.get(currentIndex).toUpperCase().startsWith(string.toUpperCase())) {
-				
-				found = true;
-			
-			} else if (comparison < 0) {
-				
-				currentIndex -= increment;
-				previousIndex = aux;
-			
-			} else if (comparison > 0) {
-				
-				currentIndex += increment;
-				previousIndex = aux;
-			
-			} 
-		}
-		
-		if (currentIndex < 0 || currentIndex >= array.size())
-			return -1;
-		
-		for (int i=currentIndex; array.get(currentIndex).toUpperCase().startsWith(string.toUpperCase()); i-= STEP) {
-			
-			currentIndex = i;
-			
-			if (i - STEP <= 0) {
-				
-				currentIndex = 0;
-				break;
-			}
-		}
-		
-		
-		for (int i=currentIndex; string.toUpperCase().compareTo(array.get(currentIndex).toUpperCase()) > 0; i++) {
-			
-			currentIndex = i;
-		}
-		
-		
-		return currentIndex;
+		if (debug)
+			System.out.print ("[debug] " + m);
 	}
-	*/
 	
-	public static void main (String args[]) {
+	public static void main (String args[]) throws ClassNotFoundException, SQLException {
 		
 		Display display;
 		Shell shell;
@@ -414,12 +334,13 @@ public class CompletedText extends Text {
 		
 		display = new Display ();
 		shell = new Shell (display);
-		shell.setText("CompletedText");
-		shell.setSize(250, 64);
+		shell.setText ("CompletedText");
+		shell.setSize (250, 64);
 		
-		shell.setLayout(new GridLayout(1, false));
+		shell.setLayout (new GridLayout (1, false));
 		
-		text = new CompletedText (shell, SWT.BORDER, new DumbHints ());
+		text = new CompletedText (shell, SWT.BORDER, new MunicipalityHints ());
+		text.setForcedHints (true);
 		text.setLayoutData (new GridData (SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		
 		shell.open ();
@@ -430,10 +351,5 @@ public class CompletedText extends Text {
 				display.sleep ();
 			}
 		}
-		
-		
-		
-		
-		
 	}
 }
