@@ -102,11 +102,8 @@ public class FormDateChooser extends Composite {
 			@Override
 			public void widgetSelected (SelectionEvent e) {
 				
-				if (calendarShell.isVisible ())
-					calendarShell.setVisible (false);
-				else
-					showCalendar (parent);
-				
+
+				showCalendar (parent);
 			}
 		});
 		
@@ -176,21 +173,7 @@ public class FormDateChooser extends Composite {
 
 					public void run () {
 						
-						Control control;
-							
-						if (!parent.getDisplay ().isDisposed ()) {
-							
-							control = parent.getDisplay ().getFocusControl ();
-							
-							if (control != button || control != text) {
-								
-								calendarShell.setVisible (false);
-							}
-							
-						} else {
-							
-							calendarShell.setVisible (false);
-						}
+						calendarShell.setVisible (false);
 					}
 				});
 			}
@@ -236,6 +219,9 @@ public class FormDateChooser extends Composite {
 		
 		calendarShell.setVisible (true);
 		calendarShell.setFocus ();
+		
+		//System.out.println (calendarShell.isEnabled ());
+		//System.out.println (parent.getShell ().isEnabled ());
 		//text.setFocus ();
 	}
 	
