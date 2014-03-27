@@ -21,6 +21,11 @@ public class Questura implements FileManager {
 	public static int PERMISSIVE = 2;	//controllo integrità sottogruppi
 
 	private List<Exception> exceptions;
+	private QueryQuestura q;
+	
+	public Questura(){
+		q = new QueryQuestura();
+	}
 
 	@Override
 	public List<Record> loadFile(String path) {
@@ -248,35 +253,13 @@ public class Questura implements FileManager {
 	 * @return String tipo alloggiato
 	 */
 	private String readTipoAlloggiato(String riga){
-		String tipo = riga.substring(0, 1);
-		
-		if (tipo.equals("16")){
-			
-			return Alloggiato.OSPITE_SINGOLO;
-			
-		}else if (tipo.equals("17")){
-			
-			return Alloggiato.CAPO_FAMIGLIA;
-			
-		}else if (tipo.equals("18")){
-			
-			return Alloggiato.CAPO_GRUPPO;
-			
-		}else if (tipo.equals("19")){
-			
-			return Alloggiato.MEMBRO_FAMIGLIA;
-			
-		}else if (tipo.equals("20")){
-			
-			return Alloggiato.MEMBRO_GRUPPO;
-			
-		}else{
-			
-			//PROBLEM DETECTED!
+				
+		try {
+			return q.getAlloggiatoByCode(riga.substring(0, 1));
+		} catch (SQLException e) {
+			e.printStackTrace();
 			return "";
 		}
-
-		 
 	}
 
 	/**
