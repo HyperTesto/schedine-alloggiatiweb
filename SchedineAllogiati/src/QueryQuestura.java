@@ -119,6 +119,90 @@ public class QueryQuestura {
 		return result;
 	}
 	
+	/*
+	 * Metodi per le query con codice in input
+	 * 
+	 */
+	
+	public String getComuneByCode(String comune) throws SQLException{
+		String query, result = null;
+		query = "select * FROM codici_luoghi WHERE codice = \"" + comune +"\"";
+		
+		if (d) System.out.println(query);
+		
+		ResultSet rs = statement.executeQuery(query);
+		 while(rs.next())
+	      {
+	        result = rs.getString("nome");
+	      }
+		return result;
+	}
+	
+	
+	public String getStatoByCode(String comune) throws SQLException{
+		String query, result = null;
+		query = "select * FROM codici_luoghi WHERE codice = \"" + comune +"\"";
+		
+		if (d) System.out.println(query);
+		
+		ResultSet rs = statement.executeQuery(query);
+		 while(rs.next())
+	      {
+	        result = rs.getString("nome");
+	      }
+		return result;
+	}
+	
+	/*
+	 * Supplementare, ma va bene per la leggibilità
+	 */
+	public String getCittadinanzaByCode(String cittadinanza) throws SQLException{
+		return getStatoByCode(cittadinanza);
+	}
+	
+	public String getDocumentoByCode(String documento) throws SQLException{
+		String query, result = null;
+		query = "select * FROM codici_documenti WHERE codice = \"" + documento +"\"";
+		
+		if (d) System.out.println(query);
+		
+		ResultSet rs = statement.executeQuery(query);
+		 while(rs.next())
+	      {
+	        result = rs.getString("tipo");
+	      }
+		return result;
+	}
+	
+	
+	public String getLuogoRilascioByCode(String rilascio) throws SQLException{
+		String query, result = null;
+		query = "select * FROM codici_luoghi WHERE codice = \"" + rilascio +"\"";
+		
+		if (d) System.out.println(query);
+		
+		ResultSet rs = statement.executeQuery(query);
+		 while(rs.next())
+	      {
+	        result = rs.getString("nome");
+	      }
+		return result;
+	}
+	
+	
+	public String getAlloggiatoByCode(String alloggiato) throws SQLException{
+		String query, result = null;
+		query = "select * from codici_alloggiati WHERE codice = \"" + alloggiato +"\"";
+		
+		if (d) System.out.println(query);
+		
+		ResultSet rs = statement.executeQuery(query);
+		 while(rs.next())
+	      {
+	        result = rs.getString("tipo");
+	      }
+		return result;
+	}
 	
 	
 	
@@ -180,6 +264,62 @@ public class QueryQuestura {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		try {
+			//q.getCodiceComune("FALCADE (BL)");
+			System.out.println(q.getComuneByCode(q.getComuneByName("FALCADE (BL)")));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			//q.getCodiceComune("FALCADE (BL)");
+			System.out.println(q.getStatoByCode(q.getStatoByName("ITALIA")));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		try {
+			//q.getCodiceComune("FALCADE (BL)");
+			System.out.println(q.getCittadinanzaByCode(q.getCittadinanzaByName("ITALIA")));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		try {
+			//q.getCodiceComune("FALCADE (BL)");
+			System.out.println(q.getDocumentoByCode(q.getDocumentoByName("CARTA DI IDENTITA\'")));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			//q.getCodiceComune("FALCADE (BL)");
+			System.out.println(q.getLuogoRilascioByCode(q.getLuogoRilascioByName("BELLUNO (BL)")));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			//q.getCodiceComune("FALCADE (BL)");
+			System.out.println(q.getAlloggiatoByCode(q.getAlloggiatoByName(Alloggiato.OSPITE_SINGOLO)));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
 		
 		try {
 			q.disconnect();
