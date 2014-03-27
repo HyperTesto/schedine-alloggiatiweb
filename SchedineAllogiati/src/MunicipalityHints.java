@@ -10,10 +10,12 @@ public class MunicipalityHints implements HintsManager {
 	
 	Connection  connection;
 	
-	public MunicipalityHints () throws ClassNotFoundException {
+	public MunicipalityHints () throws ClassNotFoundException, SQLException {
 		
 		Class.forName ("org.sqlite.JDBC");
 		
+		connection = DriverManager
+				.getConnection ("jdbc:sqlite:src/res/files/tabelle_questura.db");
 	}
 	
 	@Override
@@ -21,15 +23,10 @@ public class MunicipalityHints implements HintsManager {
 		// TODO Auto-generated method stub
 		
 		ArrayList<String> res;
-		Connection connection;
 		ResultSet rs;
 		Statement statement;
 		
 		res = new ArrayList<String> ();
-		connection = null;
-		
-		connection = DriverManager
-				.getConnection ("jdbc:sqlite:src/res/files/tabelle_questura.db");
 		
 		statement = connection.createStatement ();
 		statement.setQueryTimeout (30);
@@ -43,10 +40,21 @@ public class MunicipalityHints implements HintsManager {
 			res.add (rs.getString ("nome"));
 		}
 		
-		if (connection != null)
-			connection.close ();
-		
 		return res;
+	}
+	
+	@Override
+	public void finalize () {
+		
+		try {
+			
+			connection.close ();
+			
+		} catch (Exception e) {
+			// The object is going to be destroyed, no need to report errors
+			
+			// e.printStackTrace();
+		}
 	}
 	
 	public static void main (String[] args) throws InterruptedException, ClassNotFoundException, SQLException {
