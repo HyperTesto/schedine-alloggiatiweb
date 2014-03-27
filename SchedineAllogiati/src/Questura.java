@@ -154,17 +154,21 @@ public class Questura implements FileManager {
 		String nome,cognome,tipoAlloggiato,dataArrivo,dataNascita,sesso,cittadinanza,statoNascita,comuneNascita,tipoDoc,numDoc,rilascioDoc;
 		int permanenza;
 		Record record;
-		/*
-		 * StringTokenizer t = new StringTokenizer(riga,";");
-		 */
-		/* questa parte andrà reimplementata 
-		 * per maneggiare i record formattati per l'invio tramite file alla questura
-		 * molto probabilmente la strada migliore sarà utilizzare il metodo substring e trimmare il tutto
-		 */
-
-
-		//record = new Record(t.nextToken(),t.nextToken(),Integer.parseInt(t.nextToken()),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken(),t.nextToken());
-
+		
+		nome = this.readName(riga);
+		cognome = this.readCognome(riga);
+		tipoAlloggiato = this.readTipoAlloggiato(riga);
+		dataArrivo = this.readDataArrivo(riga);
+		dataNascita = this.readDataNascita(riga);
+		sesso = this.readSesso(riga);
+		cittadinanza = this.readCittadinanza(riga);
+		statoNascita = this.readStatoNascita(riga);
+		comuneNascita = this.readComuneNascita(riga);
+		tipoDoc = this.readTipoDoc(riga);
+		numDoc = this.readNumeroDoc(riga);
+		rilascioDoc = this.readRilascioDoc(riga);
+		permanenza = this.readPermanenza(riga);
+		
 		// da cambiare il return con record quando tutto sarà implementato
 		return null;
 	}
