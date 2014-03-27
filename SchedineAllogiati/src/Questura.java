@@ -214,7 +214,11 @@ public class Questura implements FileManager {
 	private String readCittadinanza(String riga){
 
 		//per debug ritorna direttamente il nome esteso
-		return riga.substring(125, 133);
+		try {
+			return q.getCittadinanzaByCode(riga.substring(125, 133));
+		} catch (SQLException e) {
+			return "";
+		}
 	}
 
 	/**
@@ -234,7 +238,11 @@ public class Questura implements FileManager {
 	 */
 	private String readStatoNascita(String riga){
 
-		return riga.substring(116, 124);
+		try {
+			return q.getStatoByCode(riga.substring(116, 124));
+		} catch (SQLException e) {
+			return "";
+		}
 	}
 
 	/**
@@ -244,7 +252,11 @@ public class Questura implements FileManager {
 	 */
 	private String readComuneNascita(String riga){
 		// acquisire anche la provinincia è superfluo visto che è già codificata nel DB
-		return riga.substring(105, 113);
+		try {
+			return q.getComuneByCode(riga.substring(105, 113));
+		} catch (SQLException e) {
+			return "";
+		}
 	}
 
 	/**
@@ -288,7 +300,11 @@ public class Questura implements FileManager {
 	 */
 	private String readTipoDoc(String riga){
 
-		return riga.substring(134, 138).trim();
+		try {
+			return q.getDocumentoByCode(riga.substring(134, 138).trim());
+		} catch (SQLException e) {
+			return "";
+		}
 	}
 
 	/**
@@ -308,7 +324,11 @@ public class Questura implements FileManager {
 	 */
 	private String readRilascioDoc(String riga){
 
-		return riga.substring(159, 167).trim();
+		try {
+			return q.getLuogoRilascioByCode(riga.substring(159, 167).trim());
+		} catch (SQLException e) {
+			return "";
+		}
 	}
 	
 	/*
