@@ -326,7 +326,7 @@ public class CompletedText extends Text {
 			System.out.print ("[debug] " + m);
 	}
 	
-	public static void main (String args[]) throws ClassNotFoundException {
+	public static void main (String args[]) throws ClassNotFoundException, SQLException {
 		
 		Display display;
 		Shell shell;
