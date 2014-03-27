@@ -193,10 +193,10 @@ public class AlloggiatoTree extends Tree {
 			
 			} else { //OSPITE SINGOLO
 				
-				subItem = new TreeItem (item, SWT.NONE);
-				subItem.setText (record.toStringArray ());
+				item = new TreeItem (this, SWT.NONE);
+				item.setText (record.toStringArray ());
 				
-				subItem.setImage (singleImage);
+				item.setImage (singleImage);
 			}
 		}
 	}
