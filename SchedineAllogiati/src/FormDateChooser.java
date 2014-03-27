@@ -104,8 +104,6 @@ public class FormDateChooser extends Composite {
 			@Override
 			public void widgetSelected (SelectionEvent e) {
 				
-				System.out.println (calendarShell.isVisible ());
-				
 				if (calendarShell.isVisible ())
 					calendarShell.setVisible (false);
 				else
@@ -130,21 +128,6 @@ public class FormDateChooser extends Composite {
 		
 		button.setAlignment (SWT.CENTER);
 		button.setToolTipText ("Visualizza un calendario\nmediante il quale è possibile\nselezionare una data con il mouse");
-		
-		button.addFocusListener (new FocusListener () {
-			
-			@Override
-			public void focusGained (FocusEvent arg0) {
-				
-				//text.setFocus ();
-			}
-			
-			@Override
-			public void focusLost (FocusEvent arg0) {
-				
-			}
-			
-		});
 		
 		setTabList (new Control[] { text });
 		
@@ -192,8 +175,6 @@ public class FormDateChooser extends Composite {
 				parent.getDisplay ().asyncExec (new Runnable () {
 
 					public void run () {
-						
-						System.out.println ("Focus out");
 						
 						Control control;
 
