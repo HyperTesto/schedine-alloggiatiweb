@@ -17,8 +17,6 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -108,6 +106,7 @@ public class FormDateChooser extends Composite {
 					calendarShell.setVisible (false);
 				else
 					showCalendar (parent);
+				
 			}
 		});
 		
@@ -178,14 +177,18 @@ public class FormDateChooser extends Composite {
 					public void run () {
 						
 						Control control;
-
-						if (parent.getDisplay ().isDisposed ())
-							return;
-
-						control = parent.getDisplay ().getFocusControl ();
-
-						if (control != button) {
-
+							
+						if (!parent.getDisplay ().isDisposed ()) {
+							
+							control = parent.getDisplay ().getFocusControl ();
+							
+							if (control != button || control != text) {
+								
+								calendarShell.setVisible (false);
+							}
+							
+						} else {
+							
 							calendarShell.setVisible (false);
 						}
 					}
@@ -233,6 +236,7 @@ public class FormDateChooser extends Composite {
 		
 		calendarShell.setVisible (true);
 		calendarShell.setFocus ();
+		//text.setFocus ();
 	}
 	
 	/**
