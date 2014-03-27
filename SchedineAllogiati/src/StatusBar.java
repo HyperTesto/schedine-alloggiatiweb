@@ -1,11 +1,6 @@
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -26,21 +21,25 @@ public class StatusBar extends Composite {
 	
 	public StatusBar (Composite parent, int style) {
 		super (parent, style);
-		// TODO Auto-generated constructor stub
 		
-		FillLayout layout;
 		Font defaultFont;
 		int fontHeight;
 		
-		layout = new FillLayout ();
-		layout.type = SWT.HORIZONTAL;
-		setLayout (layout);
+		//layout = new FillLayout ();
+		//layout.type = SWT.HORIZONTAL;
+		//setLayout (layout);
+		
+		setLayout (new GridLayout (2, false));
 		
 		image = new Label (this, SWT.NONE);
+		
 		label = new Label (this, SWT.NONE);
+		label.setLayoutData (new GridData (SWT.FILL, SWT.FILL, true, false, 1,
+				1));
 		
 		defaultFont = parent.getDisplay ().getSystemFont ();
-		fontHeight = defaultFont.getFontData ()[0].getHeight ();
+		//fontHeight = defaultFont.getFontData ()[0].getHeight ();
+		fontHeight = 16;
 		
 		errorImage = new Image (parent.getDisplay (), parent.getDisplay ()
 				.getSystemImage (SWT.ICON_ERROR).getImageData ()
@@ -54,39 +53,51 @@ public class StatusBar extends Composite {
 		workingImage = new Image (parent.getDisplay (), parent.getDisplay ()
 				.getSystemImage (SWT.ICON_WORKING).getImageData ()
 				.scaledTo (fontHeight, fontHeight));
+		
+		//image.setImage (errorImage);
+		//label.setText ("This is the LoL");
+		
+		//pack ();
 	}
 	
 	public void setGenericMessage (String message) {
 		
-		image.setImage (null);
+		image.setVisible (false);
 		label.setText (message);
 	}
 	
 	public void setErrorMessage (String message) {
 		
+		image.setVisible (true);
 		image.setImage (errorImage);
 		label.setText (message);
 	}
 	
 	public void setWarningMessage (String message) {
 		
+		image.setVisible (true);
 		label.setText (message);
 		image.setImage (warningImage);
 	}
 	
 	public void setInfoMessage (String message) {
 		
+		image.setVisible (true);
 		image.setImage (infoImage);
 		label.setText (message);
 	}
 	
 	public void setWorkingMessage (String message) {
 		
+		image.setVisible (true);
 		image.setImage (workingImage);
 		label.setText (message);
 	}
 	
 	public void clear () {
+		
+		image.setVisible (false);
+		image.setImage (null);
 		
 		label.setText ("");
 	}
@@ -98,13 +109,14 @@ public class StatusBar extends Composite {
 	
 	/**
 	 * @param args
+	 * @throws InterruptedException 
 	 */
-	public static void main (String[] args) {
+	public static void main (String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 		
-		Display display;
+		final Display display;
 		Shell shell;
-		StatusBar bar;
+		final StatusBar bar;
 		
 		display = new Display ();
 		shell = new Shell (display);
@@ -116,7 +128,55 @@ public class StatusBar extends Composite {
 		bar = new StatusBar (shell, SWT.NONE);
 		bar.setLayoutData (new GridData (SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		
-		bar.setWarningMessage ("Exploding now!");
+		new Runnable () {
+			
+			private int type = 0;
+			
+			@Override
+			public void run () {
+				// TODO Auto-generated method stub
+				
+				switch (type) {
+				
+					case 0:
+						
+						bar.setWarningMessage ("Warning Message");
+						break;
+					
+					case 1:
+						
+						bar.setErrorMessage ("Error Message");
+						break;
+					
+					case 2:
+						
+						bar.setWorkingMessage ("Working Message");
+						break;
+					
+					case 3:
+						
+						bar.setInfoMessage ("Info Message");
+						break;
+						
+					case 4:
+						
+						bar.setGenericMessage ("Generic message");
+						break;
+						
+					case 5:
+						
+						bar.clear ();
+						break;
+				
+				}
+				
+				type = (type +1) % 6;
+				
+				display.timerExec (5000, this);
+			}
+			
+			
+		}.run ();
 		
 		shell.open ();
 		
