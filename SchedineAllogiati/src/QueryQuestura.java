@@ -41,7 +41,7 @@ public class QueryQuestura {
 	}
 	
 	
-	public String getCodiceComune(String comune) throws SQLException{
+	public String getComuneByName(String comune) throws SQLException{
 		String query, result = null;
 		query = "select * FROM codici_luoghi WHERE nome = \"" + comune +"\"";
 		
@@ -55,7 +55,7 @@ public class QueryQuestura {
 		return result;
 	}
 
-	public String getCodiceStato(String stato) throws SQLException{
+	public String getStatoByName(String stato) throws SQLException{
 		String query, result = null;
 		query = "select * FROM codici_luoghi WHERE nome = \"" + stato +"\"";
 		
@@ -73,11 +73,11 @@ public class QueryQuestura {
 	/*
 	 * Supplementare, ma va bene per la leggibilità
 	 */
-	public String getCodiceStatoCittadinanza(String cittadinanza) throws SQLException{
-		return getCodiceStato(cittadinanza);
+	public String getCittadinanzaByName(String cittadinanza) throws SQLException{
+		return getStatoByName(cittadinanza);
 	}
 	
-	public String getCodiceDocumento(String documento) throws SQLException{
+	public String getDocumentoByName(String documento) throws SQLException{
 		String query, result = null;
 		query = "select * FROM codici_documenti WHERE tipo = \"" + documento +"\"";
 		
@@ -91,7 +91,7 @@ public class QueryQuestura {
 		return result;
 	}
 	
-	public String getLuogoRilascio(String rilascio) throws SQLException{
+	public String getLuogoRilascioByName(String rilascio) throws SQLException{
 		String query, result = null;
 		query = "select * FROM codici_luoghi WHERE nome = \"" + rilascio +"\"";
 		
@@ -105,7 +105,7 @@ public class QueryQuestura {
 		return result;
 	}
 	
-	public String getCodiceAlloggiato(String alloggiato) throws SQLException{
+	public String getAlloggiatoByName(String alloggiato) throws SQLException{
 		String query, result = null;
 		query = "select * from codici_alloggiati WHERE tipo = \"" + alloggiato +"\"";
 		
@@ -133,7 +133,7 @@ public class QueryQuestura {
 		}
 		try {
 			//q.getCodiceComune("FALCADE (BL)");
-			System.out.println(q.getCodiceComune("FALCADE (BL)"));
+			System.out.println(q.getComuneByName("FALCADE (BL)"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -141,7 +141,7 @@ public class QueryQuestura {
 		
 		try {
 			//q.getCodiceComune("FALCADE (BL)");
-			System.out.println(q.getCodiceStato("ITALIA"));
+			System.out.println(q.getStatoByName("ITALIA"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -149,7 +149,7 @@ public class QueryQuestura {
 		
 		try {
 			//q.getCodiceComune("FALCADE (BL)");
-			System.out.println(q.getCodiceStatoCittadinanza("ITALIA"));
+			System.out.println(q.getCittadinanzaByName("ITALIA"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -157,7 +157,7 @@ public class QueryQuestura {
 		
 		try {
 			//q.getCodiceComune("FALCADE (BL)");
-			System.out.println(q.getCodiceDocumento("CARTA DI IDENTITA\'"));
+			System.out.println(q.getDocumentoByName("CARTA DI IDENTITA\'"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -166,7 +166,7 @@ public class QueryQuestura {
 
 		try {
 			//q.getCodiceComune("FALCADE (BL)");
-			System.out.println(q.getLuogoRilascio("BELLUNO (BL)"));
+			System.out.println(q.getLuogoRilascioByName("BELLUNO (BL)"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -175,7 +175,7 @@ public class QueryQuestura {
 		
 		try {
 			//q.getCodiceComune("FALCADE (BL)");
-			System.out.println(q.getCodiceAlloggiato(Alloggiato.OSPITE_SINGOLO));
+			System.out.println(q.getAlloggiatoByName(Alloggiato.OSPITE_SINGOLO));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

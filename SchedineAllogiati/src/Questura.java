@@ -88,7 +88,7 @@ public class Questura implements FileManager {
 		 * Campi alloggiato
 		 */
 		//campo tipo (da sistemare coni codici
-		riga+=q.getCodiceAlloggiato(record.getTipoAlloggiato());
+		riga+=q.getAlloggiatoByName(record.getTipoAlloggiato());
 		//campo data di arrivo
 		riga+=record.getDataArrivo();
 		//campo permanenza
@@ -116,16 +116,16 @@ public class Questura implements FileManager {
 		riga+=record.getDataNascita();
 		
 		//comune di nascita
-		riga+= padRight(q.getCodiceComune(record.getComuneNascita()),9);
+		riga+= padRight(q.getComuneByName(record.getComuneNascita()),9);
 		
 		//provincia di nascita
 		riga+=padRight(record.getProvinciaNascita(),2);
 		
 		//stato di nascita
-		riga+=q.getCodiceStato(record.getStatoNascita());
+		riga+=q.getStatoByName(record.getStatoNascita());
 		
 		//cittadinanza
-		riga+=q.getCodiceStatoCittadinanza(record.getCittadinanza());
+		riga+=q.getCittadinanzaByName(record.getCittadinanza());
 		
 		//
 
@@ -134,13 +134,13 @@ public class Questura implements FileManager {
 		 */
 		
 		//tipo
-		riga+=padRight(q.getCodiceDocumento(record.getTipoDocumento()),5);
+		riga+=padRight(q.getDocumentoByName(record.getTipoDocumento()),5);
 		
 		//numero
 		riga+=padRight(record.getNumeroDocumento(), 20);
 		
 		//luogo rilascio
-		riga+=padRight(q.getLuogoRilascio(record.getRilascioDocumento()),9);
+		riga+=padRight(q.getLuogoRilascioByName(record.getRilascioDocumento()),9);
 
 		return riga;
 	}
