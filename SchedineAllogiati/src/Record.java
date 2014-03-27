@@ -177,6 +177,16 @@ public class Record {
 		
 	}
 	
+	/**
+	 * 
+	 * Ritorna un array di String contenente tutti gli attributi
+	 * dell'oggetto in ordine come specificato dalla documentazione
+	 * del sito della questura
+	 * 
+	 * 
+	 * @return L'array di String
+	 */
+	
     public String[] toStringArray () {
 		
 		String[] res;
