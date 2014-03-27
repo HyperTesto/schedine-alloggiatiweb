@@ -194,6 +194,16 @@ public class FormDateChooser extends Composite {
 		
 		dateTime.addListener (SWT.FocusOut, focusOutListener);
 		
+		dateTime.addListener (SWT.KeyDown, new Listener () {
+
+			public void handleEvent (Event event) {
+
+				if (event.keyCode == SWT.ESC) {
+					calendarShell.setVisible (false);
+				}
+			}
+		});
+		
 		parent.getShell ().addListener (SWT.Move, new Listener () {
 
 			public void handleEvent (Event event) {
