@@ -244,7 +244,9 @@ public class CompletedText extends Text {
 				parent.getDisplay ().asyncExec (new Runnable () {
 
 					public void run () {
-
+						
+						System.out.println ("Focus out");
+						
 						Control control;
 
 						if (parent.getDisplay ().isDisposed ())
