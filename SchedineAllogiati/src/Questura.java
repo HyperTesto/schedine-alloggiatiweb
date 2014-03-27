@@ -97,7 +97,7 @@ public class Questura implements FileManager {
 		//campo data di arrivo
 		riga+=record.getDataArrivo();
 		//campo permanenza
-		riga+=record.getPermanenza();
+		riga+=this.padPermanenza(record.getPermanenza());
 
 
 		/*
@@ -422,7 +422,9 @@ public class Questura implements FileManager {
 				
 		return null;
 	}
-	
+	private String padPermanenza (int n){
+		return String.format("%08d%n", n);
+	}
 	private String padRight(String s, int n) {
 	     return String.format("%1$-" + n + "s", s);  
 	}
