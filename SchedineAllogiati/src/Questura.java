@@ -1,5 +1,7 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -33,8 +35,12 @@ public class Questura implements FileManager {
 		exceptions  = new ArrayList<Exception>();
 		List<Record> records = new ArrayList<Record>();
 
-		try{	
+		try{
+			/*
 			InputStream in = ResourceLoader.loader(path);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			*/
+			FileInputStream in = new FileInputStream(new File(path));
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			String strLine;
 			//Read File Line By Line
@@ -58,19 +64,28 @@ public class Questura implements FileManager {
 
 	@Override
 	public boolean writeFile(List<Record> records, String saveTo) {
+		try {
+			q.connect();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try{
 			BufferedWriter bw = new BufferedWriter(new FileWriter(saveTo));
 			for(Record temp : records){
-				bw.write(formatRecord(temp));
+				bw.write(formatRecord(temp)+"\n");
 			}
 			bw.close();
+			q.disconnect();
 			return true;
 
 
 		}catch(Exception e){
-			System.out.println("Errore nella apertura/scrittura del file!: " +e.getMessage());
+			System.out.println("!Errore nella apertura/scrittura del file!: " +e.getMessage());
+			e.printStackTrace();
 			return false;
 		}
+		
 
 	}
 	
@@ -82,7 +97,7 @@ public class Questura implements FileManager {
 
 	private String formatRecord(Record record) throws SQLException{
 		String riga="";
-		QueryQuestura q = new QueryQuestura();
+		//QueryQuestura q = new QueryQuestura();
 
 		/*
 		 * parte da implementare per gestire la formattazione corretta
@@ -423,7 +438,7 @@ public class Questura implements FileManager {
 		return null;
 	}
 	private String padPermanenza (int n){
-		return String.format("%02d%n", n);
+		return String.format("%02d", n);
 	}
 	private String padRight(String s, int n) {
 	     return String.format("%1$-" + n + "s", s);  
