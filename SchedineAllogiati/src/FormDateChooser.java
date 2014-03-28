@@ -37,7 +37,7 @@ public class FormDateChooser extends Composite {
 	protected Button button;
 	Composite fooButton;
 
-	private Rectangle calendarBounds = null;
+	//private Rectangle calendarBounds = null;
 
 	/*
 	 * The used icon has been downloaded from
@@ -225,24 +225,29 @@ public class FormDateChooser extends Composite {
 		Rectangle parentBounds;
 		Point calendarSize;
 		Rectangle buttonSize;
-
+		
 		calendarSize = dateTime.computeSize (SWT.DEFAULT, SWT.DEFAULT);
 		buttonSize = button.getBounds ();
 
 		parentBounds = parent.getDisplay ().map (parent, null, getBounds ());
-
+		
+		/*
 		calendarBounds = new Rectangle ((parentBounds.x
 				+ text.getBounds ().width + buttonSize.width / 2)
 				- calendarSize.x / 2, parentBounds.y + parentBounds.height,
 				calendarSize.x, calendarSize.y);
+		*/
+		
+		
+		calendarShell
+				.setBounds (
+						(parentBounds.x + +text.getBounds ().width + buttonSize.width / 2)
+								- calendarSize.x / 2, parentBounds.y
+								+ parentBounds.height, calendarSize.x,
+						calendarSize.y);
+		 
 
-		/*
-		 * calendarShell .setBounds ( (parentBounds.x + +text.getBounds ().width
-		 * + buttonSize.width / 2) - calendarSize.x / 2, parentBounds.y +
-		 * parentBounds.height, calendarSize.x, calendarSize.y);
-		 */
-
-		calendarShell.setBounds (calendarBounds);
+		//calendarShell.setBounds (calendarBounds);
 		
 		calendarShell.setVisible (true);
 		calendarShell.setFocus ();
