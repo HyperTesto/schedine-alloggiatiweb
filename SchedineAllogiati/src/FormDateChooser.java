@@ -36,6 +36,8 @@ public class FormDateChooser extends Composite {
 	protected DateTime dateTime;
 	protected Button button;
 	
+	private Rectangle calendarBounds = null;
+	
 	/*
 	 * The used icon has been downloaded from
 	 * https://www.iconfinder.com/iconsets/fugue#readme and is under the
@@ -215,8 +217,7 @@ public class FormDateChooser extends Composite {
 
 			public void handleEvent (Event event) {
 
-				//calendarShell.setVisible (false);
-				event.doit = false;
+				calendarShell.setVisible (false);
 			}
 		});
 		
@@ -226,7 +227,26 @@ public class FormDateChooser extends Composite {
 			public void handleEvent(Event event) {
 				// TODO Auto-generated method stub
 				
-				System.out.println(event);
+				boolean inside = false;
+				
+				if (calendarBounds != null) {
+					
+					System.out.println(event);
+					System.out.println(calendarBounds);
+					
+					if (event.x >= calendarBounds.x && event.x <= (calendarBounds.x + calendarBounds.width)) {
+						if (event.y >= calendarBounds.y && event.y <= (calendarBounds.x + calendarBounds.height)) {
+							
+							inside = true;
+							System.out.println("inside");
+						}
+					}
+					
+					if (!inside) {
+						
+						calendarShell.setVisible(false);
+					}
+				}
 			}
 			
 			
@@ -239,17 +259,27 @@ public class FormDateChooser extends Composite {
 		Point calendarSize;
 		Rectangle buttonSize;
 		
+		
 		calendarSize = dateTime.computeSize (SWT.DEFAULT, SWT.DEFAULT);
 		buttonSize = button.getBounds ();
 		
 		parentBounds = parent.getDisplay ().map (parent, null, getBounds ());
 		
+		calendarBounds = new Rectangle((parentBounds.x
+				+ text.getBounds().width + buttonSize.width / 2)
+				- calendarSize.x / 2, parentBounds.y + parentBounds.height,
+				calendarSize.x, calendarSize.y);
+		
+		/*
 		calendarShell
 				.setBounds (
 						(parentBounds.x + +text.getBounds ().width + buttonSize.width / 2)
 								- calendarSize.x / 2, parentBounds.y
 								+ parentBounds.height, calendarSize.x,
 						calendarSize.y);
+		*/
+		
+		calendarShell.setBounds(calendarBounds);
 		
 		calendarShell.setVisible (true);
 		text.setFocus ();
