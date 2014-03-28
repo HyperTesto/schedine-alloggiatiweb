@@ -58,6 +58,7 @@ public class FormDateChooser extends Composite {
 		Point textSize;
 		Image icon;
 		ImageData iconImageData;
+		Listener listener;
 		
 		Calendar cal;
 		int day, month, year;
@@ -165,9 +166,9 @@ public class FormDateChooser extends Composite {
 			}
 		});
 		
-		dateTime.addListener (SWT.FocusOut, new Listener () {
+		listener = new Listener () {
 			
-			public void handleEvent (Event event) {
+			public void handleEvent (final Event event) {
 
 				parent.getDisplay ().asyncExec (new Runnable () {
 
@@ -177,7 +178,11 @@ public class FormDateChooser extends Composite {
 					}
 				});
 			}
-		});
+		};
+		
+		dateTime.addListener (SWT.FocusOut, listener);
+		text.addListener(SWT.FocusOut, listener);
+		
 		
 		dateTime.addListener (SWT.KeyDown, new Listener () {
 
@@ -194,6 +199,24 @@ public class FormDateChooser extends Composite {
 			public void handleEvent (Event event) {
 
 				calendarShell.setVisible (false);
+			}
+		});
+		
+		
+		parent.getShell ().addListener (SWT.Resize, new Listener () {
+
+			public void handleEvent (Event event) {
+
+				calendarShell.setVisible (false);
+			}
+		});
+		
+		parent.getShell ().addListener (SWT.Iconify, new Listener () {
+
+			public void handleEvent (Event event) {
+
+				//calendarShell.setVisible (false);
+				event.doit = false;
 			}
 		});
 		
@@ -218,11 +241,7 @@ public class FormDateChooser extends Composite {
 						calendarSize.y);
 		
 		calendarShell.setVisible (true);
-		calendarShell.setFocus ();
-		
-		//System.out.println (calendarShell.isEnabled ());
-		//System.out.println (parent.getShell ().isEnabled ());
-		//text.setFocus ();
+		text.setFocus ();
 	}
 	
 	/**
