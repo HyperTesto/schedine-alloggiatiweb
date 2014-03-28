@@ -220,6 +220,17 @@ public class FormDateChooser extends Composite {
 			}
 		});
 		
+		parent.getShell().addListener (SWT.MouseDown, new Listener () {
+
+			@Override
+			public void handleEvent(Event event) {
+				// TODO Auto-generated method stub
+				
+				System.out.println(event);
+			}
+			
+			
+		});
 	}
 	
 	private void showCalendar (Composite parent) {
