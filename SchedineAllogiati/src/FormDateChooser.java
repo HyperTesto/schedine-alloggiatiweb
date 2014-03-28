@@ -95,7 +95,8 @@ public class FormDateChooser extends Composite {
 
 		calendarShell = new Shell (parent.getDisplay (), SWT.ON_TOP);
 		calendarShell.setLayout (new FillLayout ());
-
+		calendarShell.setAlpha (235);
+		
 		dateTime = new DateTime (calendarShell, SWT.CALENDAR);
 
 		button = new Button (this, SWT.NONE);
