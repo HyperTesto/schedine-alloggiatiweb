@@ -1,20 +1,12 @@
-import java.awt.SystemColor;
-
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 
 public class StatusBar extends Composite {
@@ -32,19 +24,24 @@ public class StatusBar extends Composite {
 		
 		Font defaultFont;
 		int fontHeight;
+		Label vSeparator;
+		GridLayout gridLayout;
+		GridData layoutData;
 		
+		gridLayout = new GridLayout (3, false);
 		
-		GridLayout gridLayout = new GridLayout (3, false);
 		gridLayout.marginLeft = 5;
+		gridLayout.marginRight = 5;
 		gridLayout.verticalSpacing = 0;
 		gridLayout.marginWidth = 0;
 		gridLayout.marginHeight = 0;
+		
 		setLayout (gridLayout);
 		
 		image = new Label (this, SWT.NONE);
 		image.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
-		Label label = new Label(this, SWT.SEPARATOR | SWT.VERTICAL);
+		vSeparator = new Label(this, SWT.SEPARATOR | SWT.VERTICAL);
 		
 		text = new Label (this, SWT.NONE);
 		text.setAlignment(SWT.CENTER);
@@ -53,52 +50,12 @@ public class StatusBar extends Composite {
 		
 		defaultFont = parent.getDisplay ().getSystemFont ();
 		fontHeight = defaultFont.getFontData ()[0].getHeight () +5;
-		//fontHeight = 16;
 		
-		//SystemColor.MENU;
+		layoutData = new GridData ();
 		
-		
-		setBackgroundMode (SWT.INHERIT_DEFAULT);
-		
-		//setBackground (parent.getDisplay ().getSystemColor (SWT.COLOR_LIST_SELECTION));
-		
-		//systemColor.
-		//setBackground ();
-		
-		/*
-		addPaintListener (new PaintListener () {
-
-			@Override
-			public void paintControl (PaintEvent event) {
-				// TODO Auto-generated method stub
-				
-				Color systemColor;
-				Rectangle r;
-				
-				systemColor = event.display.getSystemColor (SWT.COLOR_LIST_SELECTION);
-				
-				
-				event.gc.setBackground (systemColor);
-				event.gc.setAlpha (80);
-				r = ((Composite) event.widget).getBounds ();
-				
-				event.gc.fillRectangle (10, 10, 10, 10);
-				
-				//event.gc.setBackground (systemColor);
-				
-				System.out.println (r);
-				
-				event.gc.dispose();
-			}
-			
-			
-		});
-		*/
-		
-		
-		GridData layoutData = new GridData ();
 		layoutData.heightHint = fontHeight;
-		label.setLayoutData (layoutData);
+		
+		vSeparator.setLayoutData (layoutData);
 		
 		errorImage = new Image (parent.getDisplay (), parent.getDisplay ()
 				.getSystemImage (SWT.ICON_ERROR).getImageData ()
@@ -115,11 +72,26 @@ public class StatusBar extends Composite {
 		
 	}
 	
+	/**
+	 * 
+	 * Sets a generic type message.
+	 * NOTE: no icon will be used
+	 * 
+	 * @param message The message to display
+	 */
+	
 	public void setGenericMessage (String message) {
 		
 		image.setVisible (false);
 		text.setText (message);
 	}
+	
+	/**
+	 * 
+	 * Sets an error message
+	 * 
+	 * @param message The message to display
+	 */
 	
 	public void setErrorMessage (String message) {
 		
@@ -127,6 +99,13 @@ public class StatusBar extends Composite {
 		image.setImage (errorImage);
 		text.setText (message);
 	}
+	
+	/**
+	 * 
+	 * Sets a warning message
+	 * 
+	 * @param message The message to display
+	 */
 	
 	public void setWarningMessage (String message) {
 		
@@ -137,6 +116,13 @@ public class StatusBar extends Composite {
 		
 	}
 	
+	/**
+	 * 
+	 * Sets an information message
+	 * 
+	 * @param message The message to display
+	 */
+	
 	public void setInfoMessage (String message) {
 		
 		image.setVisible (true);
@@ -144,12 +130,23 @@ public class StatusBar extends Composite {
 		text.setText (message);
 	}
 	
+	/**
+	 * 
+	 * Sets a message indicating a work in progress
+	 * 
+	 */
+	
 	public void setWorkingMessage (String message) {
 		
 		image.setVisible (true);
 		image.setImage (workingImage);
 		text.setText (message);
 	}
+	
+	/**
+	 * 
+	 * Clears the status bar's message and image
+	 */
 	
 	public void clear () {
 		
@@ -179,7 +176,7 @@ public class StatusBar extends Composite {
 		display = new Display ();
 		shell = new Shell (display);
 		shell.setText ("StatusBar");
-		shell.setSize (250, 70);
+		//shell.setSize (250, 70);
 		
 		shell.setLayout (gridLayout = new GridLayout (1, false));
 		
@@ -241,6 +238,7 @@ public class StatusBar extends Composite {
 			
 		}.run ();
 		
+		shell.pack ();
 		shell.open ();
 		
 		while (!shell.isDisposed ()) {
