@@ -44,7 +44,7 @@ public class StatusBar extends Composite {
 		vSeparator = new Label(this, SWT.SEPARATOR | SWT.VERTICAL);
 		
 		text = new Label (this, SWT.NONE);
-		text.setAlignment(SWT.CENTER);
+		//text.setAlignment(SWT.CENTER);
 		text.setLayoutData (new GridData (SWT.FILL, SWT.CENTER, true, false, 1,
 				1));
 		
