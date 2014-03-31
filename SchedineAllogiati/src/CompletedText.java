@@ -44,11 +44,14 @@ public class CompletedText extends Text {
 		
 		popupShell = new Shell (parent.getDisplay (), SWT.ON_TOP);
 		popupShell.setLayout (new FillLayout ());
-
+		
+		
 		parentShell = parent.getShell ();
 
 		table = new Table (popupShell, SWT.SINGLE);
-
+		
+		popupShell.setAlpha (235);
+		
 		addListener (SWT.KeyDown, new Listener () {
 
 			public void handleEvent (Event event) {
