@@ -2,6 +2,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Rectangle;
@@ -215,7 +217,30 @@ public class CompletedText extends Text {
 				}	
 			}
 		});
+		
+		table.addSelectionListener (new SelectionListener () {
 
+			@Override
+			public void widgetDefaultSelected (SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+				widgetSelected (arg0);
+			}
+
+			@Override
+			public void widgetSelected (SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				allowTextChange = true;
+
+				setText (table.getSelection ()[0].getText ());
+				popupShell.setVisible (false);
+				textSet = true;
+			}
+			
+			
+		});
+		
+		/*
 		table.addListener (SWT.DefaultSelection, new Listener () {
 
 			public void handleEvent (Event event) {
@@ -227,7 +252,8 @@ public class CompletedText extends Text {
 				textSet = true;
 			}
 		});
-
+		*/
+		
 		table.addListener (SWT.KeyDown, new Listener () {
 
 			public void handleEvent (Event event) {
@@ -244,8 +270,6 @@ public class CompletedText extends Text {
 				parent.getDisplay ().asyncExec (new Runnable () {
 
 					public void run () {
-						
-						System.out.println ("Focus out");
 						
 						Control control;
 
