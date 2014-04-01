@@ -16,12 +16,12 @@ import java.util.StringTokenizer;
  */
 public class SimpleText implements FileManager {
 
-	private List<Exception> exceptions;
+	private List<FormatException> exceptions;
 
 	@Override
 	public List<Record> loadFile(String path) {
 		
-		exceptions  = new ArrayList<Exception>();
+		exceptions  = new ArrayList<FormatException>();
 		List<Record> records = new ArrayList<Record>();
 
 		try{	
@@ -35,7 +35,7 @@ public class SimpleText implements FileManager {
 				if (temp != null){
 					records.add(temp);
 				}else{
-					exceptions.add(new Exception("Errore alla riga " + i + ": dati malformati."));
+					exceptions.add(new FormatException("Null record", i));
 				}
 				i++;
 			}
@@ -66,7 +66,7 @@ public class SimpleText implements FileManager {
 	}
 	
 	@Override
-	public List<Exception> getErrors() {
+	public List<FormatException> getErrors() {
 		// TODO Auto-generated method stub
 		return exceptions;
 	}

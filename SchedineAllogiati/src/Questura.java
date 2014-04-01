@@ -22,7 +22,7 @@ public class Questura implements FileManager {
 	public static int SEMI_STRICT = 1;	//controllo integrità sottogruppi e data arrivo non differisca più di 48 h da un record all'altro
 	public static int PERMISSIVE = 2;	//controllo integrità sottogruppi
 
-	private List<Exception> exceptions;
+	private List<FormatException> exceptions;
 	private QueryQuestura q;
 	
 	public Questura(){
@@ -32,7 +32,7 @@ public class Questura implements FileManager {
 	@Override
 	public List<Record> loadFile(String path) {
 		
-		exceptions  = new ArrayList<Exception>();
+		exceptions  = new ArrayList<FormatException>();
 		List<Record> records = new ArrayList<Record>();
 
 		try{
@@ -50,7 +50,7 @@ public class Questura implements FileManager {
 				if (temp != null){
 					records.add(temp);
 				}else{
-					exceptions.add(new Exception("Errore alla riga " + i + ": dati malformati."));
+					exceptions.add(new FormatException("Null record", i));
 				}
 				i++;
 			}
@@ -90,7 +90,7 @@ public class Questura implements FileManager {
 	}
 	
 	@Override
-	public List<Exception> getErrors() {
+	public List<FormatException> getErrors() {
 		// TODO Auto-generated method stub
 		return exceptions;
 	}
@@ -222,14 +222,14 @@ public class Questura implements FileManager {
 			return "F";
 		}else{
 			//problema: sesso errato!
-			return "";
+			return null;
 		}
 	}
 
 	/**
 	 * 
 	 * @param riga
-	 * @return String stato cittadinanza (manca query)
+	 * @return String stato cittadinanza
 	 */
 	private String readCittadinanza(String riga){
 
@@ -237,7 +237,7 @@ public class Questura implements FileManager {
 		try {
 			return q.getCittadinanzaByCode(riga.substring(125, 133));
 		} catch (SQLException e) {
-			return "";
+			return null;
 		}
 	}
 
@@ -247,7 +247,9 @@ public class Questura implements FileManager {
 	 * @return String: data di nascita
 	 */
 	private String readDataNascita(String riga){
-
+		/*
+		 * TODO: fare il controllo se la data è formtattata correttamente, altrimenti null
+		 */
 		return riga.substring(95, 104);
 	}
 

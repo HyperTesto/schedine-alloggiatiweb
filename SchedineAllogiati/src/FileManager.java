@@ -28,5 +28,5 @@ public interface FileManager{
 	 * Metodo per controllare se si sono verificati errori in lettura/scrittura
 	 * @return List<Exception>
 	 */
-	public List<Exception> getErrors();
+	public List<FormatException> getErrors();
 }

@@ -23,7 +23,7 @@ public class FormatException extends Exception{
 	
 	private int position;
 	
-	public FormatException(int pos, String tipo){
+	public FormatException(String tipo, int pos){
 		
 		super(tipo);
 		position = pos;
