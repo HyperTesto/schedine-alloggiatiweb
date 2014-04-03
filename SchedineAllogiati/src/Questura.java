@@ -364,8 +364,9 @@ public class Questura implements FileManager {
 	 * @return String: data di arrivo
 	 */
 	private String readDataArrivo(String riga){
-
-		return riga.substring(2, 11);
+		String res = riga.substring(2, 12);
+		System.out.println(res);
+		return res;
 	}
 
 	/**
