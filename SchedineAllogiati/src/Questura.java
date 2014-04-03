@@ -32,7 +32,12 @@ public class Questura implements FileManager {
 
 	@Override
 	public List<Record> loadFile(String path) {
-		
+		try {
+			q.connect();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		exceptions  = new ArrayList<FormatException>();
 		List<Record> records = new ArrayList<Record>();
 
@@ -47,6 +52,7 @@ public class Questura implements FileManager {
 			//Read File Line By Line
 			int i=1;
 			while ((strLine = br.readLine()) != null)   {
+				System.out.println(strLine);
 				if(strLine.length()!=170){
 					exceptions.add(new FormatException("Lunghezza della riga errata. Proveremo a leggere il leggibile", i));
 				}
@@ -60,8 +66,9 @@ public class Questura implements FileManager {
 			}
 			//Close the input stream
 			in.close();
+			q.disconnect();
 		}catch (Exception e){//Catch exception if any
-			System.err.println("Errore nell'apertura/lettura del file: " + e.getMessage());
+			System.err.println("[Sono qui] Errore nell'apertura/lettura del file: " + e.getMessage());
 		}
 		return records;
 	}
@@ -339,9 +346,12 @@ public class Questura implements FileManager {
 	 * @return String tipo alloggiato
 	 */
 	private String readTipoAlloggiato(String riga){
-				
+			
 		try {
-			return q.getAlloggiatoByCode(riga.substring(0, 1));
+			String res = q.getAlloggiatoByCode(riga.substring(0, 1));
+			System.out.println("\n\n"+res);
+			return res;
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return "";
