@@ -46,7 +46,7 @@ public class Questura implements FileManager {
 			//Read File Line By Line
 			int i=1;
 			while ((strLine = br.readLine()) != null)   {
-				Record temp = readRecord(strLine);
+				Record temp = readRecord(strLine, i);
 				if (temp != null){
 					records.add(temp);
 				}else{
@@ -165,24 +165,37 @@ public class Questura implements FileManager {
 		return riga;
 	}
 
-	private Record readRecord(String riga){
+	private Record readRecord(String riga, int index){
 		String nome,cognome,tipoAlloggiato,dataArrivo,dataNascita,sesso,cittadinanza,statoNascita,comuneNascita,tipoDoc,numDoc,rilascioDoc;
 		int permanenza;
 		Record record;
 		
 		nome = this.readName(riga);
+		if(nome.equals(null)){exceptions.add(new FormatException("NOME MANCANTE", index));}
 		cognome = this.readCognome(riga);
+		if(cognome.equals(null)){exceptions.add(new FormatException("COGNOME MANCANTE", index));}
 		tipoAlloggiato = this.readTipoAlloggiato(riga);
+		if(tipoAlloggiato.equals(null)){exceptions.add(new FormatException("TIPO ALLOGGIATO MANCANTE", index));}
 		dataArrivo = this.readDataArrivo(riga);
+		if(dataArrivo.equals(null)){exceptions.add(new FormatException("DATA ARRIVO MANCANTE", index));}
 		dataNascita = this.readDataNascita(riga);
+		if(dataNascita.equals(null)){exceptions.add(new FormatException("DATA NASCITA MANCANTE", index));}
 		sesso = this.readSesso(riga);
+		if(sesso.equals(null)){exceptions.add(new FormatException("SESSO MANCANTE", index));}
 		cittadinanza = this.readCittadinanza(riga);
+		if(cittadinanza.equals(null)){exceptions.add(new FormatException("CITTADINANZA MANCANTE", index));}
 		statoNascita = this.readStatoNascita(riga);
+		if(statoNascita.equals(null)){exceptions.add(new FormatException("STATO NASCITA MANCANTE", index));}
 		comuneNascita = this.readComuneNascita(riga);
+		if(comuneNascita.equals(null)){exceptions.add(new FormatException("COMUNE NASCITA MANCANTE", index));}
 		tipoDoc = this.readTipoDoc(riga);
+		if(tipoDoc.equals(null)){exceptions.add(new FormatException("TIPO DOCUMENTO MANCANTE", index));}
 		numDoc = this.readNumeroDoc(riga);
+		if(numDoc.equals(null)){exceptions.add(new FormatException("NUMERO DOCUMENTO MANCANTE", index));}
 		rilascioDoc = this.readRilascioDoc(riga);
+		if(rilascioDoc.equals(null)){exceptions.add(new FormatException("RILASCIO DOCUMENTO MANCANTE", index));}
 		permanenza = this.readPermanenza(riga);
+		if(permanenza==0){exceptions.add(new FormatException("PERMANENZA MANCANTE", index));}
 		
 		record = new Record(tipoAlloggiato, dataArrivo, permanenza, nome, cognome, dataNascita, sesso, cittadinanza, statoNascita, comuneNascita, tipoDoc, numDoc, rilascioDoc);
 		
