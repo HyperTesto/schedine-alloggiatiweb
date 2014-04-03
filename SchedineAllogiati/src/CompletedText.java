@@ -247,6 +247,8 @@ public class CompletedText extends Text {
 				allowTextChange = true;
 				
 				setText (table.getSelection ()[0].getText ());
+				setSelection (getText ().length ());
+				
 				popupShell.setVisible (false);
 				textSet = true;
 				
