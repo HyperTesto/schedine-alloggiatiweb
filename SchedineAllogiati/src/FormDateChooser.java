@@ -93,7 +93,7 @@ public class FormDateChooser extends Composite {
 				% 10 + "/" + year);
 		
 		text.setSelection (0);
-		// text.setToolTipText ("Inserire una data del tipo GG/MM/AAAA");
+		text.setToolTipText ("Inserire una data del tipo gg/mm/aaaa");
 		
 		calendarShell = new Shell (parent.getShell (), SWT.MODELESS);
 		calendarShell.setLayout (new FillLayout ());
@@ -101,6 +101,8 @@ public class FormDateChooser extends Composite {
 		
 		dateTime = new DateTime (calendarShell, SWT.CALENDAR);
 		button = new Button (this, SWT.NONE);
+		
+		button.setToolTipText ("Apre un calendario grafico mediante\nil quale è possibile selezionare una data col mouse");
 		
 		button.addSelectionListener (new SelectionAdapter () {
 			
