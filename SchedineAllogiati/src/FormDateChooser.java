@@ -37,6 +37,8 @@ public class FormDateChooser extends Composite {
 	protected Button button;
 	Composite fooButton;
 	
+	private long closeTime = 0;
+	
 	// private Rectangle calendarBounds = null;
 	
 	/*
@@ -98,14 +100,28 @@ public class FormDateChooser extends Composite {
 		calendarShell.setAlpha (235);
 		
 		dateTime = new DateTime (calendarShell, SWT.CALENDAR);
-		
 		button = new Button (this, SWT.NONE);
+		
 		button.addSelectionListener (new SelectionAdapter () {
 			
 			@Override
 			public void widgetSelected (SelectionEvent e) {
 				
-				showCalendar (parent);
+				
+				long temp;
+				
+				temp = System.currentTimeMillis ();
+				
+				if (temp-closeTime > 150) {
+				
+					showCalendar (parent);
+				
+				} else {
+					
+					calendarShell.setVisible (false);
+					closeTime = System.currentTimeMillis ();
+				
+				}		
 			}
 		});
 		
@@ -173,6 +189,7 @@ public class FormDateChooser extends Composite {
 			public void handleEvent (final Event event) {
 				
 				calendarShell.setVisible (false);
+				closeTime = System.currentTimeMillis ();
 			}
 		});
 		
@@ -185,6 +202,7 @@ public class FormDateChooser extends Composite {
 					calendarShell.setVisible (false);
 				}
 				
+				event.doit  = false;
 			}
 		});
 		
@@ -217,12 +235,6 @@ public class FormDateChooser extends Composite {
 		
 		parentBounds = parent.getDisplay ().map (parent, null, getBounds ());
 		
-		/*
-		 * calendarBounds = new Rectangle ((parentBounds.x + text.getBounds
-		 * ().width + buttonSize.width / 2) - calendarSize.x / 2, parentBounds.y
-		 * + parentBounds.height, calendarSize.x, calendarSize.y);
-		 */
-		
 		calendarShell
 				.setBounds (
 						(parentBounds.x + +text.getBounds ().width + buttonSize.width / 2)
@@ -232,10 +244,11 @@ public class FormDateChooser extends Composite {
 		
 		// calendarShell.setBounds (calendarBounds);
 		
-		calendarShell.open ();
+		calendarShell.setVisible (true);
 		calendarShell.setFocus ();
 		
 	}
+	
 	
 	/**
 	 * 
