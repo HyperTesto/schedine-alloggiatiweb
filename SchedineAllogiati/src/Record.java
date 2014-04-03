@@ -101,7 +101,7 @@ public class Record {
 	public String getProvinciaNascita(){
 		
 		String comune_provincia = allog.comuneNascita;
-		
+		System.out.println(comune_provincia);
 		return comune_provincia.substring(comune_provincia.length()-3, comune_provincia.length()-1);
 	}
 	
@@ -168,8 +168,8 @@ public class Record {
 	 *  @override
 	 */
 	public String toString(){
-		String s = null;
-		s+="TIPO ALLOGGIATO: " + perm.tipoAlloggiato + "\n";
+		String s;
+		s="TIPO ALLOGGIATO: " + perm.tipoAlloggiato + "\n";
 		s+="DATA DI ARRIVO: " + perm.dataArrivo + "\n";
 		s+="PERMANENZA: " + perm.permanenza + "\n";
 		s+="NOME: " + allog.nome + "\n";
