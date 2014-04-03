@@ -3,6 +3,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
@@ -116,9 +117,9 @@ public class Questura implements FileManager {
 		/*
 		 * Campi alloggiato
 		 */
-		
+		String allog = record.getTipoAlloggiato();
 		//campo tipo (da sistemare coni codici
-		riga+=q.getAlloggiatoByName(record.getTipoAlloggiato());
+		riga+=q.getAlloggiatoByName(allog);
 		//campo data di arrivo
 		riga+=record.getDataArrivo();
 		//campo permanenza
@@ -146,13 +147,32 @@ public class Questura implements FileManager {
 		riga+=record.getDataNascita();
 		
 		//comune di nascita
-		riga+= padRight(q.getComuneByName(record.getComuneNascita()),9);
+		
+		//riga+= padRight(q.getComuneByName(record.getComuneNascita()),9);
 		
 		//provincia di nascita
-		riga+=padRight(record.getProvinciaNascita(),2);
+		//riga+=padRight(record.getProvinciaNascita(),2);
+		
 		
 		//stato di nascita
-		riga+=q.getStatoByName(record.getStatoNascita());
+		//riga+=q.getStatoByName(record.getStatoNascita());
+		String stato = record.getStatoNascita();
+		
+		/*
+		 * Entro nel controllo:
+		 * se stato di nascita ITALIA allora riempio anche comune e provincia altrimenti riempio con blank
+		 */
+		if(stato.equals("ITALIA")){
+			String comune = record.getComuneNascita();
+			riga += padRight(q.getComuneByName(comune),9);
+			String provincia = record.getProvinciaNascita();
+			riga += padRight(provincia,2);
+			
+		}else{
+			riga += padRight("",9);
+			riga += padRight("",2);
+		}
+		riga += q.getStatoByName(stato);
 		
 		//cittadinanza
 		riga+=q.getCittadinanzaByName(record.getCittadinanza());
@@ -162,16 +182,20 @@ public class Questura implements FileManager {
 		/*
 		 * Dati documento
 		 */
-		
-		//tipo
-		riga+=padRight(q.getDocumentoByName(record.getTipoDocumento()),5);
-		
-		//numero
-		riga+=padRight(record.getNumeroDocumento(), 20);
-		
-		//luogo rilascio
-		riga+=padRight(q.getLuogoRilascioByName(record.getRilascioDocumento()),9);
+		if (allog.equals(Alloggiato.CAPO_FAMIGLIA) || allog.equals(Alloggiato.CAPO_GRUPPO) || allog.equals(Alloggiato.OSPITE_SINGOLO)){
+			//tipo
+			riga+=padRight(q.getDocumentoByName(record.getTipoDocumento()),5);
 
+			//numero
+			riga+=padRight(record.getNumeroDocumento(), 20);
+
+			//luogo rilascio
+			riga+=padRight(q.getLuogoRilascioByName(record.getRilascioDocumento()),9);
+
+		} else{
+			riga += padRight("", 34);
+		}
+		
 		return riga;
 	}
 	/**
@@ -476,5 +500,24 @@ public class Questura implements FileManager {
 
 	private String padLeft(String s, int n) {
 	    return String.format("%1$" + n + "s", s);  
+	}
+	
+	public static void main(String args[]) throws IOException{
+		/*
+		 * main di test
+		 */
+		Csv c = new Csv();
+		List<Record> records = null;
+		records = c.loadFile("/home/enrico.testori/alloggiati.csv");
+		
+		for(Record record : records){
+			System.out.print(record);
+		}
+		
+		Questura q = new Questura();
+		q.writeFile(records, "/home/enrico.testori/alloggiati.questura");
+		
+		
+		
 	}
 }
