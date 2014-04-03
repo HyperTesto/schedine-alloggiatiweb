@@ -15,7 +15,7 @@ public class MunicipalityHints implements HintsManager {
 		Class.forName ("org.sqlite.JDBC");
 		
 		connection = DriverManager
-				.getConnection ("jdbc:sqlite:src/res/files/tabelle_questura.db");
+				.getConnection ("jdbc:sqlite:tabelle_questura.db");
 	}
 	
 	@Override
