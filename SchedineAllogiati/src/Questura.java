@@ -97,7 +97,13 @@ public class Questura implements FileManager {
 		// TODO Auto-generated method stub
 		return exceptions;
 	}
-
+	
+	/**
+	 * Ritorna una riga formattata per l'invio tramite file
+	 * @param record
+	 * @return
+	 * @throws SQLException
+	 */
 	private String formatRecord(Record record) throws SQLException{
 		String riga="";
 		//QueryQuestura q = new QueryQuestura();
@@ -110,6 +116,7 @@ public class Questura implements FileManager {
 		/*
 		 * Campi alloggiato
 		 */
+		
 		//campo tipo (da sistemare coni codici
 		riga+=q.getAlloggiatoByName(record.getTipoAlloggiato());
 		//campo data di arrivo
@@ -167,7 +174,12 @@ public class Questura implements FileManager {
 
 		return riga;
 	}
-
+	/**
+	 * ritorna il record istanziato con i dati letti dal file (tutto il possibile)
+	 * @param riga
+	 * @param index
+	 * @return
+	 */
 	private Record readRecord(String riga, int index){
 		String nome,cognome,tipoAlloggiato,dataArrivo,dataNascita,sesso,cittadinanza,statoNascita,comuneNascita,tipoDoc,numDoc,rilascioDoc;
 		int permanenza;
