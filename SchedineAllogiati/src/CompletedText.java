@@ -180,6 +180,9 @@ public class CompletedText extends Text {
 						
 					}
 					
+					if (result)
+						textSet = false;
+					
 					event.doit = result;
 				}
 			}
