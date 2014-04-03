@@ -46,6 +46,9 @@ public class Questura implements FileManager {
 			//Read File Line By Line
 			int i=1;
 			while ((strLine = br.readLine()) != null)   {
+				if(strLine.length()!=170){
+					exceptions.add(new FormatException("Lunghezza della riga errata. Proveremo a leggere il leggibile", i));
+				}
 				Record temp = readRecord(strLine, i);
 				if (temp != null){
 					records.add(temp);
