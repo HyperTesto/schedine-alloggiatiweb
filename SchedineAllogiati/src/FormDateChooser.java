@@ -80,8 +80,7 @@ public class FormDateChooser extends Composite {
 		text = new DateText (this, SWT.BORDER);
 		textSize = text.computeSize (SWT.DEFAULT, SWT.DEFAULT);
 		
-		text.setLayoutData (new GridData (SWT.FILL, SWT.CENTER, true, false, 1,
-				1));
+		text.setLayoutData (new GridData (SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		cal = Calendar.getInstance ();
 		
@@ -100,9 +99,28 @@ public class FormDateChooser extends Composite {
 		calendarShell.setAlpha (235);
 		
 		dateTime = new DateTime (calendarShell, SWT.CALENDAR);
+		
 		button = new Button (this, SWT.NONE);
 		
+		gd_button = new GridData (SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		
+		gd_button.heightHint = textSize.y;
+		button.setLayoutData (gd_button);
+		
+		button.setAlignment (SWT.CENTER);
 		button.setToolTipText ("Apre un calendario grafico mediante\nil quale è possibile selezionare una data col mouse");
+		
+		icon = new Image (parent.getDisplay (),
+				ResourceLoader.loader (imageFile));
+		iconImageData = icon.getImageData ();
+		
+		button.setImage (new Image (parent.getDisplay (), iconImageData
+				.scaledTo (textSize.y - 10,
+						((textSize.y - 10) * iconImageData.width)
+								/ iconImageData.height)));
+		icon.dispose ();
+		
+		setTabList (new Control[] { text });
 		
 		button.addSelectionListener (new SelectionAdapter () {
 			
@@ -126,27 +144,6 @@ public class FormDateChooser extends Composite {
 				}		
 			}
 		});
-		
-		gd_button = new GridData (SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		
-		gd_button.heightHint = textSize.y;
-		button.setLayoutData (gd_button);
-		
-		icon = new Image (parent.getDisplay (),
-				ResourceLoader.loader (imageFile));
-		iconImageData = icon.getImageData ();
-		
-		button.setImage (new Image (parent.getDisplay (), iconImageData
-				.scaledTo (textSize.y - 10,
-						((textSize.y - 10) * iconImageData.width)
-								/ iconImageData.height)));
-		icon.dispose ();
-		
-		button.setAlignment (SWT.CENTER);
-		// button.setToolTipText
-		// ("Visualizza un calendario\nmediante il quale è possibile\nselezionare una data con il mouse");
-		
-		setTabList (new Control[] { text });
 		
 		dateTime.addSelectionListener (new SelectionListener () {
 			
