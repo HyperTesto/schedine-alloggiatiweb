@@ -508,16 +508,21 @@ public class Questura implements FileManager {
 		 */
 		Csv c = new Csv();
 		List<Record> records = null;
-		records = c.loadFile("/home/enrico.testori/alloggiati.csv");
+		records = c.loadFile("/home/hypertesto/cacca.csv");
 		
 		for(Record record : records){
 			System.out.print(record);
 		}
 		
 		Questura q = new Questura();
-		q.writeFile(records, "/home/enrico.testori/alloggiati.questura");
+		q.writeFile(records, "/home/hypertesto/alloggiati.questura");
 		
+		List<Record> recs= new ArrayList<Record>(q.loadFile("/home/hypertesto/alloggiati.questura"));
 		
+
+		for(Record record : recs){
+			System.out.print(record);
+		}
 		
 	}
 }
