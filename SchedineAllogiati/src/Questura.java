@@ -348,7 +348,7 @@ public class Questura implements FileManager {
 	private String readTipoAlloggiato(String riga){
 			
 		try {
-			String res = q.getAlloggiatoByCode(riga.substring(0, 1));
+			String res = q.getAlloggiatoByCode(riga.substring(0, 2));
 			System.out.println("\n\n"+res);
 			return res;
 			
