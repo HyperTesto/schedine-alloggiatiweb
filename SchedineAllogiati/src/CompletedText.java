@@ -240,11 +240,13 @@ public class CompletedText extends Text {
 			@Override
 			public void widgetSelected (SelectionEvent arg0) {
 				// TODO Auto-generated method stub
+				
 				allowTextChange = true;
 				
 				setText (table.getSelection ()[0].getText ());
 				popupShell.setVisible (false);
 				textSet = true;
+				
 			}
 			
 		});
@@ -323,7 +325,7 @@ public class CompletedText extends Text {
 					}
 				}
 				
-				textSet = false;
+				textSet = true;
 			}
 			
 		});
