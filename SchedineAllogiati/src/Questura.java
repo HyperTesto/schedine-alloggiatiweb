@@ -13,6 +13,14 @@ import java.util.List;
  * @author Enrico Testori
  *
  */
+/*
+ * TODO:
+ * + Testare e sistemare la manipolazione di campi null
+ * + Sistemare i blocchi try/catch
+ * + Aggiungere controlli in lettura
+ * + Altro...
+ *   
+ */
 public class Questura implements FileManager {
 
 	private List<FormatException> loadExceptions;
@@ -37,7 +45,7 @@ public class Questura implements FileManager {
 			FileInputStream in = new FileInputStream(new File(path));
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			String strLine;
-			
+
 			int i=1;
 			while ((strLine = br.readLine()) != null)   {
 				Debug.print("[RECORD]" + strLine);
@@ -67,7 +75,6 @@ public class Questura implements FileManager {
 		try {
 			q.connect();
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try{
@@ -93,7 +100,7 @@ public class Questura implements FileManager {
 	public List<FormatException> getErrors() {
 		return loadExceptions;
 	}
-	
+
 	/**
 	 *  ritorna la lista delle eccezioni riscontrate in lettura
 	 * @return
@@ -101,7 +108,7 @@ public class Questura implements FileManager {
 	public List<FormatException> getLoadErrors(){
 		return loadExceptions;
 	}
-	
+
 	/**
 	 * ritorna la lista delle eccezioni riscontrate in scrittura
 	 * @return
@@ -118,17 +125,17 @@ public class Questura implements FileManager {
 	 */
 	private String formatRecord(Record record) throws SQLException{
 		String riga="";
-		
+
 		/*
 		 * Campi alloggiato
 		 */
 		String allog = record.getTipoAlloggiato();
 		//campo tipo (da sistemare con i codici
 		riga+=q.getAlloggiatoByName(allog);
-		
+
 		//campo data di arrivo
 		riga+=record.getDataArrivo();
-		
+
 		//campo permanenza
 		riga+=this.padPermanenza(record.getPermanenza());
 
@@ -240,12 +247,12 @@ public class Questura implements FileManager {
 		Debug.print("Leggo la data di nascita...");
 		dataNascita = this.readDataNascita(riga);
 		if(dataNascita.equals(null)){loadExceptions.add(new FormatException("DATA NASCITA MANCANTE", index));}
-		
-		
+
+
 		Debug.print("Leggo lo stato di nascita...");
 		statoNascita = this.readStatoNascita(riga);
 		if(statoNascita.equals(null)){loadExceptions.add(new FormatException("STATO NASCITA MANCANTE", index));}
-		
+
 		if(statoNascita.equals("ITALIA")){
 			Debug.print("Leggo il comune di nascita...");
 			comuneNascita = this.readComuneNascita(riga);		//per la formattazione del DB i comune contiene già la provincia
@@ -254,7 +261,7 @@ public class Questura implements FileManager {
 			Debug.print("Salto comune e provincia");
 			comuneNascita = null;
 		}
-		
+
 		Debug.print("Leggo la cittadinanza...");
 		cittadinanza = this.readCittadinanza(riga);
 		if(cittadinanza.equals(null)){loadExceptions.add(new FormatException("CITTADINANZA MANCANTE", index));}
@@ -472,7 +479,7 @@ public class Questura implements FileManager {
 	/**
 	 * 
 	 * @param riga
-	 * @return String: luogo di rilascio (manca query)
+	 * @return String: luogo di rilascio
 	 */
 	private String readRilascioDoc(String riga){
 		String res;
@@ -484,20 +491,33 @@ public class Questura implements FileManager {
 		Debug.print("luogo di rilascio = " + res);
 		return res;
 	}
-
-		private String padPermanenza (int n){
+	
+	/**
+	 * 
+	 * @param n
+	 * @return ritorna il numero formattato a due cifre decimali
+	 */
+	private String padPermanenza (int n){
 		String res = String.format("%02d", n);
 		return res;
 	}
-
+	
+	/**
+	 * 
+	 * @param s
+	 * @param n
+	 * @return ritorna una stringa di n caratteri con pad di spazi bianchi a destra
+	 */
 	private String padRight(String s, int n) {
 		return String.format("%1$-" + n + "s", s);  
 	}
 
 	public static void main(String args[]) throws IOException{
+
 		/*
 		 * main di test
 		 */
+
 		Csv c = new Csv();
 		List<Record> records = null;
 		records = c.loadFile("/home/hypertesto/cacca.csv");
