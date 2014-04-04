@@ -489,14 +489,10 @@ public class Questura implements FileManager {
 		String res = String.format("%02d", n);
 		return res;
 	}
+
 	private String padRight(String s, int n) {
 		return String.format("%1$-" + n + "s", s);  
 	}
-
-	private String padLeft(String s, int n) {
-		return String.format("%1$" + n + "s", s);  
-	}
-
 
 	public static void main(String args[]) throws IOException{
 		/*
