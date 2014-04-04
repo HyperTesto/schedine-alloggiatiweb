@@ -45,7 +45,7 @@ public class QueryQuestura {
 		String query, result = null;
 		query = "select * FROM codici_luoghi WHERE nome = \"" + comune +"\"";
 		
-		if (d) System.out.println(query);
+	Debug.print(query);
 		
 		ResultSet rs = statement.executeQuery(query);
 		 while(rs.next())
@@ -59,7 +59,7 @@ public class QueryQuestura {
 		String query, result = null;
 		query = "select * FROM codici_luoghi WHERE nome = \"" + stato +"\"";
 		
-		if (d) System.out.println(query);
+	Debug.print(query);
 		
 		ResultSet rs = statement.executeQuery(query);
 		 while(rs.next())
@@ -81,7 +81,7 @@ public class QueryQuestura {
 		String query, result = null;
 		query = "select * FROM codici_documenti WHERE tipo = \"" + documento +"\"";
 		
-		if (d) System.out.println(query);
+	Debug.print(query);
 		
 		ResultSet rs = statement.executeQuery(query);
 		 while(rs.next())
@@ -95,7 +95,7 @@ public class QueryQuestura {
 		String query, result = null;
 		query = "select * FROM codici_luoghi WHERE nome = \"" + rilascio +"\"";
 		
-		if (d) System.out.println(query);
+	Debug.print(query);
 		
 		ResultSet rs = statement.executeQuery(query);
 		 while(rs.next())
@@ -109,7 +109,7 @@ public class QueryQuestura {
 		String query, result = null;
 		query = "select * from codici_alloggiati WHERE tipo = \"" + alloggiato +"\"";
 		
-		if (d) System.out.println(query);
+	Debug.print(query);
 		
 		ResultSet rs = statement.executeQuery(query);
 		 while(rs.next())
@@ -128,7 +128,7 @@ public class QueryQuestura {
 		String query, result = null;
 		query = "select * FROM codici_luoghi WHERE codice = \"" + comune +"\"";
 		
-		if (d) System.out.println(query);
+	Debug.print(query);
 		
 		ResultSet rs = statement.executeQuery(query);
 		 while(rs.next())
@@ -143,7 +143,7 @@ public class QueryQuestura {
 		String query, result = null;
 		query = "select * FROM codici_luoghi WHERE codice = \"" + comune +"\"";
 		
-		if (d) System.out.println(query);
+	Debug.print(query);
 		
 		ResultSet rs = statement.executeQuery(query);
 		 while(rs.next())
@@ -164,7 +164,7 @@ public class QueryQuestura {
 		String query, result = null;
 		query = "select * FROM codici_documenti WHERE codice = \"" + documento +"\"";
 		
-		if (d) System.out.println(query);
+	Debug.print(query);
 		
 		ResultSet rs = statement.executeQuery(query);
 		 while(rs.next())
@@ -179,7 +179,7 @@ public class QueryQuestura {
 		String query, result = null;
 		query = "select * FROM codici_luoghi WHERE codice = \"" + rilascio +"\"";
 		
-		if (d) System.out.println(query);
+	Debug.print(query);
 		
 		ResultSet rs = statement.executeQuery(query);
 		 while(rs.next())
@@ -194,7 +194,7 @@ public class QueryQuestura {
 		String query, result = null;
 		query = "select * from codici_alloggiati WHERE codice = \"" + alloggiato +"\"";
 		
-		if (d) System.out.println(query);
+	Debug.print(query);
 		
 		ResultSet rs = statement.executeQuery(query);
 		 while(rs.next())
