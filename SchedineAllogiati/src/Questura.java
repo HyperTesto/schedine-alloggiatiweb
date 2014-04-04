@@ -221,37 +221,47 @@ public class Questura implements FileManager {
 		 * Campi prenotazione
 		 */
 		
+		debug("Leggo il tipo di alloggiato...");
 		tipoAlloggiato = this.readTipoAlloggiato(riga);
 		if(tipoAlloggiato.equals(null)){exceptions.add(new FormatException("TIPO ALLOGGIATO MANCANTE", index));}
 		
+		debug("Leggo la data di arrivo...");
 		dataArrivo = this.readDataArrivo(riga);
 		if(dataArrivo.equals(null)){exceptions.add(new FormatException("DATA ARRIVO MANCANTE", index));}
 		
+		debug("Leggo la permanenza...");
 		permanenza = this.readPermanenza(riga);
 		if(permanenza==0){exceptions.add(new FormatException("PERMANENZA MANCANTE", index));}
 		
 		/*
 		 * Campi personali alloggiato
 		 */
-	
+		
+		debug("Leggo il cognome...");
 		cognome = this.readCognome(riga);
 		if(cognome.equals(null)){exceptions.add(new FormatException("COGNOME MANCANTE", index));}
 		
+		debug("Leggo il nome...");
 		nome = this.readName(riga);
 		if(nome.equals(null)){exceptions.add(new FormatException("NOME MANCANTE", index));}
 		
+		debug("Leggo il sesso...");
 		sesso = this.readSesso(riga);
 		if(sesso.equals(null)){exceptions.add(new FormatException("SESSO MANCANTE", index));}
 		
+		debug("Leggo la data di nascita...");
 		dataNascita = this.readDataNascita(riga);
 		if(dataNascita.equals(null)){exceptions.add(new FormatException("DATA NASCITA MANCANTE", index));}
 		
+		debug("Leggo il comune di nascita...");
 		comuneNascita = this.readComuneNascita(riga);		//per la formattazione del DB i comune contiene già la provincia
 		if(comuneNascita.equals(null)){exceptions.add(new FormatException("COMUNE NASCITA MANCANTE", index));}
 		
+		debug("Leggo lo stato di nascita...");
 		statoNascita = this.readStatoNascita(riga);
 		if(statoNascita.equals(null)){exceptions.add(new FormatException("STATO NASCITA MANCANTE", index));}
-				
+		
+		debug("Leggo la cittadinanza...");
 		cittadinanza = this.readCittadinanza(riga);
 		if(cittadinanza.equals(null)){exceptions.add(new FormatException("CITTADINANZA MANCANTE", index));}
 		
@@ -260,10 +270,15 @@ public class Questura implements FileManager {
 		 * Campi del documento
 		 */
 		
+		debug("Leggo il tipo del documento...");
 		tipoDoc = this.readTipoDoc(riga);
 		if(tipoDoc.equals(null)){exceptions.add(new FormatException("TIPO DOCUMENTO MANCANTE", index));}
+		
+		debug("Leggo il numero del documento...");
 		numDoc = this.readNumeroDoc(riga);
 		if(numDoc.equals(null)){exceptions.add(new FormatException("NUMERO DOCUMENTO MANCANTE", index));}
+		
+		debug("Leggo il luogo di rilascio del documento...");
 		rilascioDoc = this.readRilascioDoc(riga);
 		if(rilascioDoc.equals(null)){exceptions.add(new FormatException("RILASCIO DOCUMENTO MANCANTE", index));}
 		
@@ -547,7 +562,7 @@ public class Questura implements FileManager {
 	}
 	
 	private void debug(String s){
-		if(debug )	
+		if(debug)	
 			System.out.println("[DEBUG] " + s);
 	}
 	
