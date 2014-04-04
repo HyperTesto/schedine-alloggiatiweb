@@ -219,6 +219,7 @@ public class Questura implements FileManager {
 		/*
 		 * Campi prenotazione
 		 */
+		
 		tipoAlloggiato = this.readTipoAlloggiato(riga);
 		if(tipoAlloggiato.equals(null)){exceptions.add(new FormatException("TIPO ALLOGGIATO MANCANTE", index));}
 		
@@ -257,6 +258,7 @@ public class Questura implements FileManager {
 		/*
 		 * Campi del documento
 		 */
+		
 		tipoDoc = this.readTipoDoc(riga);
 		if(tipoDoc.equals(null)){exceptions.add(new FormatException("TIPO DOCUMENTO MANCANTE", index));}
 		numDoc = this.readNumeroDoc(riga);
@@ -264,6 +266,10 @@ public class Questura implements FileManager {
 		rilascioDoc = this.readRilascioDoc(riga);
 		if(rilascioDoc.equals(null)){exceptions.add(new FormatException("RILASCIO DOCUMENTO MANCANTE", index));}
 		
+		
+		/*
+		 * Istanzio il record
+		 */
 		
 		record = new Record(tipoAlloggiato, dataArrivo, permanenza, nome, cognome, dataNascita, sesso, cittadinanza, statoNascita, comuneNascita, tipoDoc, numDoc, rilascioDoc);
 		
