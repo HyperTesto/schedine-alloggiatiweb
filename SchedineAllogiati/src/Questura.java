@@ -252,19 +252,25 @@ public class Questura implements FileManager {
 		 * Campi del documento
 		 */
 		
-		Debug.print("Leggo il tipo del documento...");
-		tipoDoc = this.readTipoDoc(riga);
-		if(tipoDoc.equals(null)){exceptions.add(new FormatException("TIPO DOCUMENTO MANCANTE", index));}
-		
-		Debug.print("Leggo il numero del documento...");
-		numDoc = this.readNumeroDoc(riga);
-		if(numDoc.equals(null)){exceptions.add(new FormatException("NUMERO DOCUMENTO MANCANTE", index));}
-		
-		Debug.print("Leggo il luogo di rilascio del documento...");
-		rilascioDoc = this.readRilascioDoc(riga);
-		if(rilascioDoc.equals(null)){exceptions.add(new FormatException("RILASCIO DOCUMENTO MANCANTE", index));}
-		
-		
+		if(tipoAlloggiato.equals(Alloggiato.CAPO_FAMIGLIA) || tipoAlloggiato.equals(Alloggiato.CAPO_GRUPPO) || tipoAlloggiato.equals(Alloggiato.OSPITE_SINGOLO)){
+			Debug.print("Leggo il tipo del documento...");
+			tipoDoc = this.readTipoDoc(riga);
+			if(tipoDoc.equals(null)){exceptions.add(new FormatException("TIPO DOCUMENTO MANCANTE", index));}
+			
+			Debug.print("Leggo il numero del documento...");
+			numDoc = this.readNumeroDoc(riga);
+			if(numDoc.equals(null)){exceptions.add(new FormatException("NUMERO DOCUMENTO MANCANTE", index));}
+			
+			Debug.print("Leggo il luogo di rilascio del documento...");
+			rilascioDoc = this.readRilascioDoc(riga);
+			if(rilascioDoc.equals(null)){exceptions.add(new FormatException("RILASCIO DOCUMENTO MANCANTE", index));}
+		} else{
+			Debug.print("Salto i campi documento...");
+			tipoDoc = null;
+			numDoc = null;
+			rilascioDoc = null;
+		}
+
 		/*
 		 * Istanzio il record
 		 */
