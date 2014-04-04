@@ -221,15 +221,15 @@ public class Questura implements FileManager {
 		 * Campi prenotazione
 		 */
 		
-		debug("Leggo il tipo di alloggiato...");
+		Debug.print("Leggo il tipo di alloggiato...");
 		tipoAlloggiato = this.readTipoAlloggiato(riga);
 		if(tipoAlloggiato.equals(null)){exceptions.add(new FormatException("TIPO ALLOGGIATO MANCANTE", index));}
 		
-		debug("Leggo la data di arrivo...");
+		Debug.print("Leggo la data di arrivo...");
 		dataArrivo = this.readDataArrivo(riga);
 		if(dataArrivo.equals(null)){exceptions.add(new FormatException("DATA ARRIVO MANCANTE", index));}
 		
-		debug("Leggo la permanenza...");
+		Debug.print("Leggo la permanenza...");
 		permanenza = this.readPermanenza(riga);
 		if(permanenza==0){exceptions.add(new FormatException("PERMANENZA MANCANTE", index));}
 		
@@ -237,31 +237,31 @@ public class Questura implements FileManager {
 		 * Campi personali alloggiato
 		 */
 		
-		debug("Leggo il cognome...");
+		Debug.print("Leggo il cognome...");
 		cognome = this.readCognome(riga);
 		if(cognome.equals(null)){exceptions.add(new FormatException("COGNOME MANCANTE", index));}
 		
-		debug("Leggo il nome...");
+		Debug.print("Leggo il nome...");
 		nome = this.readName(riga);
 		if(nome.equals(null)){exceptions.add(new FormatException("NOME MANCANTE", index));}
 		
-		debug("Leggo il sesso...");
+		Debug.print("Leggo il sesso...");
 		sesso = this.readSesso(riga);
 		if(sesso.equals(null)){exceptions.add(new FormatException("SESSO MANCANTE", index));}
 		
-		debug("Leggo la data di nascita...");
+		Debug.print("Leggo la data di nascita...");
 		dataNascita = this.readDataNascita(riga);
 		if(dataNascita.equals(null)){exceptions.add(new FormatException("DATA NASCITA MANCANTE", index));}
 		
-		debug("Leggo il comune di nascita...");
+		Debug.print("Leggo il comune di nascita...");
 		comuneNascita = this.readComuneNascita(riga);		//per la formattazione del DB i comune contiene già la provincia
 		if(comuneNascita.equals(null)){exceptions.add(new FormatException("COMUNE NASCITA MANCANTE", index));}
 		
-		debug("Leggo lo stato di nascita...");
+		Debug.print("Leggo lo stato di nascita...");
 		statoNascita = this.readStatoNascita(riga);
 		if(statoNascita.equals(null)){exceptions.add(new FormatException("STATO NASCITA MANCANTE", index));}
 		
-		debug("Leggo la cittadinanza...");
+		Debug.print("Leggo la cittadinanza...");
 		cittadinanza = this.readCittadinanza(riga);
 		if(cittadinanza.equals(null)){exceptions.add(new FormatException("CITTADINANZA MANCANTE", index));}
 		
@@ -270,15 +270,15 @@ public class Questura implements FileManager {
 		 * Campi del documento
 		 */
 		
-		debug("Leggo il tipo del documento...");
+		Debug.print("Leggo il tipo del documento...");
 		tipoDoc = this.readTipoDoc(riga);
 		if(tipoDoc.equals(null)){exceptions.add(new FormatException("TIPO DOCUMENTO MANCANTE", index));}
 		
-		debug("Leggo il numero del documento...");
+		Debug.print("Leggo il numero del documento...");
 		numDoc = this.readNumeroDoc(riga);
 		if(numDoc.equals(null)){exceptions.add(new FormatException("NUMERO DOCUMENTO MANCANTE", index));}
 		
-		debug("Leggo il luogo di rilascio del documento...");
+		Debug.print("Leggo il luogo di rilascio del documento...");
 		rilascioDoc = this.readRilascioDoc(riga);
 		if(rilascioDoc.equals(null)){exceptions.add(new FormatException("RILASCIO DOCUMENTO MANCANTE", index));}
 		
@@ -299,7 +299,7 @@ public class Questura implements FileManager {
 	 */
 	private String readName(String riga){
 		String res = riga.substring(64, 93).trim();
-		debug("nome = " + res);
+		Debug.print("nome = " + res);
 		return res;
 	}
 	
@@ -310,7 +310,7 @@ public class Questura implements FileManager {
 	 */
 	private String readCognome(String riga){
 		String res = riga.substring(14, 63).trim();
-		debug("cognome = " + res);
+		Debug.print("cognome = " + res);
 		return res;
 	}
 	
@@ -333,7 +333,7 @@ public class Questura implements FileManager {
 			res = null;
 			//return null;
 		}
-		debug("sesso = " + res);
+		Debug.print("sesso = " + res);
 		return res;
 	}
 
@@ -349,7 +349,7 @@ public class Questura implements FileManager {
 		} catch (SQLException e) {
 			res = null;
 		}
-		debug("cittadinanza = " + res);
+		Debug.print("cittadinanza = " + res);
 		return res;
 	}
 
@@ -364,7 +364,7 @@ public class Questura implements FileManager {
 		 */
 		String res;
 		res = riga.substring(95, 105);
-		debug("data di nascita = " + res);
+		Debug.print("data di nascita = " + res);
 		return res;
 	}
 
@@ -380,7 +380,7 @@ public class Questura implements FileManager {
 		} catch (SQLException e) {
 			res = "";
 		}
-		debug("stato di nascita = " + res);
+		Debug.print("stato di nascita = " + res);
 		return res;
 	}
 
@@ -397,7 +397,7 @@ public class Questura implements FileManager {
 		} catch (SQLException e) {
 			res = "";
 		}
-		debug("comune di nascita = " + res);
+		Debug.print("comune di nascita = " + res);
 		return res;
 	}
 
@@ -414,7 +414,7 @@ public class Questura implements FileManager {
 		} catch (SQLException e) {
 			res = "";
 		}
-		debug("tipo alloggiato = " + res);
+		Debug.print("tipo alloggiato = " + res);
 		return res;
 		
 	}
@@ -426,7 +426,7 @@ public class Questura implements FileManager {
 	 */
 	private String readDataArrivo(String riga){
 		String res = riga.substring(2, 12);
-		debug("data di arrivo = " + res);
+		Debug.print("data di arrivo = " + res);
 		return res;
 	}
 
@@ -437,7 +437,7 @@ public class Questura implements FileManager {
 	 */
 	private int readPermanenza(String riga){
 		int res = Integer.parseInt(riga.substring(12, 14));
-		debug("permanenza = " + res);
+		Debug.print("permanenza = " + res);
 		return res;
 	}
 
@@ -453,7 +453,7 @@ public class Questura implements FileManager {
 		} catch (SQLException e) {
 			res = "";
 		}
-		debug("tipo documento = " + res);
+		Debug.print("tipo documento = " + res);
 		return res;
 	}
 
@@ -465,7 +465,7 @@ public class Questura implements FileManager {
 	private String readNumeroDoc(String riga){
 		String res;
 		res = riga.substring(139, 158).trim();
-		debug("numero ducumento = " + res);
+		Debug.print("numero ducumento = " + res);
 		return res;
 	}
 	
@@ -481,7 +481,7 @@ public class Questura implements FileManager {
 		} catch (SQLException e) {
 			res = "";
 		}
-		debug("luogo di rilascio = " + res);
+		Debug.print("luogo di rilascio = " + res);
 		return res;
 	}
 	
@@ -584,10 +584,12 @@ public class Questura implements FileManager {
 	    return String.format("%1$" + n + "s", s);  
 	}
 	
-	private void debug(Object s){
+	/*
+	private void Debug.print(Object s){
 		if(debug)	
 			System.out.println("[DEBUG] " + s);
 	}
+	*/
 	
 	public static void main(String args[]) throws IOException{
 		/*
