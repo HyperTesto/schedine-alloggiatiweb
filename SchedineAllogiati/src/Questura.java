@@ -298,8 +298,9 @@ public class Questura implements FileManager {
 	 * @return String
 	 */
 	private String readName(String riga){
-
-		return riga.substring(64, 93).trim();
+		String res = riga.substring(64, 93).trim();
+		debug("nome = " + res);
+		return res;
 	}
 	
 	/**
@@ -308,8 +309,9 @@ public class Questura implements FileManager {
 	 * @return String: cognome alloggiato trimmato
 	 */
 	private String readCognome(String riga){
-
-		return riga.substring(14, 63).trim();
+		String res = riga.substring(14, 63).trim();
+		debug("cognome = " + res);
+		return res;
 	}
 	
 	/**
@@ -319,14 +321,20 @@ public class Questura implements FileManager {
 	 */
 	private String readSesso(String riga){
 		String sesso = riga.substring(94, 95);
+		String res;
 		if(sesso.equals("1")){
-			return "M";
+			res = "M";
+			//return "M";
 		}else if(sesso.equals("2")){
-			return "F";
+			res = "F";
+			//return "F";
 		}else{
 			//problema: sesso errato!
-			return null;
+			res = null;
+			//return null;
 		}
+		debug("sesso = " + res);
+		return res;
 	}
 
 	/**
@@ -335,13 +343,14 @@ public class Questura implements FileManager {
 	 * @return String stato cittadinanza
 	 */
 	private String readCittadinanza(String riga){
-
-		//per debug ritorna direttamente il nome esteso
+		String res;
 		try {
-			return q.getCittadinanzaByCode(riga.substring(125, 134));
+			res = q.getCittadinanzaByCode(riga.substring(125, 134));
 		} catch (SQLException e) {
-			return null;
+			res = null;
 		}
+		debug("cittadinanza = " + res);
+		return res;
 	}
 
 	/**
@@ -353,7 +362,10 @@ public class Questura implements FileManager {
 		/*
 		 * TODO: fare il controllo se la data è formtattata correttamente, altrimenti null
 		 */
-		return riga.substring(95, 105);
+		String res;
+		res = riga.substring(95, 105);
+		debug("data di nascita = " + res);
+		return res;
 	}
 
 	/**
@@ -362,12 +374,14 @@ public class Questura implements FileManager {
 	 * @return String: stato di nascita (manca query)
 	 */
 	private String readStatoNascita(String riga){
-
+		String res;
 		try {
-			return q.getStatoByCode(riga.substring(116, 125));
+			res = q.getStatoByCode(riga.substring(116, 125));
 		} catch (SQLException e) {
-			return "";
+			res = "";
 		}
+		debug("stato di nascita = " + res);
+		return res;
 	}
 
 	/**
@@ -377,11 +391,14 @@ public class Questura implements FileManager {
 	 */
 	private String readComuneNascita(String riga){
 		// acquisire anche la provinincia è superfluo visto che è già codificata nel DB
+		String res;
 		try {
-			return q.getComuneByCode(riga.substring(105, 114));
+			res = q.getComuneByCode(riga.substring(105, 114));
 		} catch (SQLException e) {
-			return "";
+			res = "";
 		}
+		debug("comune di nascita = " + res);
+		return res;
 	}
 
 	/**
@@ -390,16 +407,16 @@ public class Questura implements FileManager {
 	 * @return String tipo alloggiato
 	 */
 	private String readTipoAlloggiato(String riga){
-			
+		String res;
 		try {
-			String res = q.getAlloggiatoByCode(riga.substring(0, 2));
-			System.out.println("\n\n"+res);
-			return res;
+			res = q.getAlloggiatoByCode(riga.substring(0, 2));
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return "";
+			res = "";
 		}
+		debug("tipo alloggiato = " + res);
+		return res;
+		
 	}
 
 	/**
@@ -409,7 +426,7 @@ public class Questura implements FileManager {
 	 */
 	private String readDataArrivo(String riga){
 		String res = riga.substring(2, 12);
-		System.out.println(res);
+		debug("data di arrivo = " + res);
 		return res;
 	}
 
@@ -420,7 +437,7 @@ public class Questura implements FileManager {
 	 */
 	private int readPermanenza(String riga){
 		int res = Integer.parseInt(riga.substring(12, 14));
-		System.out.println(res);
+		debug("permanenza = " + res);
 		return res;
 	}
 
@@ -430,12 +447,14 @@ public class Questura implements FileManager {
 	 * @return String: tipo documento trimmato (manca query)
 	 */
 	private String readTipoDoc(String riga){
-
+		String res;
 		try {
-			return q.getDocumentoByCode(riga.substring(134, 139).trim());
+			res = q.getDocumentoByCode(riga.substring(134, 139).trim());
 		} catch (SQLException e) {
-			return "";
+			res = "";
 		}
+		debug("tipo documento = " + res);
+		return res;
 	}
 
 	/**
@@ -444,8 +463,10 @@ public class Questura implements FileManager {
 	 * @return String: numero doc
 	 */
 	private String readNumeroDoc(String riga){
-
-		return riga.substring(139, 158).trim();
+		String res;
+		res = riga.substring(139, 158).trim();
+		debug("numero ducumento = " + res);
+		return res;
 	}
 	
 	/**
@@ -454,12 +475,14 @@ public class Questura implements FileManager {
 	 * @return String: luogo di rilascio (manca query)
 	 */
 	private String readRilascioDoc(String riga){
-
+		String res;
 		try {
-			return q.getLuogoRilascioByCode(riga.substring(159, 168).trim());
+			res = q.getLuogoRilascioByCode(riga.substring(159, 168).trim());
 		} catch (SQLException e) {
-			return "";
+			res = "";
 		}
+		debug("luogo di rilascio = " + res);
+		return res;
 	}
 	
 	/*
@@ -561,7 +584,7 @@ public class Questura implements FileManager {
 	    return String.format("%1$" + n + "s", s);  
 	}
 	
-	private void debug(String s){
+	private void debug(Object s){
 		if(debug)	
 			System.out.println("[DEBUG] " + s);
 	}
