@@ -15,7 +15,7 @@ import java.util.List;
  *
  */
 public class Questura implements FileManager {
-	
+
 	/*
 	 * Variabili statiche per la modalità del check
 	 */
@@ -25,8 +25,7 @@ public class Questura implements FileManager {
 
 	private List<FormatException> exceptions;
 	private QueryQuestura q;
-	private boolean debug = true;
-	
+
 	public Questura(){
 		q = new QueryQuestura();
 	}
@@ -43,14 +42,10 @@ public class Questura implements FileManager {
 		List<Record> records = new ArrayList<Record>();
 
 		try{
-			/*
-			InputStream in = ResourceLoader.loader(path);
-			BufferedReader br = new BufferedReader(new InputStreamReader(in));
-			*/
 			FileInputStream in = new FileInputStream(new File(path));
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			String strLine;
-			//Read File Line By Line
+			
 			int i=1;
 			while ((strLine = br.readLine()) != null)   {
 				Debug.print("[FINAL-RECORD]" + strLine);
@@ -68,7 +63,7 @@ public class Questura implements FileManager {
 			//Close the input stream
 			in.close();
 			q.disconnect();
-		}catch (Exception e){//Catch exception if any
+		}catch (Exception e){
 			System.err.println("[Sono qui] Errore nell'apertura/lettura del file: " + e.getMessage());
 		}
 		return records;
@@ -97,16 +92,15 @@ public class Questura implements FileManager {
 			e.printStackTrace();
 			return false;
 		}
-		
+
 
 	}
-	
+
 	@Override
 	public List<FormatException> getErrors() {
-		// TODO Auto-generated method stub
 		return exceptions;
 	}
-	
+
 	/**
 	 * Ritorna una riga formattata per l'invio tramite file
 	 * @param record
@@ -115,14 +109,17 @@ public class Questura implements FileManager {
 	 */
 	private String formatRecord(Record record) throws SQLException{
 		String riga="";
+		
 		/*
 		 * Campi alloggiato
 		 */
 		String allog = record.getTipoAlloggiato();
 		//campo tipo (da sistemare con i codici
 		riga+=q.getAlloggiatoByName(allog);
+		
 		//campo data di arrivo
 		riga+=record.getDataArrivo();
+		
 		//campo permanenza
 		riga+=this.padPermanenza(record.getPermanenza());
 
@@ -130,26 +127,26 @@ public class Questura implements FileManager {
 		/*
 		 * Dati personali alloggiato
 		 */
-		
+
 		//campo nome
 		riga+=padRight(record.getCognome(), 50);
-		
+
 		//campo cognome
 		riga+=padRight(record.getNome(), 30);
-		
+
 		//campo sesso
 		if(record.getSesso().equals("M")){
 			riga+="1";
 		}else{
 			riga+="2";
 		}
-		
+
 		//data di nascita
 		riga+=record.getDataNascita();
-		
+
 		//stato di nascita
 		String stato = record.getStatoNascita();
-		
+
 		/*
 		 * Entro nel controllo:
 		 * se stato di nascita ITALIA allora riempio anche comune e provincia altrimenti riempio con blank
@@ -159,13 +156,13 @@ public class Questura implements FileManager {
 			riga += padRight(q.getComuneByName(comune),9);
 			String provincia = record.getProvinciaNascita();
 			riga += padRight(provincia,2);
-			
+
 		}else{
 			riga += padRight("",9);
 			riga += padRight("",2);
 		}
 		riga += q.getStatoByName(stato);
-		
+
 		//cittadinanza
 		riga+=q.getCittadinanzaByName(record.getCittadinanza());
 
@@ -185,7 +182,7 @@ public class Questura implements FileManager {
 		} else{
 			riga += padRight("", 34);
 		}
-		
+
 		return riga;
 	}
 	/**
@@ -198,69 +195,69 @@ public class Questura implements FileManager {
 		String nome,cognome,tipoAlloggiato,dataArrivo,dataNascita,sesso,cittadinanza,statoNascita,comuneNascita,tipoDoc,numDoc,rilascioDoc;
 		int permanenza;
 		Record record;
-		
+
 		/*
 		 * Campi prenotazione
 		 */
-		
+
 		Debug.print("Leggo il tipo di alloggiato...");
 		tipoAlloggiato = this.readTipoAlloggiato(riga);
 		if(tipoAlloggiato.equals(null)){exceptions.add(new FormatException("TIPO ALLOGGIATO MANCANTE", index));}
-		
+
 		Debug.print("Leggo la data di arrivo...");
 		dataArrivo = this.readDataArrivo(riga);
 		if(dataArrivo.equals(null)){exceptions.add(new FormatException("DATA ARRIVO MANCANTE", index));}
-		
+
 		Debug.print("Leggo la permanenza...");
 		permanenza = this.readPermanenza(riga);
 		if(permanenza==0){exceptions.add(new FormatException("PERMANENZA MANCANTE", index));}
-		
+
 		/*
 		 * Campi personali alloggiato
 		 */
-		
+
 		Debug.print("Leggo il cognome...");
 		cognome = this.readCognome(riga);
 		if(cognome.equals(null)){exceptions.add(new FormatException("COGNOME MANCANTE", index));}
-		
+
 		Debug.print("Leggo il nome...");
 		nome = this.readName(riga);
 		if(nome.equals(null)){exceptions.add(new FormatException("NOME MANCANTE", index));}
-		
+
 		Debug.print("Leggo il sesso...");
 		sesso = this.readSesso(riga);
 		if(sesso.equals(null)){exceptions.add(new FormatException("SESSO MANCANTE", index));}
-		
+
 		Debug.print("Leggo la data di nascita...");
 		dataNascita = this.readDataNascita(riga);
 		if(dataNascita.equals(null)){exceptions.add(new FormatException("DATA NASCITA MANCANTE", index));}
-		
+
 		Debug.print("Leggo il comune di nascita...");
 		comuneNascita = this.readComuneNascita(riga);		//per la formattazione del DB i comune contiene già la provincia
 		if(comuneNascita.equals(null)){exceptions.add(new FormatException("COMUNE NASCITA MANCANTE", index));}
-		
+
 		Debug.print("Leggo lo stato di nascita...");
 		statoNascita = this.readStatoNascita(riga);
 		if(statoNascita.equals(null)){exceptions.add(new FormatException("STATO NASCITA MANCANTE", index));}
-		
+
 		Debug.print("Leggo la cittadinanza...");
 		cittadinanza = this.readCittadinanza(riga);
 		if(cittadinanza.equals(null)){exceptions.add(new FormatException("CITTADINANZA MANCANTE", index));}
-		
-		
+
+
 		/*
 		 * Campi del documento
 		 */
-		
+
 		if(tipoAlloggiato.equals(Alloggiato.CAPO_FAMIGLIA) || tipoAlloggiato.equals(Alloggiato.CAPO_GRUPPO) || tipoAlloggiato.equals(Alloggiato.OSPITE_SINGOLO)){
 			Debug.print("Leggo il tipo del documento...");
 			tipoDoc = this.readTipoDoc(riga);
 			if(tipoDoc.equals(null)){exceptions.add(new FormatException("TIPO DOCUMENTO MANCANTE", index));}
-			
+
 			Debug.print("Leggo il numero del documento...");
 			numDoc = this.readNumeroDoc(riga);
 			if(numDoc.equals(null)){exceptions.add(new FormatException("NUMERO DOCUMENTO MANCANTE", index));}
-			
+
 			Debug.print("Leggo il luogo di rilascio del documento...");
 			rilascioDoc = this.readRilascioDoc(riga);
 			if(rilascioDoc.equals(null)){exceptions.add(new FormatException("RILASCIO DOCUMENTO MANCANTE", index));}
@@ -274,12 +271,12 @@ public class Questura implements FileManager {
 		/*
 		 * Istanzio il record
 		 */
-		
+
 		record = new Record(tipoAlloggiato, dataArrivo, permanenza, nome, cognome, dataNascita, sesso, cittadinanza, statoNascita, comuneNascita, tipoDoc, numDoc, rilascioDoc);
-		
+
 		return record;
 	}
-	
+
 	/**
 	 * Ritorna il nome dell'alloggiato opportunamente trimmato
 	 * @param riga
@@ -290,7 +287,7 @@ public class Questura implements FileManager {
 		Debug.print("nome = " + res);
 		return res;
 	}
-	
+
 	/**
 	 * 
 	 * @param riga
@@ -301,7 +298,7 @@ public class Questura implements FileManager {
 		Debug.print("cognome = " + res);
 		return res;
 	}
-	
+
 	/**
 	 * 
 	 * @param riga
@@ -398,13 +395,13 @@ public class Questura implements FileManager {
 		String res;
 		try {
 			res = q.getAlloggiatoByCode(riga.substring(0, 2));
-			
+
 		} catch (SQLException e) {
 			res = "";
 		}
 		Debug.print("tipo alloggiato = " + res);
 		return res;
-		
+
 	}
 
 	/**
@@ -456,7 +453,7 @@ public class Questura implements FileManager {
 		Debug.print("numero ducumento = " + res);
 		return res;
 	}
-	
+
 	/**
 	 * 
 	 * @param riga
@@ -472,25 +469,20 @@ public class Questura implements FileManager {
 		Debug.print("luogo di rilascio = " + res);
 		return res;
 	}
-	
-	/*
-	 * Metodi per la creazione del file alloggiati
-	 */
-	
-	
+
 	/*
 	 * Utilità varie
 	 */
 	public static boolean check(List<Record> records, int mod){
-		
+
 		return false;
-		
+
 	}
-	
+
 	private static boolean checkSubGroups(List<Record> records){
 		boolean isSingle, isFamily, isGroup;
 		isSingle=isGroup=isFamily=false;
-		
+
 		/*
 		 * RULES:
 		 * - ogni sottogruppo deve cominciare con un osite singolo, un capogruppo o u capo famiglia
@@ -499,23 +491,23 @@ public class Questura implements FileManager {
 		 * - ogni sottogruppo famiglia deve avere almeno un capofamiglia e un membro famiglia
 		 */
 		for(Record temp : records){
-			
+
 			//trovo di che sottogruppo si tratta
 			if(temp.getTipoAlloggiato().equals(Alloggiato.CAPO_FAMIGLIA)){
 				isFamily = true;
 				isGroup = false;
 				isSingle=false;
-				
+
 			}else if(temp.getTipoAlloggiato().equals(Alloggiato.CAPO_GRUPPO)){
 				isGroup = true;
 				isFamily=false;
 				isSingle=false;
-				
+
 			}else if(temp.getTipoAlloggiato().equals(Alloggiato.OSPITE_SINGOLO)){
 				isSingle = true;
 				isFamily = false;
 				isGroup = false;
-				
+
 			}else{
 				/*
 				 * Entro nel controllo dei membri gruppo/famiglia
@@ -527,28 +519,28 @@ public class Questura implements FileManager {
 				}else{
 					//PROBLEM DETECTED!
 					return false;
-					
+
 				}
-				
+
 			}
-			
-			
+
+
 		}
-		
+
 		return true;
 	}
-	
+
 	private static List<FormatException> checkDateInterval(List<Record> records, int mod){
-		
+
 		List<FormatException> dateExceptions = new ArrayList<FormatException>();
-		
+
 		if(mod==Questura.PERMISSIVE){
 			return null;
 		}else if(mod==Questura.SEMI_STRICT){
 			for(Record temp : records){
 				// controlli per la modalità semi-strict 
 			}
-			
+
 		}else if(mod==Questura.STRICT){
 			for(Record temp : records){
 				// controlli per la modalità strict 
@@ -556,7 +548,7 @@ public class Questura implements FileManager {
 		}else{
 			// parametro errato
 		}
-				
+
 		return null;
 	}
 	private String padPermanenza (int n){
@@ -564,14 +556,14 @@ public class Questura implements FileManager {
 		return res;
 	}
 	private String padRight(String s, int n) {
-	     return String.format("%1$-" + n + "s", s);  
+		return String.format("%1$-" + n + "s", s);  
 	}
 
 	private String padLeft(String s, int n) {
-	    return String.format("%1$" + n + "s", s);  
+		return String.format("%1$" + n + "s", s);  
 	}
 
-	
+
 	public static void main(String args[]) throws IOException{
 		/*
 		 * main di test
@@ -579,18 +571,18 @@ public class Questura implements FileManager {
 		Csv c = new Csv();
 		List<Record> records = null;
 		records = c.loadFile("/home/hypertesto/cacca.csv");
-		
+
 		for(Record record : records){
 			System.out.print("*********** RECORD LETTO *************\n");
 			System.out.print(record);
 			System.out.print("**************************************\n\n");
 		}
-		
+
 		Questura q = new Questura();
 		System.out.print("********************************** GENERA FILE **********************************\n");
 		q.writeFile(records, "/home/hypertesto/alloggiati.questura");
 		System.out.print("**********************************************************************************\n\n");
-		
+
 		System.out.print("********************************** LEGGO FILE **********************************\n");
 		List<Record> recs= new ArrayList<Record>(q.loadFile("/home/hypertesto/alloggiati.questura"));
 		System.out.print("********************************************************************************\n\n");
@@ -600,6 +592,6 @@ public class Questura implements FileManager {
 			System.out.print(record);
 			System.out.print("**************************************\n\n");
 		}
-		
+
 	}
 }
