@@ -216,20 +216,31 @@ public class Questura implements FileManager {
 		int permanenza;
 		Record record;
 		
+		System.out.println("STEP 1");
+		permanenza = this.readPermanenza(riga);
+		if(permanenza==0){exceptions.add(new FormatException("PERMANENZA MANCANTE", index));}
+		System.out.println("STEP 2");
 		nome = this.readName(riga);
 		if(nome.equals(null)){exceptions.add(new FormatException("NOME MANCANTE", index));}
+		System.out.println("STEP 3");
 		cognome = this.readCognome(riga);
 		if(cognome.equals(null)){exceptions.add(new FormatException("COGNOME MANCANTE", index));}
+		System.out.println("STEP 4");
 		tipoAlloggiato = this.readTipoAlloggiato(riga);
 		if(tipoAlloggiato.equals(null)){exceptions.add(new FormatException("TIPO ALLOGGIATO MANCANTE", index));}
+		System.out.println("STEP 5");
 		dataArrivo = this.readDataArrivo(riga);
 		if(dataArrivo.equals(null)){exceptions.add(new FormatException("DATA ARRIVO MANCANTE", index));}
+		System.out.println("STEP 6");
 		dataNascita = this.readDataNascita(riga);
 		if(dataNascita.equals(null)){exceptions.add(new FormatException("DATA NASCITA MANCANTE", index));}
+		System.out.println("STEP 7");
 		sesso = this.readSesso(riga);
 		if(sesso.equals(null)){exceptions.add(new FormatException("SESSO MANCANTE", index));}
+		System.out.println("STEP 8");
 		cittadinanza = this.readCittadinanza(riga);
 		if(cittadinanza.equals(null)){exceptions.add(new FormatException("CITTADINANZA MANCANTE", index));}
+		System.out.println("STEP 9");
 		statoNascita = this.readStatoNascita(riga);
 		if(statoNascita.equals(null)){exceptions.add(new FormatException("STATO NASCITA MANCANTE", index));}
 		comuneNascita = this.readComuneNascita(riga);
@@ -240,8 +251,7 @@ public class Questura implements FileManager {
 		if(numDoc.equals(null)){exceptions.add(new FormatException("NUMERO DOCUMENTO MANCANTE", index));}
 		rilascioDoc = this.readRilascioDoc(riga);
 		if(rilascioDoc.equals(null)){exceptions.add(new FormatException("RILASCIO DOCUMENTO MANCANTE", index));}
-		permanenza = this.readPermanenza(riga);
-		if(permanenza==0){exceptions.add(new FormatException("PERMANENZA MANCANTE", index));}
+		
 		
 		record = new Record(tipoAlloggiato, dataArrivo, permanenza, nome, cognome, dataNascita, sesso, cittadinanza, statoNascita, comuneNascita, tipoDoc, numDoc, rilascioDoc);
 		
@@ -274,7 +284,7 @@ public class Questura implements FileManager {
 	 * @return String: sesso alloggiato (M o F)
 	 */
 	private String readSesso(String riga){
-		String sesso = riga.substring(94, 94);
+		String sesso = riga.substring(94, 95);
 		if(sesso.equals("1")){
 			return "M";
 		}else if(sesso.equals("2")){
@@ -294,7 +304,7 @@ public class Questura implements FileManager {
 
 		//per debug ritorna direttamente il nome esteso
 		try {
-			return q.getCittadinanzaByCode(riga.substring(125, 133));
+			return q.getCittadinanzaByCode(riga.substring(125, 134));
 		} catch (SQLException e) {
 			return null;
 		}
@@ -309,7 +319,7 @@ public class Questura implements FileManager {
 		/*
 		 * TODO: fare il controllo se la data è formtattata correttamente, altrimenti null
 		 */
-		return riga.substring(95, 104);
+		return riga.substring(95, 105);
 	}
 
 	/**
@@ -320,7 +330,7 @@ public class Questura implements FileManager {
 	private String readStatoNascita(String riga){
 
 		try {
-			return q.getStatoByCode(riga.substring(116, 124));
+			return q.getStatoByCode(riga.substring(116, 125));
 		} catch (SQLException e) {
 			return "";
 		}
@@ -334,7 +344,7 @@ public class Questura implements FileManager {
 	private String readComuneNascita(String riga){
 		// acquisire anche la provinincia è superfluo visto che è già codificata nel DB
 		try {
-			return q.getComuneByCode(riga.substring(105, 113));
+			return q.getComuneByCode(riga.substring(105, 114));
 		} catch (SQLException e) {
 			return "";
 		}
@@ -375,7 +385,9 @@ public class Questura implements FileManager {
 	 * @return int: permanenza
 	 */
 	private int readPermanenza(String riga){
-		return Integer.parseInt(riga.substring(12, 13));
+		int res = Integer.parseInt(riga.substring(12, 14));
+		System.out.println(res);
+		return res;
 	}
 
 	/**
@@ -386,7 +398,7 @@ public class Questura implements FileManager {
 	private String readTipoDoc(String riga){
 
 		try {
-			return q.getDocumentoByCode(riga.substring(134, 138).trim());
+			return q.getDocumentoByCode(riga.substring(134, 139).trim());
 		} catch (SQLException e) {
 			return "";
 		}
@@ -410,7 +422,7 @@ public class Questura implements FileManager {
 	private String readRilascioDoc(String riga){
 
 		try {
-			return q.getLuogoRilascioByCode(riga.substring(159, 167).trim());
+			return q.getLuogoRilascioByCode(riga.substring(159, 168).trim());
 		} catch (SQLException e) {
 			return "";
 		}
@@ -503,7 +515,9 @@ public class Questura implements FileManager {
 		return null;
 	}
 	private String padPermanenza (int n){
-		return String.format("%02d", n);
+		String res = String.format("%02d", n);
+		System.out.println(res);
+		return res;
 	}
 	private String padRight(String s, int n) {
 	     return String.format("%1$-" + n + "s", s);  
