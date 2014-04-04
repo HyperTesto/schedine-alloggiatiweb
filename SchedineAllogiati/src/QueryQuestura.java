@@ -16,12 +16,15 @@ public class QueryQuestura {
 	Connection connection;
 	Statement statement;
 	Boolean d = true;
-
+	
 	public QueryQuestura(){
 		connection = null;
 	}	
 
-
+	/**
+	 * Metodo per la connessione al DB
+	 * @throws SQLException
+	 */
 	public void connect() throws SQLException{
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -35,12 +38,21 @@ public class QueryQuestura {
 
 	}
 
+	/**
+	 * Metodo per la disconnessione dal DB
+	 * @throws SQLException
+	 */
 	public void disconnect() throws SQLException{
 		if(connection != null)
 			connection.close();
 	}
 
-
+	/**
+	 * Ritorna il codice del comune passato come parametro
+	 * @param comune
+	 * @return
+	 * @throws SQLException
+	 */
 	public String getComuneByName(String comune) throws SQLException{
 		String query, result = null;
 		query = "select * FROM codici_luoghi WHERE nome = \"" + comune +"\"";
@@ -55,6 +67,13 @@ public class QueryQuestura {
 		return result;
 	}
 
+	
+	/**
+	 * Ritorna il codice dello stato passato come parametro
+	 * @param stato
+	 * @return
+	 * @throws SQLException
+	 */
 	public String getStatoByName(String stato) throws SQLException{
 		String query, result = null;
 		query = "select * FROM codici_luoghi WHERE nome = \"" + stato +"\"";
@@ -70,8 +89,11 @@ public class QueryQuestura {
 
 	}
 
-	/*
-	 * Supplementare, ma va bene per la leggibilità
+	/**
+	 * Ritorna il codice dello stato passato come parametro
+	 * @param cittadinanza
+	 * @return
+	 * @throws SQLException
 	 */
 	public String getCittadinanzaByName(String cittadinanza) throws SQLException{
 		return getStatoByName(cittadinanza);
@@ -91,6 +113,13 @@ public class QueryQuestura {
 		return result;
 	}
 
+	
+	/**
+	 * Ritorna il codice del luogo passato come parametro
+	 * @param rilascio
+	 * @return
+	 * @throws SQLException
+	 */
 	public String getLuogoRilascioByName(String rilascio) throws SQLException{
 		String query, result = null;
 		query = "select * FROM codici_luoghi WHERE nome = \"" + rilascio +"\"";
@@ -105,6 +134,13 @@ public class QueryQuestura {
 		return result;
 	}
 
+	
+	/**
+	 * Ritorna il codice alloggiato del tipo passato come parametro
+	 * @param alloggiato
+	 * @return
+	 * @throws SQLException
+	 */
 	public String getAlloggiatoByName(String alloggiato) throws SQLException{
 		String query, result = null;
 		query = "select * from codici_alloggiati WHERE tipo = \"" + alloggiato +"\"";
@@ -124,6 +160,13 @@ public class QueryQuestura {
 	 * 
 	 */
 
+	
+	/**
+	 * Ritorna il nome del comune in abse al codice passato come parametro
+	 * @param comune
+	 * @return
+	 * @throws SQLException
+	 */
 	public String getComuneByCode(String comune) throws SQLException{
 		String query, result = null;
 		query = "select * FROM codici_luoghi WHERE codice = \"" + comune +"\"";
@@ -139,6 +182,12 @@ public class QueryQuestura {
 	}
 
 
+	/**
+	 * Ritorna il nome dello stato in base al codice passato come parametro
+	 * @param comune
+	 * @return
+	 * @throws SQLException
+	 */
 	public String getStatoByCode(String comune) throws SQLException{
 		String query, result = null;
 		query = "select * FROM codici_luoghi WHERE codice = \"" + comune +"\"";
@@ -153,8 +202,12 @@ public class QueryQuestura {
 		return result;
 	}
 
-	/*
-	 * Supplementare, ma va bene per la leggibilità
+	
+	/**
+	 * Ritorna il nome dello stato in base al codice passato come parametro
+	 * @param cittadinanza
+	 * @return
+	 * @throws SQLException
 	 */
 	public String getCittadinanzaByCode(String cittadinanza) throws SQLException{
 		return getStatoByCode(cittadinanza);
@@ -174,7 +227,12 @@ public class QueryQuestura {
 		return result;
 	}
 
-
+	/**
+	 * Ritorna il nome del luogo (comune o stato) in base al codice passato come parametro
+	 * @param rilascio
+	 * @return
+	 * @throws SQLException
+	 */
 	public String getLuogoRilascioByCode(String rilascio) throws SQLException{
 		String query, result = null;
 		query = "select * FROM codici_luoghi WHERE codice = \"" + rilascio +"\"";
@@ -189,7 +247,12 @@ public class QueryQuestura {
 		return result;
 	}
 
-
+	/**
+	 * Ritorna il tipo alloggiato in base al codice passato come parametro
+	 * @param alloggiato
+	 * @return
+	 * @throws SQLException
+	 */
 	public String getAlloggiatoByCode(String alloggiato) throws SQLException{
 		String query, result = null;
 		query = "select * from codici_alloggiati WHERE codice = \"" + alloggiato +"\"";
@@ -203,134 +266,4 @@ public class QueryQuestura {
 		}
 		return result;
 	}
-
-
-
-/*
-	public static void main(String[] args) {
-		QueryQuestura q = new QueryQuestura();
-		try {
-			q.connect();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			//q.getCodiceComune("FALCADE (BL)");
-			System.out.println(q.getComuneByName("FALCADE (BL)"));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			//q.getCodiceComune("FALCADE (BL)");
-			System.out.println(q.getStatoByName("ITALIA"));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			//q.getCodiceComune("FALCADE (BL)");
-			System.out.println(q.getCittadinanzaByName("ITALIA"));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			//q.getCodiceComune("FALCADE (BL)");
-			System.out.println(q.getDocumentoByName("CARTA DI IDENTITA\'"));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-		try {
-			//q.getCodiceComune("FALCADE (BL)");
-			System.out.println(q.getLuogoRilascioByName("BELLUNO (BL)"));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-		try {
-			//q.getCodiceComune("FALCADE (BL)");
-			System.out.println(q.getAlloggiatoByName(Alloggiato.OSPITE_SINGOLO));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			//q.getCodiceComune("FALCADE (BL)");
-			System.out.println(q.getComuneByCode(q.getComuneByName("FALCADE (BL)")));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			//q.getCodiceComune("FALCADE (BL)");
-			System.out.println(q.getStatoByCode(q.getStatoByName("ITALIA")));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-		try {
-			//q.getCodiceComune("FALCADE (BL)");
-			System.out.println(q.getCittadinanzaByCode(q.getCittadinanzaByName("ITALIA")));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-
-		try {
-			//q.getCodiceComune("FALCADE (BL)");
-			System.out.println(q.getDocumentoByCode(q.getDocumentoByName("CARTA DI IDENTITA\'")));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			//q.getCodiceComune("FALCADE (BL)");
-			System.out.println(q.getLuogoRilascioByCode(q.getLuogoRilascioByName("BELLUNO (BL)")));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			//q.getCodiceComune("FALCADE (BL)");
-			System.out.println(q.getAlloggiatoByCode(q.getAlloggiatoByName(Alloggiato.OSPITE_SINGOLO)));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-
-
-
-
-		try {
-			q.disconnect();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-
-	}
-
-*/
 }
