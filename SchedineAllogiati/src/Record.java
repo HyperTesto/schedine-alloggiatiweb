@@ -99,10 +99,7 @@ public class Record {
 	 * @return 2 lettere della provincia (di supporto)
 	 */
 	public String getProvinciaNascita(){
-		
-		String comune_provincia = allog.comuneNascita;
-		System.out.println(comune_provincia);
-		return comune_provincia.substring(comune_provincia.length()-3, comune_provincia.length()-1);
+		return allog.comuneNascita.substring(allog.comuneNascita.length()-3, allog.comuneNascita.length()-1);
 	}
 	
 	/*

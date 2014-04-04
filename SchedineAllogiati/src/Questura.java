@@ -53,7 +53,7 @@ public class Questura implements FileManager {
 			//Read File Line By Line
 			int i=1;
 			while ((strLine = br.readLine()) != null)   {
-				System.out.println(strLine);
+				Debug.print("[FINAL-RECORD]" + strLine);
 				if(strLine.length()!=170){
 					exceptions.add(new FormatException("Lunghezza della riga errata. Proveremo a leggere il leggibile", i));
 				}
@@ -115,18 +115,11 @@ public class Questura implements FileManager {
 	 */
 	private String formatRecord(Record record) throws SQLException{
 		String riga="";
-		//QueryQuestura q = new QueryQuestura();
-
-		/*
-		 * parte da implementare per gestire la formattazione corretta
-		 * per i record da inviare tramite file alla questura
-		 */
-
 		/*
 		 * Campi alloggiato
 		 */
 		String allog = record.getTipoAlloggiato();
-		//campo tipo (da sistemare coni codici
+		//campo tipo (da sistemare con i codici
 		riga+=q.getAlloggiatoByName(allog);
 		//campo data di arrivo
 		riga+=record.getDataArrivo();
@@ -154,16 +147,7 @@ public class Questura implements FileManager {
 		//data di nascita
 		riga+=record.getDataNascita();
 		
-		//comune di nascita
-		
-		//riga+= padRight(q.getComuneByName(record.getComuneNascita()),9);
-		
-		//provincia di nascita
-		//riga+=padRight(record.getProvinciaNascita(),2);
-		
-		
 		//stato di nascita
-		//riga+=q.getStatoByName(record.getStatoNascita());
 		String stato = record.getStatoNascita();
 		
 		/*
@@ -184,8 +168,6 @@ public class Questura implements FileManager {
 		
 		//cittadinanza
 		riga+=q.getCittadinanzaByName(record.getCittadinanza());
-		
-		//
 
 		/*
 		 * Dati documento
@@ -573,7 +555,6 @@ public class Questura implements FileManager {
 	}
 	private String padPermanenza (int n){
 		String res = String.format("%02d", n);
-		System.out.println(res);
 		return res;
 	}
 	private String padRight(String s, int n) {
@@ -583,13 +564,7 @@ public class Questura implements FileManager {
 	private String padLeft(String s, int n) {
 	    return String.format("%1$" + n + "s", s);  
 	}
-	
-	/*
-	private void Debug.print(Object s){
-		if(debug)	
-			System.out.println("[DEBUG] " + s);
-	}
-	*/
+
 	
 	public static void main(String args[]) throws IOException{
 		/*
@@ -600,17 +575,24 @@ public class Questura implements FileManager {
 		records = c.loadFile("/home/hypertesto/cacca.csv");
 		
 		for(Record record : records){
+			System.out.print("*********** RECORD LETTO *************\n");
 			System.out.print(record);
+			System.out.print("**************************************\n\n");
 		}
 		
 		Questura q = new Questura();
+		System.out.print("********************************** GENERA FILE **********************************\n");
 		q.writeFile(records, "/home/hypertesto/alloggiati.questura");
+		System.out.print("**********************************************************************************\n\n");
 		
+		System.out.print("********************************** LEGGO FILE **********************************\n");
 		List<Record> recs= new ArrayList<Record>(q.loadFile("/home/hypertesto/alloggiati.questura"));
-		
+		System.out.print("********************************************************************************\n\n");
 
 		for(Record record : recs){
+			System.out.print("*********** RECORD LETTO *************\n");
 			System.out.print(record);
+			System.out.print("**************************************\n\n");
 		}
 		
 	}
