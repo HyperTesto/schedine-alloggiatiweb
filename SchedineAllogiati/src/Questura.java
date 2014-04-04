@@ -216,35 +216,47 @@ public class Questura implements FileManager {
 		int permanenza;
 		Record record;
 		
-		System.out.println("STEP 1");
-		permanenza = this.readPermanenza(riga);
-		if(permanenza==0){exceptions.add(new FormatException("PERMANENZA MANCANTE", index));}
-		System.out.println("STEP 2");
-		nome = this.readName(riga);
-		if(nome.equals(null)){exceptions.add(new FormatException("NOME MANCANTE", index));}
-		System.out.println("STEP 3");
-		cognome = this.readCognome(riga);
-		if(cognome.equals(null)){exceptions.add(new FormatException("COGNOME MANCANTE", index));}
-		System.out.println("STEP 4");
+		/*
+		 * Campi prenotazione
+		 */
 		tipoAlloggiato = this.readTipoAlloggiato(riga);
 		if(tipoAlloggiato.equals(null)){exceptions.add(new FormatException("TIPO ALLOGGIATO MANCANTE", index));}
-		System.out.println("STEP 5");
+		
 		dataArrivo = this.readDataArrivo(riga);
 		if(dataArrivo.equals(null)){exceptions.add(new FormatException("DATA ARRIVO MANCANTE", index));}
-		System.out.println("STEP 6");
-		dataNascita = this.readDataNascita(riga);
-		if(dataNascita.equals(null)){exceptions.add(new FormatException("DATA NASCITA MANCANTE", index));}
-		System.out.println("STEP 7");
+		
+		permanenza = this.readPermanenza(riga);
+		if(permanenza==0){exceptions.add(new FormatException("PERMANENZA MANCANTE", index));}
+		
+		/*
+		 * Campi personali alloggiato
+		 */
+	
+		cognome = this.readCognome(riga);
+		if(cognome.equals(null)){exceptions.add(new FormatException("COGNOME MANCANTE", index));}
+		
+		nome = this.readName(riga);
+		if(nome.equals(null)){exceptions.add(new FormatException("NOME MANCANTE", index));}
+		
 		sesso = this.readSesso(riga);
 		if(sesso.equals(null)){exceptions.add(new FormatException("SESSO MANCANTE", index));}
-		System.out.println("STEP 8");
-		cittadinanza = this.readCittadinanza(riga);
-		if(cittadinanza.equals(null)){exceptions.add(new FormatException("CITTADINANZA MANCANTE", index));}
-		System.out.println("STEP 9");
+		
+		dataNascita = this.readDataNascita(riga);
+		if(dataNascita.equals(null)){exceptions.add(new FormatException("DATA NASCITA MANCANTE", index));}
+		
+		comuneNascita = this.readComuneNascita(riga);		//per la formattazione del DB i comune contiene già la provincia
+		if(comuneNascita.equals(null)){exceptions.add(new FormatException("COMUNE NASCITA MANCANTE", index));}
+		
 		statoNascita = this.readStatoNascita(riga);
 		if(statoNascita.equals(null)){exceptions.add(new FormatException("STATO NASCITA MANCANTE", index));}
-		comuneNascita = this.readComuneNascita(riga);
-		if(comuneNascita.equals(null)){exceptions.add(new FormatException("COMUNE NASCITA MANCANTE", index));}
+				
+		cittadinanza = this.readCittadinanza(riga);
+		if(cittadinanza.equals(null)){exceptions.add(new FormatException("CITTADINANZA MANCANTE", index));}
+		
+		
+		/*
+		 * Campi del documento
+		 */
 		tipoDoc = this.readTipoDoc(riga);
 		if(tipoDoc.equals(null)){exceptions.add(new FormatException("TIPO DOCUMENTO MANCANTE", index));}
 		numDoc = this.readNumeroDoc(riga);
