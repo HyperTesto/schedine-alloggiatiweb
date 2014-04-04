@@ -231,15 +231,21 @@ public class Questura implements FileManager {
 		Debug.print("Leggo la data di nascita...");
 		dataNascita = this.readDataNascita(riga);
 		if(dataNascita.equals(null)){exceptions.add(new FormatException("DATA NASCITA MANCANTE", index));}
-
-		Debug.print("Leggo il comune di nascita...");
-		comuneNascita = this.readComuneNascita(riga);		//per la formattazione del DB i comune contiene già la provincia
-		if(comuneNascita.equals(null)){exceptions.add(new FormatException("COMUNE NASCITA MANCANTE", index));}
-
+		
+		
 		Debug.print("Leggo lo stato di nascita...");
 		statoNascita = this.readStatoNascita(riga);
 		if(statoNascita.equals(null)){exceptions.add(new FormatException("STATO NASCITA MANCANTE", index));}
-
+		
+		if(statoNascita.equals("ITALIA")){
+			Debug.print("Leggo il comune di nascita...");
+			comuneNascita = this.readComuneNascita(riga);		//per la formattazione del DB i comune contiene già la provincia
+			if(comuneNascita.equals(null)){exceptions.add(new FormatException("COMUNE NASCITA MANCANTE", index));}
+		} else {
+			Debug.print("Salto comune e provincia");
+			comuneNascita = null;
+		}
+		
 		Debug.print("Leggo la cittadinanza...");
 		cittadinanza = this.readCittadinanza(riga);
 		if(cittadinanza.equals(null)){exceptions.add(new FormatException("CITTADINANZA MANCANTE", index));}
