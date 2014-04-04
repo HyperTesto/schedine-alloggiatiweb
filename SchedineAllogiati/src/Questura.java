@@ -25,6 +25,7 @@ public class Questura implements FileManager {
 
 	private List<FormatException> exceptions;
 	private QueryQuestura q;
+	private boolean debug = true;
 	
 	public Questura(){
 		q = new QueryQuestura();
@@ -543,6 +544,11 @@ public class Questura implements FileManager {
 
 	private String padLeft(String s, int n) {
 	    return String.format("%1$" + n + "s", s);  
+	}
+	
+	private void debug(String s){
+		if(debug )	
+			System.out.println("[DEBUG] " + s);
 	}
 	
 	public static void main(String args[]) throws IOException{
