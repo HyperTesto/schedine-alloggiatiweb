@@ -5,10 +5,12 @@ import java.util.List;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
@@ -50,6 +52,7 @@ public class AlloggiatoTree extends Tree {
 		
 		// Lets make visible the column heathers with the column names
 		setHeaderVisible (true);
+		setLinesVisible (true);
 		
 		type = new TreeColumn (this, SWT.CENTER);
 		type.setText ("Tipo Alloggiato");
@@ -140,6 +143,7 @@ public class AlloggiatoTree extends Tree {
 		
 		TreeItem item, subItem;
 		Image singleImage, groupImage, familyImage, tempImage;
+		Color errorColor;
 		
 		/*
 		 * addListener (SWT.MeasureItem, new Listener () {
@@ -166,14 +170,20 @@ public class AlloggiatoTree extends Tree {
 		tempImage.dispose ();
 		
 		item = null;
+		errorColor = new Color (Display.getDefault (), 255, 163, 102);
 		
 		for (Record record : people) {
+			
+			String[] fields;
+			
+			fields = record.toStringArray ();
+			fields[4] = "";
 			
 			if (record.getTipoAlloggiato ().equals (Alloggiato.CAPO_GRUPPO) ||
 					record.getTipoAlloggiato ().equals (Alloggiato.CAPO_FAMIGLIA)) {
 				
 				item = new TreeItem (this, SWT.NONE);
-				item.setText (record.toStringArray ());
+				item.setText (fields);
 				
 				if (record.getTipoAlloggiato ().equals (Alloggiato.CAPO_GRUPPO)) {
 					
@@ -182,6 +192,10 @@ public class AlloggiatoTree extends Tree {
 					//TODO: aggiungere immagine famiglia
 					
 				}
+				
+				if (checkNull (item, fields))
+					item.setBackground (errorColor);
+					
 			
 			} else if (record.getTipoAlloggiato ().equals (Alloggiato.MEMBRO_GRUPPO) ||
 					record.getTipoAlloggiato ().equals (Alloggiato.MEMBRO_FAMIGLIA)){
@@ -190,6 +204,9 @@ public class AlloggiatoTree extends Tree {
 				subItem.setText (record.toStringArray ());
 				
 				subItem.setImage (singleImage);
+				
+				if (checkNull (item, fields))
+					subItem.setBackground (errorColor);
 			
 			} else { //OSPITE SINGOLO
 				
@@ -197,8 +214,33 @@ public class AlloggiatoTree extends Tree {
 				item.setText (record.toStringArray ());
 				
 				item.setImage (singleImage);
+				
+				if (checkNull (item, fields))
+					item.setBackground (errorColor);
 			}
+			/*
+			//item.setBackground (Display.getDefault ().getSystemColor (SWT.COLOR_LIST_SELECTION));
+			
+			Control[] foo;
+			
+			foo = (Control[]) item.getData ();
+			
+			System.out.println (foo instanceof Control[]);
+			
+			for (Control control : foo)
+				if (control != null)
+					control.setBackground (Display.getDefault ().getSystemColor (SWT.COLOR_LIST_SELECTION));
+			*/
 		}
+		
+	}
+	
+	private boolean checkNull (TreeItem item, String[] fields) {
+		
+		for (String temp : fields)
+			if (temp == null) return true;
+		
+		return false;
 	}
 	
 	public List<Record> getSelectedRecords () {
@@ -290,6 +332,8 @@ public class AlloggiatoTree extends Tree {
 	
 	private static Record treeItemToRecord (TreeItem item) {
 		
+		//FIXME: record formattato male
+		
 		Record res;
 		
 		res = new Record (
@@ -335,7 +379,7 @@ public class AlloggiatoTree extends Tree {
 			System.out.print ("[menu] pressed \""
 					+ ((MenuItem) arg0.widget).getText () + "\", ");
 			System.out.println ("selected element \""
-					+ tree.getSelection ()[0].getText () + "\"");
+					+ treeItemToRecord (tree.getSelection ()[0]) + "\"");
 		}
 	}
 	
