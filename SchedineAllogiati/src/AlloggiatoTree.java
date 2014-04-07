@@ -144,18 +144,6 @@ public class AlloggiatoTree extends Tree {
 		Image singleImage, groupImage, familyImage, tempImage;
 		Color errorColor;
 		
-		/*
-		 * addListener (SWT.MeasureItem, new Listener () {
-		 * 
-		 * @Override public void handleEvent (Event arg0) { // TODO
-		 * Auto-generated method stub
-		 * 
-		 * System.out.println ("altezza-riga: " + arg0.height); }
-		 * 
-		 * 
-		 * });
-		 */
-		
 		tempImage = new Image (Display.getDefault (),
 				ResourceLoader.loader (singleIconFile));
 		singleImage = new Image (Display.getDefault (), tempImage
@@ -193,7 +181,8 @@ public class AlloggiatoTree extends Tree {
 				
 				if (checkNull (item, fields))
 					item.setBackground (errorColor);
-					
+				
+				item.setChecked (true);
 			
 			} else if (record.getTipoAlloggiato ().equals (Alloggiato.MEMBRO_GRUPPO) ||
 					record.getTipoAlloggiato ().equals (Alloggiato.MEMBRO_FAMIGLIA)){
@@ -205,7 +194,9 @@ public class AlloggiatoTree extends Tree {
 				
 				if (checkNull (item, fields))
 					subItem.setBackground (errorColor);
-			
+				
+				subItem.setChecked (true);
+				
 			} else { //OSPITE SINGOLO
 				
 				item = new TreeItem (this, SWT.NONE);
@@ -215,22 +206,10 @@ public class AlloggiatoTree extends Tree {
 				
 				if (checkNull (item, fields))
 					item.setBackground (errorColor);
+				
+				item.setChecked (true);
 			}
-			/*
-			//item.setBackground (Display.getDefault ().getSystemColor (SWT.COLOR_LIST_SELECTION));
-			
-			Control[] foo;
-			
-			foo = (Control[]) item.getData ();
-			
-			System.out.println (foo instanceof Control[]);
-			
-			for (Control control : foo)
-				if (control != null)
-					control.setBackground (Display.getDefault ().getSystemColor (SWT.COLOR_LIST_SELECTION));
-			*/
 		}
-		
 	}
 	
 	private boolean checkNull (TreeItem item, String[] fields) {
@@ -367,13 +346,11 @@ public class AlloggiatoTree extends Tree {
 		
 		@Override
 		public void widgetDefaultSelected (SelectionEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 		
 		@Override
 		public void widgetSelected (SelectionEvent arg0) {
-			// TODO Auto-generated method stub
 			
 			System.out.print ("[menu] pressed \""
 					+ ((MenuItem) arg0.widget).getText () + "\", ");
@@ -390,8 +367,8 @@ public class AlloggiatoTree extends Tree {
 		
 		Display display;
 		Shell shell;
-		AlloggiatoTree tree;
-		FileManager fManager;
+		final AlloggiatoTree tree;
+		final FileManager fManager;
 		
 		display = new Display ();
 		shell = new Shell (display);
@@ -413,10 +390,7 @@ public class AlloggiatoTree extends Tree {
 		gd_tree.heightHint = 146;
 		tree.setLayoutData (gd_tree);
 		
-		//fManager.writeFile (tree.getSelectedRecords (), "/home/alberto/Desktop/alloggiati_out.csv");
-		
 		shell.open ();
-		// shell.pack ();
 		
 		while (!shell.isDisposed ()) {
 			
