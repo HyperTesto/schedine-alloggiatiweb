@@ -10,7 +10,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
@@ -177,7 +176,6 @@ public class AlloggiatoTree extends Tree {
 			String[] fields;
 			
 			fields = record.toStringArray ();
-			fields[4] = "";
 			
 			if (record.getTipoAlloggiato ().equals (Alloggiato.CAPO_GRUPPO) ||
 					record.getTipoAlloggiato ().equals (Alloggiato.CAPO_FAMIGLIA)) {
@@ -332,27 +330,28 @@ public class AlloggiatoTree extends Tree {
 	
 	private static Record treeItemToRecord (TreeItem item) {
 		
-		//FIXME: record formattato male
-		
+		String type, arrival, surname, name, sex, birthday,
+			birthState, birthDistrict, citizienship, docType, docNumber, documentReleasePlace;
+		int stay;
 		Record res;
 		
-		res = new Record (
-		
-			item.getText (0),
-			item.getText (1),
-			Integer.parseInt (item.getText (2)),
-			item.getText (3),
-			item.getText (4),
-			item.getText (5),
-			item.getText (6),
-			item.getText (7),
-			item.getText (8),
-			item.getText (9),
-			item.getText (10),
-			item.getText (11),
-			item.getText (12)
-				
-		);
+		type = item.getText (0);
+		arrival = item.getText (1);
+		stay = Integer.parseInt (item.getText (2));
+		surname = item.getText (3);
+		name = item.getText (4);
+		sex = item.getText (5);
+		birthday = item.getText (6);
+		birthDistrict = item.getText (7);
+		birthState = item.getText (8);
+		citizienship = item.getText (9);
+		docType = item.getText (10);
+		docNumber = item.getText (11);
+		documentReleasePlace = item.getText (12);
+
+		res = new Record (type, arrival, stay, surname, name, sex, birthday,
+				birthDistrict, birthState, citizienship, docType, docNumber,
+				documentReleasePlace);
 		
 		return res;
 	}
@@ -399,7 +398,7 @@ public class AlloggiatoTree extends Tree {
 		fManager = new Csv ();
 		
 		shell.setText ("AllogiatoTree");
-		shell.setSize (500, 200);
+		shell.setSize (1300, 200);
 		
 		GridLayout gl_shell = new GridLayout (1, false);
 		gl_shell.marginWidth = 0;
