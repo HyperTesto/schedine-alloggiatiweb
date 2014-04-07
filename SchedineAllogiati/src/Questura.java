@@ -23,8 +23,8 @@ import java.util.List;
  */
 public class Questura implements FileManager {
 
-	private List<FormatException> loadExceptions;
-	private List<FormatException> writeExceptions;
+	private List<FormatException> exceptions;
+
 	private QueryQuestura q;
 
 	public Questura(){
@@ -38,7 +38,7 @@ public class Questura implements FileManager {
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		loadExceptions  = new ArrayList<FormatException>();
+		exceptions  = new ArrayList<FormatException>();
 		List<Record> records = new ArrayList<Record>();
 
 		try{
@@ -51,13 +51,13 @@ public class Questura implements FileManager {
 				Debug.print("[RECORD]" + strLine);
 				if(strLine.length()!=170){
 					Debug.print("Lunghezza della riga errata. Proveremo a leggere il leggibile");
-					loadExceptions.add(new FormatException("Lunghezza della riga errata. Proveremo a leggere il leggibile", i));
+					exceptions.add(new FormatException("Lunghezza della riga errata. Proveremo a leggere il leggibile", i));
 				}
 				Record temp = readRecord(strLine, i);
 				if (temp != null){
 					records.add(temp);
 				}else{
-					loadExceptions.add(new FormatException("Null record", i));
+					exceptions.add(new FormatException("Null record", i));
 				}
 				i++;
 			}
@@ -98,24 +98,9 @@ public class Questura implements FileManager {
 
 	@Override
 	public List<FormatException> getErrors() {
-		return loadExceptions;
+		return exceptions;
 	}
 
-	/**
-	 *  ritorna la lista delle eccezioni riscontrate in lettura
-	 * @return
-	 */
-	public List<FormatException> getLoadErrors(){
-		return loadExceptions;
-	}
-
-	/**
-	 * ritorna la lista delle eccezioni riscontrate in scrittura
-	 * @return
-	 */
-	public List<FormatException> getWriteErrors(){
-		return writeExceptions;
-	}
 
 	/**
 	 * Ritorna una riga formattata per l'invio tramite file
@@ -218,15 +203,15 @@ public class Questura implements FileManager {
 
 		Debug.print("Leggo il tipo di alloggiato...");
 		tipoAlloggiato = this.readTipoAlloggiato(riga);
-		if(tipoAlloggiato.equals(null)){loadExceptions.add(new FormatException("TIPO ALLOGGIATO MANCANTE", index));}
+		if(tipoAlloggiato.equals(null)){exceptions.add(new FormatException("TIPO ALLOGGIATO MANCANTE", index));}
 
 		Debug.print("Leggo la data di arrivo...");
 		dataArrivo = this.readDataArrivo(riga);
-		if(dataArrivo.equals(null)){loadExceptions.add(new FormatException("DATA ARRIVO MANCANTE", index));}
+		if(dataArrivo.equals(null)){exceptions.add(new FormatException("DATA ARRIVO MANCANTE", index));}
 
 		Debug.print("Leggo la permanenza...");
 		permanenza = this.readPermanenza(riga);
-		if(permanenza==0){loadExceptions.add(new FormatException("PERMANENZA MANCANTE", index));}
+		if(permanenza==0){exceptions.add(new FormatException("PERMANENZA MANCANTE", index));}
 
 		/*
 		 * Campi personali alloggiato
@@ -234,29 +219,29 @@ public class Questura implements FileManager {
 
 		Debug.print("Leggo il cognome...");
 		cognome = this.readCognome(riga);
-		if(cognome.equals(null)){loadExceptions.add(new FormatException("COGNOME MANCANTE", index));}
+		if(cognome.equals(null)){exceptions.add(new FormatException("COGNOME MANCANTE", index));}
 
 		Debug.print("Leggo il nome...");
 		nome = this.readName(riga);
-		if(nome.equals(null)){loadExceptions.add(new FormatException("NOME MANCANTE", index));}
+		if(nome.equals(null)){exceptions.add(new FormatException("NOME MANCANTE", index));}
 
 		Debug.print("Leggo il sesso...");
 		sesso = this.readSesso(riga);
-		if(sesso.equals(null)){loadExceptions.add(new FormatException("SESSO MANCANTE", index));}
+		if(sesso.equals(null)){exceptions.add(new FormatException("SESSO MANCANTE", index));}
 
 		Debug.print("Leggo la data di nascita...");
 		dataNascita = this.readDataNascita(riga);
-		if(dataNascita.equals(null)){loadExceptions.add(new FormatException("DATA NASCITA MANCANTE", index));}
+		if(dataNascita.equals(null)){exceptions.add(new FormatException("DATA NASCITA MANCANTE", index));}
 
 
 		Debug.print("Leggo lo stato di nascita...");
 		statoNascita = this.readStatoNascita(riga);
-		if(statoNascita.equals(null)){loadExceptions.add(new FormatException("STATO NASCITA MANCANTE", index));}
+		if(statoNascita.equals(null)){exceptions.add(new FormatException("STATO NASCITA MANCANTE", index));}
 
 		if(statoNascita.equals("ITALIA")){
 			Debug.print("Leggo il comune di nascita...");
 			comuneNascita = this.readComuneNascita(riga);		//per la formattazione del DB i comune contiene già la provincia
-			if(comuneNascita.equals(null)){loadExceptions.add(new FormatException("COMUNE NASCITA MANCANTE", index));}
+			if(comuneNascita.equals(null)){exceptions.add(new FormatException("COMUNE NASCITA MANCANTE", index));}
 		} else {
 			Debug.print("Salto comune e provincia");
 			comuneNascita = null;
@@ -264,7 +249,7 @@ public class Questura implements FileManager {
 
 		Debug.print("Leggo la cittadinanza...");
 		cittadinanza = this.readCittadinanza(riga);
-		if(cittadinanza.equals(null)){loadExceptions.add(new FormatException("CITTADINANZA MANCANTE", index));}
+		if(cittadinanza.equals(null)){exceptions.add(new FormatException("CITTADINANZA MANCANTE", index));}
 
 
 		/*
@@ -274,15 +259,15 @@ public class Questura implements FileManager {
 		if(tipoAlloggiato.equals(Alloggiato.CAPO_FAMIGLIA) || tipoAlloggiato.equals(Alloggiato.CAPO_GRUPPO) || tipoAlloggiato.equals(Alloggiato.OSPITE_SINGOLO)){
 			Debug.print("Leggo il tipo del documento...");
 			tipoDoc = this.readTipoDoc(riga);
-			if(tipoDoc.equals(null)){loadExceptions.add(new FormatException("TIPO DOCUMENTO MANCANTE", index));}
+			if(tipoDoc.equals(null)){exceptions.add(new FormatException("TIPO DOCUMENTO MANCANTE", index));}
 
 			Debug.print("Leggo il numero del documento...");
 			numDoc = this.readNumeroDoc(riga);
-			if(numDoc.equals(null)){loadExceptions.add(new FormatException("NUMERO DOCUMENTO MANCANTE", index));}
+			if(numDoc.equals(null)){exceptions.add(new FormatException("NUMERO DOCUMENTO MANCANTE", index));}
 
 			Debug.print("Leggo il luogo di rilascio del documento...");
 			rilascioDoc = this.readRilascioDoc(riga);
-			if(rilascioDoc.equals(null)){loadExceptions.add(new FormatException("RILASCIO DOCUMENTO MANCANTE", index));}
+			if(rilascioDoc.equals(null)){exceptions.add(new FormatException("RILASCIO DOCUMENTO MANCANTE", index));}
 		} else{
 			Debug.print("Salto i campi documento...");
 			tipoDoc = null;
