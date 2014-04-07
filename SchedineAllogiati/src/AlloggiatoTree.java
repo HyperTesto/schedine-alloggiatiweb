@@ -10,7 +10,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
@@ -145,18 +144,6 @@ public class AlloggiatoTree extends Tree {
 		Image singleImage, groupImage, familyImage, tempImage;
 		Color errorColor;
 		
-		/*
-		 * addListener (SWT.MeasureItem, new Listener () {
-		 * 
-		 * @Override public void handleEvent (Event arg0) { // TODO
-		 * Auto-generated method stub
-		 * 
-		 * System.out.println ("altezza-riga: " + arg0.height); }
-		 * 
-		 * 
-		 * });
-		 */
-		
 		tempImage = new Image (Display.getDefault (),
 				ResourceLoader.loader (singleIconFile));
 		singleImage = new Image (Display.getDefault (), tempImage
@@ -177,7 +164,6 @@ public class AlloggiatoTree extends Tree {
 			String[] fields;
 			
 			fields = record.toStringArray ();
-			fields[4] = "";
 			
 			if (record.getTipoAlloggiato ().equals (Alloggiato.CAPO_GRUPPO) ||
 					record.getTipoAlloggiato ().equals (Alloggiato.CAPO_FAMIGLIA)) {
@@ -195,7 +181,8 @@ public class AlloggiatoTree extends Tree {
 				
 				if (checkNull (item, fields))
 					item.setBackground (errorColor);
-					
+				
+				item.setChecked (true);
 			
 			} else if (record.getTipoAlloggiato ().equals (Alloggiato.MEMBRO_GRUPPO) ||
 					record.getTipoAlloggiato ().equals (Alloggiato.MEMBRO_FAMIGLIA)){
@@ -207,7 +194,9 @@ public class AlloggiatoTree extends Tree {
 				
 				if (checkNull (item, fields))
 					subItem.setBackground (errorColor);
-			
+				
+				subItem.setChecked (true);
+				
 			} else { //OSPITE SINGOLO
 				
 				item = new TreeItem (this, SWT.NONE);
@@ -217,22 +206,10 @@ public class AlloggiatoTree extends Tree {
 				
 				if (checkNull (item, fields))
 					item.setBackground (errorColor);
+				
+				item.setChecked (true);
 			}
-			/*
-			//item.setBackground (Display.getDefault ().getSystemColor (SWT.COLOR_LIST_SELECTION));
-			
-			Control[] foo;
-			
-			foo = (Control[]) item.getData ();
-			
-			System.out.println (foo instanceof Control[]);
-			
-			for (Control control : foo)
-				if (control != null)
-					control.setBackground (Display.getDefault ().getSystemColor (SWT.COLOR_LIST_SELECTION));
-			*/
 		}
-		
 	}
 	
 	private boolean checkNull (TreeItem item, String[] fields) {
@@ -332,27 +309,28 @@ public class AlloggiatoTree extends Tree {
 	
 	private static Record treeItemToRecord (TreeItem item) {
 		
-		//FIXME: record formattato male
-		
+		String type, arrival, surname, name, sex, birthday,
+			birthState, birthDistrict, citizienship, docType, docNumber, documentReleasePlace;
+		int stay;
 		Record res;
 		
-		res = new Record (
-		
-			item.getText (0),
-			item.getText (1),
-			Integer.parseInt (item.getText (2)),
-			item.getText (3),
-			item.getText (4),
-			item.getText (5),
-			item.getText (6),
-			item.getText (7),
-			item.getText (8),
-			item.getText (9),
-			item.getText (10),
-			item.getText (11),
-			item.getText (12)
-				
-		);
+		type = item.getText (0);
+		arrival = item.getText (1);
+		stay = Integer.parseInt (item.getText (2));
+		surname = item.getText (3);
+		name = item.getText (4);
+		sex = item.getText (5);
+		birthday = item.getText (6);
+		birthDistrict = item.getText (7);
+		birthState = item.getText (8);
+		citizienship = item.getText (9);
+		docType = item.getText (10);
+		docNumber = item.getText (11);
+		documentReleasePlace = item.getText (12);
+
+		res = new Record (type, arrival, stay, surname, name, sex, birthday,
+				birthDistrict, birthState, citizienship, docType, docNumber,
+				documentReleasePlace);
 		
 		return res;
 	}
@@ -368,13 +346,11 @@ public class AlloggiatoTree extends Tree {
 		
 		@Override
 		public void widgetDefaultSelected (SelectionEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 		
 		@Override
 		public void widgetSelected (SelectionEvent arg0) {
-			// TODO Auto-generated method stub
 			
 			System.out.print ("[menu] pressed \""
 					+ ((MenuItem) arg0.widget).getText () + "\", ");
@@ -391,15 +367,15 @@ public class AlloggiatoTree extends Tree {
 		
 		Display display;
 		Shell shell;
-		AlloggiatoTree tree;
-		FileManager fManager;
+		final AlloggiatoTree tree;
+		final FileManager fManager;
 		
 		display = new Display ();
 		shell = new Shell (display);
 		fManager = new Csv ();
 		
 		shell.setText ("AllogiatoTree");
-		shell.setSize (500, 200);
+		shell.setSize (1300, 200);
 		
 		GridLayout gl_shell = new GridLayout (1, false);
 		gl_shell.marginWidth = 0;
@@ -414,10 +390,7 @@ public class AlloggiatoTree extends Tree {
 		gd_tree.heightHint = 146;
 		tree.setLayoutData (gd_tree);
 		
-		//fManager.writeFile (tree.getSelectedRecords (), "/home/alberto/Desktop/alloggiati_out.csv");
-		
 		shell.open ();
-		// shell.pack ();
 		
 		while (!shell.isDisposed ()) {
 			
