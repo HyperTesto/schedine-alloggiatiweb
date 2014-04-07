@@ -138,7 +138,7 @@ public class SimpleText implements FileManager {
 			numDoc = t.nextToken();
 			rilascioDoc = t.nextToken();
 			
-			record = new Record(tipoAlloggiato, dataArrivo, permanenza, nome, cognome, dataNascita, sesso, cittadinanza, statoNascita, comuneNascita, tipoDoc, numDoc, rilascioDoc);
+			record = new Record(tipoAlloggiato, dataArrivo, permanenza, cognome, nome, sesso, dataNascita, comuneNascita, statoNascita, cittadinanza, tipoDoc, numDoc, rilascioDoc);
 			
 		}catch (Exception e){//Catch exception if any
 			System.err.println("Errore: la riga non sembra formattata correttamente");
@@ -156,10 +156,10 @@ public class SimpleText implements FileManager {
 		
 		records = new ArrayList<Record> ();
 		
-		records.add (new Record (Alloggiato.CAPO_GRUPPO, "04/03/2014", 3, "Alberto", "Bonizzi", "10/08/1994", "M", "Italiana", "Italia", "Belluno (BL)", "Carta d'identità", "AS101SA", "Belluno (BL)"));
-		records.add (new Record (Alloggiato.OSPITE_SINGOLO, "04/03/2014", 3, "Enrico", "Testori", "26/01/1994", "M", "Italiana", "Italia", "Feltre (BL)", "Carta d'identità", "ET202TE", "Feltre (BL)"));
-		records.add (new Record (Alloggiato.OSPITE_SINGOLO, "04/03/2014", 3, "Gimmy", "Ymmig", "10/08/1994", "M", "Congo", "Malawi", "Lilongwe (MK)", "Carta d'identità", "454554", "Lilongwe (MK)"));
-		records.add (new Record (Alloggiato.OSPITE_SINGOLO, "04/03/2014", 3, "Kabobo", "Ga", "26/01/1994", "M", "Ghana", "Ghana", "Mokungo (MK)", "Carta d'identità", "TONGABONGA", "Mokungo (MK)"));
+		records.add (new Record (Alloggiato.CAPO_GRUPPO, "04/03/2014", 3, "Bonizzi", "Alberto", "M", "10/08/1994", "Belluno (BL)", "Italia", "Italiana", "Carta d'identità", "AS101SA", "Belluno (BL)"));
+		records.add (new Record (Alloggiato.OSPITE_SINGOLO, "04/03/2014", 3, "Testori", "Enrico", "M", "26/01/1994", "Feltre (BL)", "Italia", "Italiana", "Carta d'identità", "ET202TE", "Feltre (BL)"));
+		records.add (new Record (Alloggiato.OSPITE_SINGOLO, "04/03/2014", 3, "Ymmig", "Gimmy", "M", "10/08/1994", "Lilongwe (MK)", "Malawi", "Congo", "Carta d'identità", "454554", "Lilongwe (MK)"));
+		records.add (new Record (Alloggiato.OSPITE_SINGOLO, "04/03/2014", 3, "Ga", "Kabobo", "M", "26/01/1994", "Mokungo (MK)", "Ghana", "Ghana", "Carta d'identità", "TONGABONGA", "Mokungo (MK)"));
 		
 		fManager.writeFile (records, "/home/alberto.bonizzi/Desktop/allogiati.txt");
 		

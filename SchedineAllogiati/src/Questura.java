@@ -279,7 +279,7 @@ public class Questura implements FileManager {
 		 * Istanzio il record
 		 */
 
-		record = new Record(tipoAlloggiato, dataArrivo, permanenza, nome, cognome, dataNascita, sesso, cittadinanza, statoNascita, comuneNascita, tipoDoc, numDoc, rilascioDoc);
+		record = new Record(tipoAlloggiato, dataArrivo, permanenza, cognome, nome, sesso, dataNascita, comuneNascita, statoNascita, cittadinanza, tipoDoc, numDoc, rilascioDoc);
 
 		return record;
 	}
@@ -505,7 +505,7 @@ public class Questura implements FileManager {
 
 		Csv c = new Csv();
 		List<Record> records = null;
-		records = c.loadFile("/home/hypertesto/cacca.csv");
+		records = c.loadFile("/home/enrico.testori/alloggiati.csv");
 
 		for(Record record : records){
 			System.out.print("*********** RECORD LETTO *************\n");
@@ -515,11 +515,11 @@ public class Questura implements FileManager {
 
 		Questura q = new Questura();
 		System.out.print("********************************** GENERA FILE **********************************\n");
-		q.writeFile(records, "/home/hypertesto/alloggiati.questura");
+		q.writeFile(records, "/home/enrico.testori/alloggiati.questura");
 		System.out.print("**********************************************************************************\n\n");
 
 		System.out.print("********************************** LEGGO FILE **********************************\n");
-		List<Record> recs= new ArrayList<Record>(q.loadFile("/home/hypertesto/alloggiati.questura"));
+		List<Record> recs= new ArrayList<Record>(q.loadFile("/home/enrico.testori/alloggiati.questura"));
 		System.out.print("********************************************************************************\n\n");
 
 		for(Record record : recs){

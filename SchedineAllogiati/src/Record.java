@@ -14,18 +14,18 @@ public class Record {
 	 * @param tipoAlloggiato
 	 * @param dataArrivo
 	 * @param permanenza
-	 * @param nome
 	 * @param cognome
-	 * @param dataNascita
+	 * @param nome
 	 * @param sesso
-	 * @param cittadinanza
-	 * @param statoNascita
+	 * @param dataNascita
 	 * @param comuneNascita
+	 * @param statoNascita
+	 * @param cittadinanza
 	 * @param tipoDoc
 	 * @param numeroDoc
 	 * @param rilascioDoc
 	 */
-	public Record(String tipoAlloggiato, String dataArrivo, int permanenza, String nome, String cognome, String dataNascita, String sesso, String cittadinanza, String statoNascita, String comuneNascita, String tipoDoc, String numeroDoc, String rilascioDoc){
+	public Record(String tipoAlloggiato, String dataArrivo, int permanenza, String cognome, String nome, String sesso, String dataNascita, String comuneNascita, String statoNascita, String cittadinanza, String tipoDoc, String numeroDoc, String rilascioDoc){
 		
 		perm = new Permanenza(tipoAlloggiato, dataArrivo, permanenza);
 		allog = new Alloggiato(nome, cognome, dataNascita, sesso, cittadinanza, statoNascita, comuneNascita);
